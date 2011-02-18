@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+    <form-beans>       
+		<form-bean name="atividadeForm" type="br.com.dba.timesheet.web.form.AtividadesForm" />        
+		<form-bean name="loginForm" type="br.com.dba.timesheet.web.form.LoginForm" />        
+		<form-bean name="funcionarioForm" type="br.com.dba.timesheet.web.form.FuncionarioForm" />        
+    </form-beans>
+
+    <action-mappings>    
+		<action path="/inicio/logar" 
+			type="br.com.dba.timesheet.web.action.LoginAction"
+			name="loginForm">
+		<forward name="index" 	path="/WebContent/jsp/atividades/index.jsp"/>
+		</action>
+
+	    <action path="/atividade/cadastarAtividade" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="cadastrarAtividade" path="/WebContent/jsp/atividades/cadastrarAtividades.jsp"/>
+		</action>
+
+	    <action path="/funcionario/cadastarFuncionario" 
+				type="br.com.dba.timesheet.web.action.FuncionarioAction"
+				name="funcionarioForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="cadastro" path="/WebContent/jsp/cadastroUsuario/cadastroFuncionario.jsp"/>
+		</action>
+
+	</action-mappings>
+	
+	<!--
+		=================================================== Validator plugin
+	-->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" 
+            value="/org/apache/struts/validator/validator-rules.xml, /WEB-INF/config/validation.xml"/>
+        <set-property property="stopOnFirstError" value="false"/>
+    </plug-in>
+	    
+</struts-config>
