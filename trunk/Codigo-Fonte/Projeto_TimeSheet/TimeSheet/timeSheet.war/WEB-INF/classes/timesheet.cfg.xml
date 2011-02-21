@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory name="java:/HibernateFCTFactory">
+		
+		<!-- datasource connection properties -->
+		<property name="hibernate.connection.datasource">java:/TimeSheet</property>
+		
+		<!-- dialect for Microsoft SQL Server -->
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property>  
+		<property name="hibernate.connection.username">postgres</property>  
+		<property name="hibernate.connection.password">12349876</property>
+		 
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.CMTTransactionFactory</property>
+		<property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
+		<property name="hibernate.current_session_context_class">jta</property>
+		<property name="jta.UserTransaction">UserTransaction</property>	
+
+        <mapping class="br.com.dba.timesheet.pojo.Atividade"/>
+        <mapping class="br.com.dba.timesheet.pojo.Cliente"/>
+        <mapping class="br.com.dba.timesheet.pojo.Funcionario"/>
+        <mapping class="br.com.dba.timesheet.pojo.Metodologia"/>
+        <mapping class="br.com.dba.timesheet.pojo.OP"/>        
+        <mapping class="br.com.dba.timesheet.pojo.Produto_Servico"/>                
+        <mapping class="br.com.dba.timesheet.pojo.Projeto"/>        
+        <mapping class="br.com.dba.timesheet.pojo.Tipo_Atividade"/>        
+		             
+    </session-factory>
+</hibernate-configuration>

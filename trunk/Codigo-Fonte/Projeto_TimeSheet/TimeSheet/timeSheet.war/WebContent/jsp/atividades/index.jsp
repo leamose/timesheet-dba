@@ -126,6 +126,14 @@
 			  	<input class="campoLeitura" name="input5" cols="" rows="" style="width:61px;" />
 			</div>							
 			<div class="foco">
+				<div class="label">Atividade:</div>
+			  	<html:select name="form" property="tipo_atividade_id" styleId="atividades" style="width:150px" 
+			  		styleClass="campo">
+				    <option value=""><fmt:message key="opcao.selecione" /></option>
+					<html:optionsCollection name="form" property="listaAtividades" label="descricao" value="codigo" />
+				</html:select>
+			</div>
+			<div class="foco">
 				<div class="label">Produto/Serviço:</div>
 			  	<input class="campoLeitura" name="input11" cols="" rows="" style="width:95px;" />
 			</div>

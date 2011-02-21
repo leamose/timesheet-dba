@@ -1,8 +1,11 @@
 package br.com.dba.timesheet.web.form;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.struts.validator.ValidatorForm;
+
+import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
 
 public class AtividadesForm extends ValidatorForm {
 	
@@ -31,6 +34,16 @@ public class AtividadesForm extends ValidatorForm {
 	private String observacao;
 	
 	private Boolean alteracao_data_avaliacao;
+	
+	private List<Tipo_AtividadeVO> listaAtividades;
+	
+	public List<Tipo_AtividadeVO> getListaAtividades() {
+		return listaAtividades;
+	}
+	
+	public void setListaAtividades(List<Tipo_AtividadeVO> listaAtividades) {
+		this.listaAtividades = listaAtividades;
+	}
 	
 	public Integer getId() {
 		return id;

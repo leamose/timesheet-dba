@@ -11,23 +11,29 @@
 
     <action-mappings>
     		
-	    <action path="/atividade/cadastarAtividade" 
+	    <action path="/atividade/inicio" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
 			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>
 		</action>
+	    <action path="/atividade/cadastarAtividade" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retornoCadastro" path="/WebContent/jsp/atividades/index.jsp"/>
+		</action>
 	    <action path="/atividade/salvar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retornoSalvar" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="retornoSalvar" path="/atividade/inicio.do"/>
 		</action>
 	    <action path="/atividade/voltar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="voltar" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="voltar" path="/atividade/inicio.do"/>
 		</action>
 
 	</action-mappings>	

@@ -5,17 +5,15 @@
 
 <struts-config>
 
-    <form-beans>       
-		<form-bean name="atividadeForm" type="br.com.dba.timesheet.web.form.AtividadesForm" />        
-		<form-bean name="loginForm" type="br.com.dba.timesheet.web.form.LoginForm" />        
-		<form-bean name="funcionarioForm" type="br.com.dba.timesheet.web.form.FuncionarioForm" />        
+    <form-beans>
+		<form-bean name="loginForm" type="br.com.dba.timesheet.web.form.LoginForm" />
     </form-beans>
 
     <action-mappings>    
 		<action path="/inicio/logar" 
 			type="br.com.dba.timesheet.web.action.LoginAction"
 			name="loginForm">
-		<forward name="index" 	path="/WebContent/jsp/atividades/index.jsp"/>
+		<forward name="index" path="/atividade/inicio.do"/>
 		</action>
 	</action-mappings>
 	
