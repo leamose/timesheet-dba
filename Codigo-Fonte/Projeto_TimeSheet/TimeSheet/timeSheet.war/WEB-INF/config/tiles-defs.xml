@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+    <definition name=".mainLayout" template="/WebContent/paginas/comum/layout.jsp">
+        <put name="title" value="SISRH" />
+        <put name="cabecalho" value="/WebContent/paginas/comum/cabecalho.jsp"/>
+        <put name="mensagens" value="/WebContent/paginas/comum/mensagens.jsp"/>
+        <put name="menuTopo" value="/WebContent/paginas/comum/menuTopo.jsp"/>
+        <put name="imagemTopo" value="" />
+        <put name="javascript" value="" />
+        <put name="corpo" value="" />
+        <put name="tituloPaginas" value="" />
+        <put name="rodape" value="/WebContent/paginas/comum/rodape.jsp" />
+    </definition>	
+</tiles-definitions>

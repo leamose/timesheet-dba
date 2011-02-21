@@ -1,0 +1,32 @@
+#bubble_tooltip{
+	width:196px;
+	position:absolute;
+	display:none;
+}
+#bubble_tooltip .bubble_top{
+	background-image: url('../img/bubble_top.png');
+	background-repeat:no-repeat;
+	height:14px;	
+}
+#bubble_tooltip .bubble_middle{
+	background-image: url('../img/bubble_middle.png');
+	background-repeat:repeat-y;	
+	background-position:bottom left;
+	padding-left:7px;
+	padding-right:7px;
+}
+#bubble_tooltip .bubble_middle span{
+	position:relative;
+	top:-5px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size:11px;
+	color:#666;
+}
+#bubble_tooltip .bubble_bottom{
+	background-image: url('../img/bubble_bottom.png');
+	background-repeat:no-repeat;
+	background-repeat:no-repeat;	
+	height:35px;
+	position:relative;
+	top:-0px;
+}

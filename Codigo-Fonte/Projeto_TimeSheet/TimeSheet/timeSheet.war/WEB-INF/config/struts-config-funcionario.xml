@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+    <form-beans>
+		<form-bean name="funcionarioForm" type="br.com.dba.timesheet.web.form.FuncionarioForm" />        
+    </form-beans>
+
+    <action-mappings>
+    		
+	    <action path="/funcionario/cadastarFuncionario" 
+				type="br.com.dba.timesheet.web.action.FuncionarioAction"
+				name="funcionarioForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="cadastro" path="/WebContent/jsp/cadastroFuncionario/cadastroFuncionario.jsp"/>
+		</action>
+	    <action path="/funcionario/salvar" 
+				type="br.com.dba.timesheet.web.action.FuncionarioAction"
+				name="funcionarioForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retornoSalvar" path="/WebContent/jsp/atividades/index.jsp"/>
+		</action>
+	    <action path="/funcionario/voltar" 
+				type="br.com.dba.timesheet.web.action.FuncionarioAction"
+				name="funcionarioForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="voltar" path="/WebContent/jsp/atividades/index.jsp"/>
+		</action>
+
+	</action-mappings>	
+	    
+</struts-config>
