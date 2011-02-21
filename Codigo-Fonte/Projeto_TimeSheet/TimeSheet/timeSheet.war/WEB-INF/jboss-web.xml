@@ -1,7 +1,0 @@
-<jboss-web>
-    <context-root>/timesheet</context-root>
-    <class-loading java2ClassLoadingCompliance="false">
-        <loader-repository>br.com.dba.timesheet:loader=timeSheet.war</loader-repository>
-        <loader-repository-config>java2ParentDelegation=false</loader-repository-config>
-    </class-loading>
-</jboss-web>
