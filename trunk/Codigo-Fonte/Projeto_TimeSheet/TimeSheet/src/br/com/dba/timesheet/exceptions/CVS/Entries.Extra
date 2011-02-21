@@ -1,8 +1,0 @@
-/EmailInvalidoException.java///////
-/ErroInternoException.java///////
-/ErroInternoSendMailException.java///////
-/MetodoNaoImplementadoException.java///////
-/ParametroInvalidoException.java///////
-/RegistroJaAssociadoException.java///////
-/RegistroJaCadastradoException.java///////
-/RegistroNaoEncontradoException.java///////
