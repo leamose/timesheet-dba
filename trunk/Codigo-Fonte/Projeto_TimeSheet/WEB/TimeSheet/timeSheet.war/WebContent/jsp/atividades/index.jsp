@@ -73,8 +73,9 @@
 						<html:img src="${contexto}/WebContent/img/novoContratoIcone.png" title="atividade"/>
 					</a>					
 					<a href="#" onclick="javascript:document.forms[0].submit();">
-						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="usuário"/></a>
-					<html:img src="${contexto}/WebContent/img/cadastrarChefia.png" title="chefia"/></a>					
+						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/>
+					</a>
+										
 				    
 					<a href="#" onclick="javascript:sair();">
 				    	<html:img src="${contexto}/WebContent/img/sair.png" alt="sair"/>
