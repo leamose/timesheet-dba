@@ -1,5 +1,6 @@
 package br.com.dba.timesheet.web.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import br.com.dba.timesheet.dominios.Dominio;
+import br.com.dba.timesheet.dominios.ListaDominios;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 import br.com.dba.timesheet.vo.AtividadeVO;
 import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
@@ -44,9 +47,17 @@ public class AtividadesAction extends BaseDispatchAction {
     public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         
-        AtividadesForm formulario = (AtividadesForm) form;
+        try {
+            AtividadesForm formulario = (AtividadesForm) form;
+            
+            ListaDominios listaDominios = new ListaDominios();
         
-        montaListaTipoAtividades(formulario);       
+            formulario.setListaTipoAtividades(listaDominios.getListaTipoAtividades()) ;
+            formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }       
         
         return mapping.findForward("retornoCadastro");      
     }
@@ -68,22 +79,7 @@ public class AtividadesAction extends BaseDispatchAction {
 		atividadeVO.setOutros("Teste");
 		atividadeVO.setObservacoes("Teste Observacao");
 		return atividadeVO;
-	}
-
-	public List<Tipo_AtividadeVO> montaListaTipoAtividades(AtividadesForm formulario) {
-		List<Tipo_AtividadeVO> lista = new ArrayList<Tipo_AtividadeVO>();
-		
-		lista.add(criaTipo_AtividadeVO("Elaboração de artefato de metodologia"));
-		lista.add(criaTipo_AtividadeVO("Validação de artefato de metodologia"));
-		lista.add(criaTipo_AtividadeVO("Ajuste de artefato proveniente da qualidade"));
-		lista.add(criaTipo_AtividadeVO("Correção de artefato de metodologia"));
-		lista.add(criaTipo_AtividadeVO("Atividade de item não mensurável"));
-		lista.add(criaTipo_AtividadeVO("Outras atividades"));
-
-		
-		formulario.setListaTipoAtividades(lista);
-		return lista;
-	}
+	}	
 
 	public Tipo_AtividadeVO criaTipo_AtividadeVO(String descricao) {        
         Tipo_AtividadeVO tipo_AtividadeVO = new Tipo_AtividadeVO();

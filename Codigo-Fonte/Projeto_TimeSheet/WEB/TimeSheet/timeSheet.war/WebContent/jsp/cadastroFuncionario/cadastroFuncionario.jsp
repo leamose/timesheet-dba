@@ -82,43 +82,51 @@
 			    	<div class="boxMensagemS">
 			          	<div class="textoMensagemS">Alguns erros foram encontrados. Por favor, reveja os campos assinalados em vermelho.</div>
 			            <div class="iconeMensagemS">
-			            	<img src="${contexto}/WebContent/img/block.png" width="32" height="32" />
+			            	<html:img src="${contexto}/WebContent/img/block.png" width="32" height="32" />
 			            </div>
 			        </div>
-			    
 			    	<div class="foco" style="width:auto;">
 			   			<div class="label">Nome: *</div>
-			          	<input class="campo" name="" type="text" style="width:750px;" value="" />
+			          	<html:text styleClass="campo" name="form" property="nome" size="122"/>
 					</div>
 				
 					<div class="foco" style="width:880px;">
-			   			<div class="label">Cargo: *</div>
-			          	<input class="campo" name="" type="text" style="width:750px;" value="" />
+			   			<div class="label">Cargo:</div>
+			          	<html:text styleClass="campo" name="form" property="cargo" size="122"/>
 					</div>	
 			    
 			    	<div class="foco">
 		                <div class="label">Hora Trabalho Início:</div>
-		                <input class="campo" name="" type="text" style="width:118px;" />
+		                <html:text styleClass="campo" name="form" property="hora_trabalho_fim"/>
 		            </div>
-			    	<div class="foco" style="width:80px;">
+			    	<div class="foco">
 		                <div class="label">Hora Trabalho Fim:</div>
-		                <input class="campo" name="" type="text" style="width:118px;" />
+		                <html:text styleClass="campo" name="form" property="hora_trabalho_fim"/>
 		            </div>
 			    	<div class="foco">
 		                <div class="label">Hora Almoco Início:</div>
-		                <input class="campo" name="" type="text" style="width:118px;" />
+		                <html:text styleClass="campo" name="form" property="hora_almoco_inicio"/>
 		            </div>
 			    	<div class="foco">
 		                <div class="label">Hora Almoco Fim:</div>
-		                <input class="campo" name="" type="text" style="width:118px;" />
+		               	<html:text styleClass="campo" name="form" property="hora_trabalho_fim"/>
 		            </div>
+		            
+		            <div class="foco">
+			   			<div class="label">Chefe:</div>
+			          	<html:checkbox styleClass="campo" property="chefe" />
+					</div>
+		            <div class="foco">
+			   			<div class="label">Férias:</div>
+			          	<html:checkbox styleClass="campo" property="ferias" />
+					</div>
 			    	
 			    </div>
 			    
 			    <div class="final_formulario">
-			    	<img src="${contexto}/WebContent/img/salvar.png" width="43" height="43" 
+			    	<html:img src="${contexto}/WebContent/img/salvar.png" width="43" height="43" 
 			    		onclick="javascript:document.forms[0].submit();"/>					    	
-			    	<img src="${contexto}/WebContent/img/voltar.png" width="54" height="43" alt="voltar" 
+			    	<html:img src="${contexto}/WebContent/img/voltar.png" width="54" height="43" alt="voltar" 
 			    		onclick="javascript:voltar();"/>
 			    </div>
 						
