@@ -27,9 +27,7 @@ import br.com.dba.timesheet.exceptions.NegocioException;
 /**
  * Objeto que trata as exceções lançadas pela camada de controller.
  *
- * @author União Federativa do Brasil
- * @author Ministério da Justiça
- * @author CGTI
+ * @author Fabio Oliveria de Pinho
  * @version 1.0
  */
 public class MjExceptionHandler extends ExceptionHandler {

@@ -15,15 +15,51 @@
 			function habilitarDiv(div){
 				document.getElementById(div).style.display = '';				
 			}
+			
+			function cadastrarAtividades() {
+				var form = document.forms[0];
+				form.action = '${contexto}/atividade/cadastarAtividade.do'; 
+				form.submit();
+			}
+			
 		</script>
 		
 	</head>
 	<body>
 		<!-- TOPO -->
 		<div id="header">	
-			<div class="barraTextoTopo"></div>		
+			<div class="barraTextoTopo">
+				<table width="71%" cellspacing="0">
+				<tr><th class="h1" colspan="5">PLANEJAMENTO INDIVIDUAL DE ATIVIDADES DIÁRIAS</th></tr>
+					<tr><th colspan="5"><div style="text-align:center;float:center">Cliente: Ministerio da Justiça</div></th></tr>
+					<tr>
+						<th width="35%"><div class="foco">Calendário padrão:</div></th>
+						<td width="12%">8h00</td>
+						<td width="15%">18h00</td>
+						<th width="15%">MÊS:</th>
+						<td>Dezembro</td>						
+					</tr>
+					<tr>
+						<th><div class="foco">Almoço:</div></th>
+						<td> 8h00</td>
+						<td>18h00</td>
+						<th width="10%">Minino: </th>
+						<td>1h</td>
+					</tr>
+					<tr>
+						<th><div class="foco">Total horas no mês:</div></th>
+						<td>176</td>
+						<td>&nbsp;</td>						
+						<th>ANO</th>
+						<td>2010</td>
+					</tr>
+				</table>
+			</div>
 			<div class="barraIcones">
 				<html:form action="/funcionario/cadastarFuncionario" method="post">
+					<a href="#" onclick="javascript:cadastrarAtividades();">
+						<html:img src="${contexto}/WebContent/img/novoContratoIcone.png" title="atividade"/>
+					</a>					
 					<a href="#" onclick="javascript:document.forms[0].submit();">
 						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="usuário"/></a>
 					<html:img src="${contexto}/WebContent/img/cadastrarChefia.png" title="chefia"/></a>					
@@ -33,110 +69,28 @@
 		</div>
 		<!-- FIM TOPO -->
 
+
 		<!-- MIOLO -->
-		<div style="background-color:#fff; background-image:none;height:62%;">	
-		<div class="botoesJanela" ></div>	
-			<html:form action="/atividade/cadastarAtividade.do">
-				<table class="lista" style="margin:2px; padding-left:2px; padding-right:5px;" width="100%" border="0"
-					cellspacing="0" cellpadding="0" >
-					<tr>
-						<th class="h1" width="5%"><center>Data</center></td>
-						<th class="h1" width="5%"><center>Início previsto</center></th>
-						<th class="h1" width="5%"><center>Término previsto</center></th>
-						<th class="h1" width="5%"><center>Horas díarias</center></th>
-						<th class="h1" width="5%"><center>Saldo díario</center></th>
-						<th class="h1" width="10%"><center>OP</center></td>        
-						<th class="h1" width="10%"><center>Metodologia</center></td>        
-						<th class="h1" width="10%"><center>No. Projeto</center></td>        
-						<th class="h1" width="10%"><center>Atividade</center></td>        
-						<th class="h1" width="10%"><center>Produto/Servico</center></td>        
-						<th class="h1" width="10%"><center>Outros</center></td>        
-						<th class="h1" width="10%"><center>Observações</center></td>
-					</tr>
-					<tr> 
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>						        
-					</tr>			     
-				</table>	
-	   		</html:form> 
-	   	</div>   	
-		<!-- FIM MIOLO -->		
-		
-		<div style="background-color:#ece9d8; background-image:none;">
-			<div style="width:100%; height:10px; background-color:#00779e;">
-				<a href="#">
-					<img style="float:right;" src="${contexto}/WebContent/img/setasEx.jpg" width="11" height="10" 
-						onclick="javascript:habilitarDiv('camposAtividades');"/>
-				</a>
-			</div>					
-			<div class="boxBotoesVertical">
-				<img src="${contexto}/WebContent/img/imprimir.png" width="20" height="18" title="imprimir" />
-		   		<img src="${contexto}/WebContent/img/recurso.png" width="20" height="21" title="cadastrar atividade" />
-			</div>
-				
-			<!-- INICIO TEXTAREA -->
-			<div style="width:340px; margin-bottom: 10px;; float:right; display:table-column;">
-				<div class="foco">
-				  	<div class="label">Atividade a ser realizada:</div>
-					<textarea class="campo" name="textarea" style="width:320px; height:50px;" id="textarea" cols="45" rows="2"></textarea>
-				</div>
-				<div class="foco">
-					<div class="label">Observações:</div>
-				  	<textarea class="campo" name="textarea2" style="width:320px; height:50px;" id="textarea2" cols="45" rows="2"></textarea>
-				</div>
-			</div>
-			<!-- FIM TEXTAREA -->	
-			
-			<div class="foco">
-			  	<div class="label">Data Atividade:</div>
-			  	<input class="campoLeitura" name="input12" cols="" rows="" style="width:85px;" />
-			</div>													
-			<div class="foco">
-			  	<div class="label">Dia Atividade:</div>
-			  	<input class="campoLeitura" name="input12" cols="" rows="" style="width:77px;" />
-			</div>															
-			<div class="foco">
-			  	<div class="label">Início Previsto:</div>
-			  	<input class="campoLeitura" name="input3" cols="" rows="" style="width:82px;" />
-			</div>									
-			<div class="foco">
-			  	<div class="label">Termino Previsto:</div>
-			  	<input class="campoLeitura" name="input9" cols="" rows="" style="width:99px;" />
-			</div>															
-			<div class="foco">
-			  	<div class="label">OP:</div>
-			  	<input class="campoLeitura" name="input2" cols="" rows="" style="width:292px;" />
-			</div>							
-			<div class="foco">
-			<div class="label">Metodologia:</div>
-				<input class="campoLeitura" name="input7" cols="" rows="" style="width:80px;" />		  
-			</div>											
-			<div class="foco">
-				<div class="label">Nº Projeto:</div>
-			  	<input class="campoLeitura" name="input5" cols="" rows="" style="width:61px;" />
-			</div>							
-			<div class="foco">
-				<div class="label">Atividade:</div>
-			  	<html:select name="form" property="tipo_atividade_id" styleId="atividades" style="width:150px" 
-			  		styleClass="campo">
-				    <option value=""><fmt:message key="opcao.selecione" /></option>
-					<html:optionsCollection name="form" property="listaAtividades" label="descricao" value="codigo" />
-				</html:select>
-			</div>
-			<div class="foco">
-				<div class="label">Produto/Serviço:</div>
-			  	<input class="campoLeitura" name="input11" cols="" rows="" style="width:95px;" />
-			</div>
-		</div>
+		<div style="background-color:#fff; background-image:none;height:78%;">
+			<div class="botoesJanela" ></div>		
+				<html:form action="/atividade/cadastarAtividade.do">
+					<display:table name="form.listaAtividades" style="width:640px;" class="lista" id="tabela" length="100" pagesize="5" 
+						requestURI="/atividade/inicio.do">
+						<display:column title="Data" />
+						<display:column title="Início previsto"/>
+						<display:column property="data_hora_fim" title="Término previsto"/>
+						<display:column title="Horas díarias"/>
+						<display:column title="Saldo díario"/>											
+						<display:column property="op_id" title="OP"/>
+						<display:column property="metodologia_id" title="Metodologia"/>
+						<display:column property="projeto_id" title="No. Projeto"/>
+						<display:column property="atividade_original_id" title="Atividade"/>
+						<display:column title="Produto/Servico"/>
+						<display:column title="Outros"/>
+						<display:column title="Observações"/>
+					</display:table>
+				</html:form>
+		</div>   	
+		<!-- FIM MIOLO -->
 	</body>
 </html>

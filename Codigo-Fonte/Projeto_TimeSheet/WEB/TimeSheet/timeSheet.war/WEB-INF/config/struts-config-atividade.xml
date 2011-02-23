@@ -21,7 +21,7 @@
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retornoCadastro" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="retornoCadastro" path="/WebContent/jsp/cadastroAtividades/cadastroAtividades.jsp"/>
 		</action>
 	    <action path="/atividade/salvar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"

@@ -29,9 +29,7 @@ import br.com.dba.timesheet.util.Sessao;
 /**
  * Classe base para actions.
  *
- * @author União Federativa do Brasil
- * @author Ministério da Justiça
- * @author CGTI
+ * @author Fabio Oliveira de Pinho
  * @version 1.0
  */
 public abstract class BaseDispatchAction extends Action {
