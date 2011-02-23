@@ -15,6 +15,7 @@ import br.com.dba.timesheet.vo.AtividadeVO;
 import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
 
+
 public class AtividadesAction extends BaseDispatchAction {
 	
 	public ActionForward inicio(ActionMapping mapping, ActionForm form,
@@ -22,42 +23,54 @@ public class AtividadesAction extends BaseDispatchAction {
 		
 		AtividadesForm formulario = (AtividadesForm) form;
 
-		montaListaTipoAtividades(formulario);
+		List<AtividadeVO> listaAtividades = montaListaAtividades(formulario);
+		
+		
+		request.setAttribute("listaAtividades", listaAtividades);
 		
 		return mapping.findForward("cadastro");		
 	}
+	
+	public ActionForward salvar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retornoSalvar");        
+    }
 
-	public AtividadeVO criaTipo_AtividadeVO() {
+    public ActionForward voltar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("voltar");       
+    }
+    
+    public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        AtividadesForm formulario = (AtividadesForm) form;
+        
+        montaListaTipoAtividades(formulario);       
+        
+        return mapping.findForward("retornoCadastro");      
+    }
+
+	public AtividadeVO criaAtividadeVO() {
 		
 		AtividadeVO atividadeVO = new AtividadeVO();
 		
-		atividadeVO.setAlteracao_data_avaliacao();
-		atividadeVO.setAtividade_original_id();
-		atividadeVO.setCliente_id();
-		atividadeVO.setData_hora_fim();
-		atividadeVO.setData_hora_inicio();
-		atividadeVO.setFuncionario_id();
-		atividadeVO.setMetodologia_id();
-		atividadeVO.setObservacao();
-		atividadeVO.setOp_id();
-		atividadeVO.setProduto_servico_id();
-		atividadeVO.setTipo_atividade_id();
-		
-		
-		return tipo_AtividadeVO;
-	}
-	
-	public ActionForward cadastarAtividade(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		
-		AtividadesForm formulario = (AtividadesForm) form;
-		
-		montaListaTipoAtividades(formulario);		
-		
-		return mapping.findForward("retornoCadastro");		
+		atividadeVO.setData("Seg 23/2/2011");
+		atividadeVO.setDescricaoAtividade("Elaboracao e programacao do projeto Timesheet");
+		atividadeVO.setInicioPrevisto("08:00");
+		atividadeVO.setTerminoPrevisto("18:00");
+		atividadeVO.setHorasDiarias("8");
+		atividadeVO.setSaldoDiario("8");
+		atividadeVO.setDescricaoOp("DCX003458 - Cliente");
+		atividadeVO.setDescricaoMetodologia("MP");
+		atividadeVO.setNumeroProjeto("123");
+		atividadeVO.setProdutoServico("3");
+		atividadeVO.setOutros("Teste");
+		atividadeVO.setObservacoes("Teste Observacao");
+		return atividadeVO;
 	}
 
-	public void montaListaTipoAtividades(AtividadesForm formulario) {
+	public List<Tipo_AtividadeVO> montaListaTipoAtividades(AtividadesForm formulario) {
 		List<Tipo_AtividadeVO> lista = new ArrayList<Tipo_AtividadeVO>();
 		
 		lista.add(criaTipo_AtividadeVO("Elaboração de artefato de metodologia"));
@@ -69,30 +82,45 @@ public class AtividadesAction extends BaseDispatchAction {
 
 		
 		formulario.setListaTipoAtividades(lista);
+		return lista;
 	}
 
-	public void montaListaAtividades(AtividadesForm formulario) {
+	public Tipo_AtividadeVO criaTipo_AtividadeVO(String descricao) {        
+        Tipo_AtividadeVO tipo_AtividadeVO = new Tipo_AtividadeVO();
+        tipo_AtividadeVO.setDescricao(descricao);
+        
+        return tipo_AtividadeVO;
+    }
+
+    public List<AtividadeVO> montaListaAtividades(AtividadesForm formulario) {
 		List<AtividadeVO> lista = new ArrayList<AtividadeVO>();
 		
-		lista.add(criaTipo_AtividadeVO("Elaboração de artefato de metodologia"));
-		lista.add(criaTipo_AtividadeVO("Validação de artefato de metodologia"));
-		lista.add(criaTipo_AtividadeVO("Ajuste de artefato proveniente da qualidade"));
-		lista.add(criaTipo_AtividadeVO("Correção de artefato de metodologia"));
-		lista.add(criaTipo_AtividadeVO("Atividade de item não mensurável"));
-		lista.add(criaTipo_AtividadeVO("Outras atividades"));
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
 		
 		
-		formulario.setListaTipoAtividades(lista);
-	}
-	
-	public ActionForward salvar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retornoSalvar");		
-	}
-
-	public ActionForward voltar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("voltar");		
+		formulario.setListaAtividades(lista);
+		return lista;
 	}
 	
 }
