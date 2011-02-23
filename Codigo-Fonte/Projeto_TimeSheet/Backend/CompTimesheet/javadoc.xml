@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="javadoc">
+<target name="javadoc">
+<javadoc access="public" author="true" classpath="C:\java\lib\hibernate2.1.6\hibernate2.jar;C:\java\eclipse\plugins\org.junit_3.8.1\junit.jar;C:\java\lib\jboss\jbossall-client.jar;C:\java\lib\jdbc\mssql\jtds-1.2.jar;C:\java\lib\corporativo\MJSegurancaCliente2.jar;C:\java\lib\hibernate2.1.6\odmg-3.0.jar;C:\java\lib\corporativo\MJUorgCliente.jar;C:\java\lib\hibernate2.1.6\dom4j-1.4.jar;C:\java\lib\hibernate2.1.6\ehcache-0.9.jar;C:\java\lib\hibernate2.1.6\c3p0-0.8.4.5.jar;C:\java\lib\corporativo\MJ_CorporativoCliente.jar;C:\java\lib\hibernate2.1.6\cglib-full-2.0.2.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="br.gov.mj.recursoshumanos.colaborador.ejb,br.gov.mj.recursoshumanos.colaborador.exceptions,br.gov.mj.recursoshumanos.colaborador.pojo,br.gov.mj.recursoshumanos.colaborador.testes,br.gov.mj.recursoshumanos.colaborador.servicos,br.gov.mj.recursoshumanos.colaborador.pojo.base,br.gov.mj.recursoshumanos.colaborador.pojo.dao,br.gov.mj.recursoshumanos.colaborador.dominios" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
+</target>
+</project>
