@@ -24,11 +24,11 @@ text-align:center;
 
 
 
-#header { width:100%; height:100px; margin:auto; background-repeat:no-repeat; background-position:top left; }
+#header { width:100%; height:90px; margin:auto; background-repeat:no-repeat; background-position:top left; }
 
 #headerModulo { width:770px; height:130px; margin:auto; background-repeat:no-repeat; background-position:top left; *margin-bottom:0;/*hack para IE7*/ }
 
-.barraTextoTopo {width:700px; margin-right:10px; height:30px; text-align:right; display:block;  margin-top:5px;  float:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#FFF; }
+.barraTextoTopo {width:700px; margin-right:10px; height:20px; text-align:right; display:block;  margin-top:5px;  float:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#FFF; }
 
 .barraIcones {width:970px; margin-right:10px; height:30px; text-align:right; display:block;  margin-top:30px; letter-spacing:10px; float:right; }
 .barraIcones img {cursor:pointer; }
@@ -44,7 +44,7 @@ img {border:none;}
 
 .formulario { width:100%px; background-color:#FFF; display: table-cell; padding-top:10px; padding-bottom:20px; }
 
-.final_formulario { width:100%; height:55px; border-top:1px solid #00779e; background-image:url(../img/final_form.png); text-align:right;  }
+.final_formulario { width:100%; height:55px; border-top:1px solid #00779e; text-align:right;  }
 
 .final_formulario img{margin-top:5px; margin-right:20px; cursor:pointer; text-decoration:none; }
 

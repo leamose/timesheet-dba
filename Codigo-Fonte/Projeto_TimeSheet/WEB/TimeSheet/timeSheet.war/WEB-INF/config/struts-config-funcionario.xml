@@ -21,13 +21,13 @@
 				type="br.com.dba.timesheet.web.action.FuncionarioAction"
 				name="funcionarioForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retornoSalvar" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="retornoSalvar" path="/atividade/inicio.do"/>
 		</action>
 	    <action path="/funcionario/voltar" 
 				type="br.com.dba.timesheet.web.action.FuncionarioAction"
 				name="funcionarioForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="voltar" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="voltar" path="/atividade/inicio.do"/>
 		</action>
 
 	</action-mappings>	
