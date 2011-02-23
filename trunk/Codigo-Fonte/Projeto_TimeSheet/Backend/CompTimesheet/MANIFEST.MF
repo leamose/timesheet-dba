@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: Ministerio da Justica - CGTI/DIPROS
+Deploy-Priority: 4500000
+build-time: ${build.time}
+build-version: ${build.version}
+

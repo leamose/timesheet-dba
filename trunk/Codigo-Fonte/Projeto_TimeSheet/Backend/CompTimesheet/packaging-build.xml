@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Packaging Generator" default="_packaging_generation_">
+<target name="_packaging_generation_" depends="N65540,N65557"/>
+<target name="N65540" description="MJColaborador.jar">
+<mkdir dir="dist"/>
+	<manifest file="MANIFEST.MF" mode="replace">
+		<attribute name="Deploy-Priority" value="450" />	
+		<attribute name="Created-By" value="Ministerio da Justica - CGTI/DIPROS" />	
+		<attribute name="build-time" value="${build.time}" />	  	
+		<attribute name="build-version" value="${build.version}" />	  	
+	</manifest>   
+	
+<jar destfile="dist/MJColaborador.jar" manifest="MANIFEST.MF">
+<zipfileset dir="bin" includes="**/*.*" excludes="**/testes/* **/jndi.properties"/>
+</jar>
+</target>
+	
+<target name="N65557" description="MJColaboradorCliente.jar">
+<mkdir dir="dist"/>
+<jar destfile="dist/MJColaboradorCliente.jar" manifest="MANIFEST.MF" >
+<zipfileset dir="bin" includes="**/pojo/**/*.class **/servicos/**/*.class **/ejb/**/*.class  **/exceptions/*.class **/dominios/*.class **/dominios/**/*.properties" excludes="**/pojo/**/*DAO.* **/ejb/**/Abstract*Facade.class **/ejb/**/*FacadeSession.class"/>
+</jar>
+	<!-- Apaga o manifest -->    	
+	<delete file="MANIFEST.MF" />
+</target>
+</project>

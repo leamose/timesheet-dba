@@ -1,0 +1,34 @@
+<project default="dist">
+
+        <target name="init">
+        		<property name="lib.dir" value="/java/lib/corporativo/"/>
+        </target>
+        <target name="dist" depends="init">
+        	<!-- Copia o jar gerado para publicação -->
+        	<copy todir="${deployDir}/dist" >
+        		<fileset dir="${basedir}/dist">
+        			<include name="**/*"/>
+        		</fileset>
+        	</copy>
+            <!-- Copia o jar gerado para o diretório LIB do servidor -->
+            <copy todir="${lib.dir}" >
+                <fileset dir="${basedir}/dist/">
+                    <include name="**/*Cliente.*"/>
+                </fileset>
+            </copy>
+            <!-- Copia o javadoc gerado para publicação -->
+            <copy todir="${deployDir}/doc" >
+                <fileset dir="${basedir}/doc">
+                    <include name="**/*"/>
+                </fileset>
+            </copy>
+            <!-- Copia o Relatório de teste gerado para publicação -->
+            <copy todir="${deployDir}/testreport" >
+                <fileset dir="${basedir}/testreport">
+                    <include name="**/*"/>
+                </fileset>
+            </copy>
+        	<!-- Coloca o novo JAR no CVS -->
+        	<cvs cvsroot=":pserver:anthill@cvsdesen:/var/cvsroot" command="commit -m 'commit by anthill' -f MJColaboradorCliente.jar" dest="${lib.dir}" />
+        </target>
+</project>
