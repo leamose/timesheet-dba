@@ -8,7 +8,10 @@
 		<link href="${contexto}/WebContent/css/Geral.css" rel="stylesheet" type="text/css" />
 		<link href="${contexto}/WebContent/css/default.css" rel="stylesheet" type="text/css" />
 		<link href="${contexto}/WebContent/css/mac_os_x.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="css/tooltip.css" media="screen"/>		
+		<link type="text/css" rel="stylesheet" href="${contexto}/WebContent/css/calendario.css"/>
+		<link rel="stylesheet" href="css/tooltip.css" media="screen"/>
+		<script type="text/javascript" src="${contexto}/WebContent/js/jquery-1.4.2.js"></script>
+		
 		<title>Documento sem título</title>
 		
 		<script type="text/javascript">
@@ -28,14 +31,16 @@
 				form.submit();
 			}
 			
+			
 		</script>
-		
+
 	</head>
 	<body>
-		<!-- TOPO -->
+	
+	<!-- TOPO -->
 		<div id="header">	
 			<div class="barraTextoTopo">
-				<table width="71%" cellspacing="0">
+				<table width="71%" cellpadding="0">
 					<tr>
 						<th colspan="5" align="left">PLANEJAMENTO INDIVIDUAL DE ATIVIDADES DIÁRIAS</th>
 					</tr>
@@ -75,8 +80,6 @@
 					<a href="#" onclick="javascript:document.forms[0].submit();">
 						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/>
 					</a>
-										
-				    
 					<a href="#" onclick="javascript:sair();">
 				    	<html:img src="${contexto}/WebContent/img/sair.png" alt="sair"/>
 				    </a>
@@ -85,10 +88,17 @@
 		</div>
 		<!-- FIM TOPO -->
 
-
 		<!-- MIOLO -->
 		<div style="background-color:#fff; background-image:none;height:84%;">
-			<div class="botoesJanela" ></div>		
+			<div class="botoesJanela">
+			
+				<!-- DATA DO CALENDARIO -->
+				<form action="">	
+					<div class="foco">DATA DA ATIVIDADE: </div>
+					<input onclick="ds_sh(this);" name="date" readonly="readonly" style="cursor: text" size="8"/>				
+				</form>
+				
+			</div>					
 				<html:form action="/atividade/inicio.do">
 					<display:table name="${listaAtividades}" style="width:98%;" class="lista" id="tabela" 
 						length="100" pagesize="15" requestURI="/atividade/inicio.do" cellspacing="0">
@@ -114,5 +124,16 @@
 				</html:form>
 		</div>   	
 		<!-- FIM MIOLO -->
+
+		<!-- INICIO CALENDARIO -->
+		<table class="ds_box" cellpadding="0" cellspacing="0" id="ds_conclass" style="display: none;">
+			<tr>
+				<td id="ds_calclass"></td>
+			</tr>
+		</table>
+		
+		<script type="text/javascript" src="${contexto}/WebContent/js/calendario.js"></script>
+		<!-- FIM CALENDARIO -->
+		
 	</body>
 </html>
