@@ -33,24 +33,39 @@ public class AtividadesAction extends BaseDispatchAction {
 		return mapping.findForward("cadastro");		
 	}
 	
-	public ActionForward salvar(ActionMapping mapping, ActionForm form,
+	public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retornoSalvar");        
+		return mapping.findForward("retorno");        
+	}
+	
+	public ActionForward salvar(ActionMapping mapping, ActionForm form,
+	        HttpServletRequest request, HttpServletResponse response) {
+	    return mapping.findForward("retorno");        
+	}
+
+	public ActionForward confirmaSalvar(ActionMapping mapping, ActionForm form,
+	        HttpServletRequest request, HttpServletResponse response) {
+	    return mapping.findForward("retorno");        
 	}
 	
 	public ActionForward excluir(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retornoExcluir");        
+		return mapping.findForward("retorno");        
+	}
+
+	public ActionForward confirmaExcluir(ActionMapping mapping, ActionForm form,
+	        HttpServletRequest request, HttpServletResponse response) {
+	    return mapping.findForward("retorno");        
 	}
 	
 	public ActionForward alterar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retornoAlterar");        
+		return mapping.findForward("retorno");        
 	}
 	
 	public ActionForward detalhar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retornoDetalhar");        
+		return mapping.findForward("retorno");        
 	}
 
     public ActionForward voltar(ActionMapping mapping, ActionForm form,
@@ -60,7 +75,7 @@ public class AtividadesAction extends BaseDispatchAction {
     
     public ActionForward consultar(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retornoConsultar");       
+        return mapping.findForward("retorno");       
     }
     
     public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,

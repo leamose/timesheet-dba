@@ -2,6 +2,12 @@ function habilitarDiv(div){
 	document.getElementById(div).style.display = '';				
 }
 
+function operacaoCancelada() {
+	var form = document.forms[0];
+	form.action = contexto + '/atividade/operacaoCancelada.do'; 
+	form.submit();
+}
+
 function cadastrarAtividades() {
 	var form = document.forms[0];
 	form.action = contexto + '/atividade/cadastrarAtividade.do'; 
