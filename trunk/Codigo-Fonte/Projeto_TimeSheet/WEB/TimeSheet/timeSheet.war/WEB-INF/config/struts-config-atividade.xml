@@ -23,6 +23,13 @@
 				input="/WebContent/jsp/index.html">
 			<forward name="retornoCadastro" path="/WebContent/jsp/cadastroAtividades/cadastroAtividades.jsp"/>
 		</action>
+		
+		 <action path="/atividade/consultar" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retornoConsultar" path="/atividade/inicio.do"/>
+		</action>
 	    
 	    <action path="/atividade/detalhar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"

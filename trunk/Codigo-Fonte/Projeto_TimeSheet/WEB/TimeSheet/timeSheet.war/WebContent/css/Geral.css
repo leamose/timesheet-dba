@@ -24,7 +24,7 @@ text-align:center;
 
 
 
-#header { width:100%; height:90px; margin:auto; background-repeat:no-repeat; background-position:top left; }
+#header { width:100%; height:100px; margin:auto; background-repeat:no-repeat; background-position:top left; }
 
 #headerModulo { width:770px; height:130px; margin:auto; background-repeat:no-repeat; background-position:top left; *margin-bottom:0;/*hack para IE7*/ }
 
@@ -42,7 +42,7 @@ img {border:none;}
 
 .infoUsuario {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; float:right; margin-right:20px; margin-top:10px;}
 
-.formulario { width:100%px; background-color:#FFF; display: table-cell; padding-top:10px; padding-bottom:20px; }
+.formulario { width:100%; background-color:#FFF; display: table-cell; padding-top:10px; padding-bottom:20px; }
 
 .final_formulario { width:100%; height:55px; border-top:1px solid #00779e; text-align:right;  }
 
@@ -63,7 +63,7 @@ img {border:none;}
 .botoesExpan a:active {text-decoration:none; color:#666;}
 .botoesExpan a:visited {text-decoration:none; color:#666;}
 
-.botoesJanela{width:100%; height:25px; background-image:url(../img/bgBotoesJanela.jpg); background-repeat:repeat-y; background-position:left; margin-bottom:5px; text-align:left; padding-top:3px;}
+.botoesJanela{width:100%; height:30px; background-image:url(../img/bgBotoesJanela.jpg); background-repeat:repeat-y; background-position:left; margin-bottom:5px; text-align:left; padding-top:3px;}
 
 .botoesJanela2{width:600px; height:30px; background-image:url(../img/bgBotoesJanela.jpg); background-repeat:repeat-y; background-position:left; margin-bottom:5px; text-align:left; padding-top:3px;}
 

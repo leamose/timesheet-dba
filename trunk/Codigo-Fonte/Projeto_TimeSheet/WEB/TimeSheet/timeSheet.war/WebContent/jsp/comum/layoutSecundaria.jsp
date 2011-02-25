@@ -11,7 +11,7 @@
 		<link href="${contexto}/WebContent/css/mac_os_x.css" rel="stylesheet" type="text/css" />
 		<link type="text/css" rel="stylesheet" href="${contexto}/WebContent/css/calendario.css"/>
 		<link rel="stylesheet" href="${contexto}/WebContent/css/tooltip.css" media="screen"/>
-		<script type="text/javascript" src="${contexto}/WebContent/js/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/geral.js"></script>
 
 		<script type="text/javascript">
 			var contexto = '${contexto}';

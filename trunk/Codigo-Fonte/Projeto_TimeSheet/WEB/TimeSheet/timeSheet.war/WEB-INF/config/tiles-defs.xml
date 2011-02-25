@@ -14,7 +14,7 @@
         <put name="tituloPaginas" value="" />
         <put name="tituloCabecalho" value="" />        
     </definition>   
-    <definition name=".secundarias" template="/WebContent/jsp/comum/layoutSecundarias.jsp">
+    <definition name=".secundarias" template="/WebContent/jsp/comum/layoutSecundaria.jsp">
         <put name="title" value="SISRH" />     
         <put name="cabecalho" value="/WebContent/jsp/comum/cabecalho.jsp"/>   
         <put name="imagemTopo" value="" />

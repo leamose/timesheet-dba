@@ -10,18 +10,31 @@
 			<div class="botoesJanela">
 			
 				<!-- DATA DO CALENDARIO -->
-				<form action="">	
-					<div class="foco">DATA DA ATIVIDADE: </div>
-					<input onclick="ds_sh(this);" name="date" readonly="readonly" style="cursor: text" size="8"/>				
+				<form action="">
+					<table cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="150px;">&nbsp;</td>
+							<th valign="middle">
+								DATA DA ATIVIDADE:
+							</td>
+							<td valign="middle">
+								<input onclick="ds_sh(this);" name="date" readonly="readonly" style="cursor: text" size="8"/>
+							</td>
+							<td>	
+								<html:img src="${contexto}/WebContent/img/consultar.jpg" title="aprovado" onclick="javascript:consultarAtividade();"/>
+							</td>
+						</tr>
+					</table>	
+							
 				</form>
 				
 			</div>					
 				<html:form action="/atividade/inicio.do">
 					<display:table name="${listaAtividades}" style="width:98%;" class="lista" id="tabela" 
-						length="100" pagesize="15" requestURI="/atividade/inicio.do" cellspacing="0">
+						length="100" pagesize="25" requestURI="/atividade/inicio.do" cellspacing="0">
 						<display:column style="width:4%;">
-							<img src="${contexto}/WebContent/img/inativo.png" title="aprovado"/></a>
-							<img src="${contexto}/WebContent/img/ativo.png" title="aprovado"/></a>
+							<html:img src="${contexto}/WebContent/img/inativo.png" title="aprovado"/>
+							<html:img src="${contexto}/WebContent/img/ativo.png" title="aprovado"/>
 						</display:column>						
 						<display:column property="data" title="Data"/>
 						<display:column property="inicioPrevisto" title="Início"/>

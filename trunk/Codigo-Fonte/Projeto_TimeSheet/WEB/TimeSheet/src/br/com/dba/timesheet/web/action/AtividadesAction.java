@@ -11,11 +11,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import br.com.dba.timesheet.dominios.Dominio;
 import br.com.dba.timesheet.dominios.ListaDominios;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 import br.com.dba.timesheet.vo.AtividadeVO;
-import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
+//import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
 
 
@@ -35,13 +34,33 @@ public class AtividadesAction extends BaseDispatchAction {
 	}
 	
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retornoSalvar");        
-    }
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("retornoSalvar");        
+	}
+	
+	public ActionForward excluir(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("retornoExcluir");        
+	}
+	
+	public ActionForward alterar(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("retornoAlterar");        
+	}
+	
+	public ActionForward detalhar(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("retornoDetalhar");        
+	}
 
     public ActionForward voltar(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("voltar");       
+    }
+    
+    public ActionForward consultar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retornoConsultar");       
     }
     
     public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,
@@ -81,16 +100,17 @@ public class AtividadesAction extends BaseDispatchAction {
 		return atividadeVO;
 	}	
 
-	public Tipo_AtividadeVO criaTipo_AtividadeVO(String descricao) {        
-        Tipo_AtividadeVO tipo_AtividadeVO = new Tipo_AtividadeVO();
-        tipo_AtividadeVO.setDescricao(descricao);
-        
-        return tipo_AtividadeVO;
-    }
-
     public List<AtividadeVO> montaListaAtividades(AtividadesForm formulario) {
 		List<AtividadeVO> lista = new ArrayList<AtividadeVO>();
 		
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
+		lista.add(criaAtividadeVO());
 		lista.add(criaAtividadeVO());
 		lista.add(criaAtividadeVO());
 		lista.add(criaAtividadeVO());
