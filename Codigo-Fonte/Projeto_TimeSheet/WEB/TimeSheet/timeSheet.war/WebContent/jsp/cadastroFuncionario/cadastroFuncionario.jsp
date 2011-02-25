@@ -7,7 +7,7 @@
 		<div style="background-color:#fff; background-image:none;height:84%;">
 		<div class="botoesJanela" ></div>
 			<html:form action="/funcionario/salvar" method="post">
-			    <div class="formulario" style="height:450px">					    						
+			    <div class="formulario" style="height:400px">					    						
 					<!-- Espaco para mensagens -->
 			    	<div class="boxMensagemS">
 			          	<div class="textoMensagemS">Alguns erros foram encontrados. Por favor, reveja os campos assinalados em vermelho.</div>
