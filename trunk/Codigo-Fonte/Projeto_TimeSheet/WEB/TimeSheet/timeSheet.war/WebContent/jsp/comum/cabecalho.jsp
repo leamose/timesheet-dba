@@ -1,5 +1,6 @@
 <%@include file="/WebContent/jsp/comum/Global.jspf"%>
 
+
 <!-- TOPO -->
 	<div id="header">	
 		<div class="barraTextoTopo">
@@ -61,9 +62,9 @@
 		</div>
 		<div class="barraIcones">
 			<html:form action="/funcionario/cadastarFuncionario" method="post">
-				<a href="#" onclick="javascript:cadastrarAtividades();">
+				<a href="#" onclick="javascript:open_popPp();">
 					<html:img src="${contexto}/WebContent/img/novoContratoIcone.png" title="atividade"/></a>					
-				<a href="#" onclick="javascript:document.forms[0].submit();">
+				<a href="#" onclick="javascript:open_popPpFuncionario();">
 					<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/></a>
 				<a href="#" onclick="javascript:sair();">
 			    	<html:img src="${contexto}/WebContent/img/sair.png" alt="sair"/>

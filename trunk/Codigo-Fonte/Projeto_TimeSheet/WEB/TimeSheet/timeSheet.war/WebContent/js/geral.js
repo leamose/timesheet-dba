@@ -50,42 +50,41 @@ function voltar() {
 	form.submit();
 }
 
-/***********************************************
-* Collapsible Frames script- © Dynamic Drive (www.dynamicdrive.com)
-* This notice must stay intact for use
-* Visit http://www.dynamicdrive.com/ for full source code
-***********************************************/
-
-var columntype=""
-var defaultsetting=""
-
-function getCurrentSetting(){
-if (document.body)
-	return (document.body.cols)? document.body.cols : document.body.rows
+function aprovarAtividade() {
+	var form = document.forms[0];
+	form.action = contexto + '/atividade/aprovar.do'; 
+	form.submit();
 }
 
-function setframevalue(coltype, settingvalue){
-	if (coltype=="rows")
-		document.body.rows=settingvalue
-	else if (coltype=="cols")
-		document.body.cols=settingvalue
+function reprovarAtividade() {
+	var form = document.forms[0];
+	form.action = contexto + '/atividade/reprovar.do'; 
+	form.submit();
 }
 
-function resizeFrame(contractsetting){
-	if (getCurrentSetting()!=defaultsetting)
-		setframevalue(columntype, defaultsetting)
-	else
-		setframevalue(columntype, contractsetting)
+function returnSalvarPopUp() {
+	alert("entrei")
+	var form = document.forms[0];
+	form.action = contexto + '/atividade/inicio.do';
+	form.submit();
 }
 
-function init(){
-	if (!document.all && !document.getElementById) return
-	if (document.body!=null){
-		columntype=(document.body.cols)? "cols" : "rows"
-		defaultsetting=(document.body.cols)? document.body.cols : document.body.rows
-	}
-	else
-		setTimeout("init()",100)
+function confirmaOperacao() {
+	window.parent.hidePopWin(true);	
+}	
+			
+function cancelaOperacao() {
+	window.parent.hidePopWin(false);
 }
 
-setTimeout("init()",100)
+function open_popPp() {
+	var largura = 730;
+	var altura = 353;
+	parent.showPopWin(contexto + "/atividade/abrePopUpCadastrarAtividade.do", largura, altura, "100", "Cadastrar Atividade",0, returnSalvarPopUp);
+}
+
+function open_popPpFuncionario() {
+	var largura = 730;
+	var altura = 257;
+	parent.showPopWin(contexto + "/funcionario/abrePopUpCadastrarFuncionario.do", largura, altura, "100", "Cadastrar Funcionario",0, returnSalvarPopUp);
+}

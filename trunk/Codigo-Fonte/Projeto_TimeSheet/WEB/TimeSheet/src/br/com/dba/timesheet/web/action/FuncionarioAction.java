@@ -18,12 +18,15 @@ public class FuncionarioAction extends BaseDispatchAction {
 	
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retornoSalvar");		
+		return mapping.findForward("retorno");		
 	}
+	
+	public ActionForward abrePopUpCadastrarFuncionario(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+	    
+	    
 
-	public ActionForward voltar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("voltar");		
-	}
+	    return mapping.findForward("retorno");       
+    }
 	
 }

@@ -16,7 +16,7 @@
     </definition>   
     <definition name=".secundarias" template="/WebContent/jsp/comum/layoutSecundaria.jsp">
         <put name="title" value="SISRH" />     
-        <put name="cabecalho" value="/WebContent/jsp/comum/cabecalho.jsp"/>   
+        <put name="cabecalho" value=""/>   
         <put name="imagemTopo" value="" />
         <put name="javascript" value="" />
         <put name="corpo" value="" />

@@ -14,21 +14,24 @@
 	    <action path="/funcionario/cadastarFuncionario" 
 				type="br.com.dba.timesheet.web.action.FuncionarioAction"
 				name="funcionarioForm" 
-				input="/WebContent/jsp/index.html">
+				input="/WebContent/jsp/index.html"
+				scope="request">
 			<forward name="cadastro" path="/WebContent/jsp/cadastroFuncionario/cadastroFuncionario.jsp"/>
 		</action>
 	    <action path="/funcionario/salvar" 
 				type="br.com.dba.timesheet.web.action.FuncionarioAction"
 				name="funcionarioForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retornoSalvar" path="/atividade/inicio.do"/>
+			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
-	    <action path="/funcionario/voltar" 
+		<action path="/funcionario/abrePopUpCadastrarFuncionario" 
 				type="br.com.dba.timesheet.web.action.FuncionarioAction"
-				name="funcionarioForm" 
-				input="/WebContent/jsp/index.html">
-			<forward name="voltar" path="/atividade/inicio.do"/>
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html"
+				scope="request">
+			<forward name="retorno" path="/WebContent/jsp/cadastroFuncionario/popUpCadastroFuncionario.jsp"/>
 		</action>
+		
 
 	</action-mappings>	
 	    

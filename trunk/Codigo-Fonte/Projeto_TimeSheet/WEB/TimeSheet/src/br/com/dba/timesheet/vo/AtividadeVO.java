@@ -23,6 +23,7 @@ public class AtividadeVO {
     public String descricaoProjeto;
     public String outros;
     public String observacoes;
+    public String ultimaAtividade;
     /**
      * @return the data
      */
@@ -178,6 +179,18 @@ public class AtividadeVO {
      */
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+    /**
+     * @return the ultimaAtividade
+     */
+    public String getUltimaAtividade() {
+        return ultimaAtividade;
+    }
+    /**
+     * @param ultimaAtividade the ultimaAtividade to set
+     */
+    public void setUltimaAtividade(String ultimaAtividade) {
+        this.ultimaAtividade = ultimaAtividade;
     }
     
        
