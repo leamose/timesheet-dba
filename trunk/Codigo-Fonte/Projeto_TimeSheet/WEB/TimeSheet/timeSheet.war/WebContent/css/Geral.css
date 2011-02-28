@@ -89,7 +89,7 @@ img {border:none;}
 
 .botoesMeio { float:right; padding-right:10px; padding-top:10px; padding-bottom:20px;}
 
-.boxBotoesVertical {width:30px; height:100px; text-align:center; float:right; margin-left:10px;}
+.boxBotoesVertical {width:30px; height:130px; text-align:center; float:right; margin-left:10px;}
 .boxBotoesVertical img{ margin-right:2px; margin-top:5px;}
 
 .boxImportante {width:100%; background-color:#ece9d8; display:table-cell; padding:10px; /*border-bottom:1px solid #00779e;*/ }
