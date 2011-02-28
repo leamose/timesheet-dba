@@ -16,6 +16,7 @@ import br.com.dba.timesheet.struts.BaseDispatchAction;
 import br.com.dba.timesheet.vo.AtividadeVO;
 //import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
+import br.com.dba.timesheet.web.form.FuncionarioForm;
 
 
 public class AtividadesAction extends BaseDispatchAction {
@@ -78,6 +79,49 @@ public class AtividadesAction extends BaseDispatchAction {
         return mapping.findForward("retorno");       
     }
     
+    public ActionForward aprovar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retorno");       
+    }
+    
+    public ActionForward confirmaAprovar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retorno");       
+    }
+    
+    public ActionForward reprovar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retorno");       
+    }
+    
+    public ActionForward confirmaReprovar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retorno");       
+    }
+    
+    public ActionForward abrePopUpCadastrarFuncionario(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("retorno");       
+    }
+
+    public ActionForward abrePopUpCadastrarAtividade(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        try {
+            AtividadesForm formulario = (AtividadesForm) form;
+            
+            ListaDominios listaDominios = new ListaDominios();
+        
+            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
+            formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }       
+        
+        return mapping.findForward("retorno");       
+    }
+    
     public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         
@@ -93,7 +137,7 @@ public class AtividadesAction extends BaseDispatchAction {
             e.printStackTrace();
         }       
         
-        return mapping.findForward("retornoCadastro");      
+        return mapping.findForward("retorno");      
     }
 
 	public AtividadeVO criaAtividadeVO() {
@@ -101,7 +145,7 @@ public class AtividadesAction extends BaseDispatchAction {
 		AtividadeVO atividadeVO = new AtividadeVO();
 		
 		atividadeVO.setData("Seg 23/2/2011");
-		atividadeVO.setDescricaoAtividade("Elaboracao e programacao do projeto Timesheet");
+		atividadeVO.setDescricaoAtividade("Ajuste de artefato proveniente da qualidade");
 		atividadeVO.setInicioPrevisto("08:00");
 		atividadeVO.setTerminoPrevisto("18:00");
 		atividadeVO.setHorasDiarias("8");
@@ -112,6 +156,8 @@ public class AtividadesAction extends BaseDispatchAction {
 		atividadeVO.setProdutoServico("3");
 		atividadeVO.setOutros("Teste");
 		atividadeVO.setObservacoes("Teste Observacao");
+		atividadeVO.setUltimaAtividade("23/2/2011 - Fabio Pinho");
+		
 		return atividadeVO;
 	}	
 
@@ -150,7 +196,7 @@ public class AtividadesAction extends BaseDispatchAction {
 		lista.add(criaAtividadeVO());
 		
 		
-		formulario.setListaAtividades(lista);
+		formulario.setListaAtividadesVO(lista);
 		return lista;
 	}
 	

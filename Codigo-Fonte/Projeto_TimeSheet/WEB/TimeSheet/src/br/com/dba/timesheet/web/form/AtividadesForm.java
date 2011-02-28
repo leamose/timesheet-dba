@@ -27,7 +27,8 @@ public class AtividadesForm extends ValidatorForm {
 	private Boolean alteracao_data_avaliacao;	
 	private List<Dominio> listaTipoAtividades;
 	private List<Dominio> listaDiasDaSemana;
-	private List<AtividadeVO> listaAtividades;
+	private List<AtividadeVO> listaAtividadesVO;
+	private List<Dominio> listaAtividades;
 	
 	public String data;
 	public String diaAtividade;
@@ -43,12 +44,26 @@ public class AtividadesForm extends ValidatorForm {
     public String descricaoProjeto;
     public String outros;
     public String observacoes;	
+    
+    /**
+     * Funcionario Form
+     */
+    private Integer substituto_id;
+    private Integer chefe_id;
+    private String nome;
+    private String cargo;
+    private Boolean chefe;
+    private Integer hora_trabalho_inicio;
+    private Integer hora_trabalho_fim;
+    private Integer hora_almoco_inicio;
+    private Integer hora_almoco_fim;
+    private Boolean ferias;
 	
-	public List<AtividadeVO> getListaAtividades() {
+	public List<Dominio> getListaAtividades() {
 		return listaAtividades;
 	}
 
-	public void setListaAtividades(List<AtividadeVO> listaAtividades) {
+	public void setListaAtividades(List<Dominio> listaAtividades) {
 		this.listaAtividades = listaAtividades;
 	}
 
@@ -341,6 +356,160 @@ public class AtividadesForm extends ValidatorForm {
      */
     public void setListaDiasDaSemana(List<Dominio> listaDiasDaSemana) {
         this.listaDiasDaSemana = listaDiasDaSemana;
+    }
+
+    /**
+     * @return the listaAtividadesVO
+     */
+    public List<AtividadeVO> getListaAtividadesVO() {
+        return listaAtividadesVO;
+    }
+
+    /**
+     * @param listaAtividadesVO the listaAtividadesVO to set
+     */
+    public void setListaAtividadesVO(List<AtividadeVO> listaAtividadesVO) {
+        this.listaAtividadesVO = listaAtividadesVO;
+    }
+
+    /**
+     * @return the substituto_id
+     */
+    public Integer getSubstituto_id() {
+        return substituto_id;
+    }
+
+    /**
+     * @param substituto_id the substituto_id to set
+     */
+    public void setSubstituto_id(Integer substituto_id) {
+        this.substituto_id = substituto_id;
+    }
+
+    /**
+     * @return the chefe_id
+     */
+    public Integer getChefe_id() {
+        return chefe_id;
+    }
+
+    /**
+     * @param chefe_id the chefe_id to set
+     */
+    public void setChefe_id(Integer chefe_id) {
+        this.chefe_id = chefe_id;
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the cargo
+     */
+    public String getCargo() {
+        return cargo;
+    }
+
+    /**
+     * @param cargo the cargo to set
+     */
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    /**
+     * @return the chefe
+     */
+    public Boolean getChefe() {
+        return chefe;
+    }
+
+    /**
+     * @param chefe the chefe to set
+     */
+    public void setChefe(Boolean chefe) {
+        this.chefe = chefe;
+    }
+
+    /**
+     * @return the hora_trabalho_inicio
+     */
+    public Integer getHora_trabalho_inicio() {
+        return hora_trabalho_inicio;
+    }
+
+    /**
+     * @param hora_trabalho_inicio the hora_trabalho_inicio to set
+     */
+    public void setHora_trabalho_inicio(Integer hora_trabalho_inicio) {
+        this.hora_trabalho_inicio = hora_trabalho_inicio;
+    }
+
+    /**
+     * @return the hora_trabalho_fim
+     */
+    public Integer getHora_trabalho_fim() {
+        return hora_trabalho_fim;
+    }
+
+    /**
+     * @param hora_trabalho_fim the hora_trabalho_fim to set
+     */
+    public void setHora_trabalho_fim(Integer hora_trabalho_fim) {
+        this.hora_trabalho_fim = hora_trabalho_fim;
+    }
+
+    /**
+     * @return the hora_almoco_inicio
+     */
+    public Integer getHora_almoco_inicio() {
+        return hora_almoco_inicio;
+    }
+
+    /**
+     * @param hora_almoco_inicio the hora_almoco_inicio to set
+     */
+    public void setHora_almoco_inicio(Integer hora_almoco_inicio) {
+        this.hora_almoco_inicio = hora_almoco_inicio;
+    }
+
+    /**
+     * @return the hora_almoco_fim
+     */
+    public Integer getHora_almoco_fim() {
+        return hora_almoco_fim;
+    }
+
+    /**
+     * @param hora_almoco_fim the hora_almoco_fim to set
+     */
+    public void setHora_almoco_fim(Integer hora_almoco_fim) {
+        this.hora_almoco_fim = hora_almoco_fim;
+    }
+
+    /**
+     * @return the ferias
+     */
+    public Boolean getFerias() {
+        return ferias;
+    }
+
+    /**
+     * @param ferias the ferias to set
+     */
+    public void setFerias(Boolean ferias) {
+        this.ferias = ferias;
     }
 	
 }
