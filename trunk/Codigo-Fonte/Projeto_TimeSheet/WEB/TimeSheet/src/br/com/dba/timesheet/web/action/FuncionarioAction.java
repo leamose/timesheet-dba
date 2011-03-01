@@ -11,22 +11,14 @@ import br.com.dba.timesheet.struts.BaseDispatchAction;
 
 public class FuncionarioAction extends BaseDispatchAction {
 	
-	public ActionForward cadastarFuncionario(ActionMapping mapping, ActionForm form,
+	public ActionForward cadastrarFuncionario(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("cadastro");		
-	}
+		return mapping.findForward("retorno");		
+	}	
 	
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		return mapping.findForward("retorno");		
 	}
-	
-	public ActionForward abrePopUpCadastrarFuncionario(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-	    
-	    
-
-	    return mapping.findForward("retorno");       
-    }
 	
 }

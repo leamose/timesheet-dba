@@ -14,9 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import br.com.dba.timesheet.dominios.ListaDominios;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 import br.com.dba.timesheet.vo.AtividadeVO;
-//import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
-import br.com.dba.timesheet.web.form.FuncionarioForm;
 
 
 public class AtividadesAction extends BaseDispatchAction {
@@ -41,32 +39,62 @@ public class AtividadesAction extends BaseDispatchAction {
 	
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
+	    
 	    return mapping.findForward("retorno");        
 	}
 
-	public ActionForward confirmaSalvar(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) {
-	    return mapping.findForward("retorno");        
-	}
-	
 	public ActionForward excluir(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+	    
 		return mapping.findForward("retorno");        
 	}
 
-	public ActionForward confirmaExcluir(ActionMapping mapping, ActionForm form,
+	public ActionForward alterar(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+	    
+	    try {
+            AtividadesForm formulario = (AtividadesForm) form;
+            
+            ListaDominios listaDominios = new ListaDominios();
+            
+            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
+            formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+		return mapping.findForward("retorno");        
+	}
+
+	public ActionForward retornoAlterar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
 	    return mapping.findForward("retorno");        
 	}
-	
-	public ActionForward alterar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("retorno");        
-	}
+
 	
 	public ActionForward detalhar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+	    
+	    try {
+
+	        AtividadesForm formulario = (AtividadesForm) form;
+            
+            ListaDominios listaDominios = new ListaDominios();
+            
+            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
+            formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }       
+	    
 		return mapping.findForward("retorno");        
+	}
+
+	public ActionForward retornoDetalhar(ActionMapping mapping, ActionForm form,
+	        HttpServletRequest request, HttpServletResponse response) {
+	    return mapping.findForward("retorno");        
 	}
 
     public ActionForward voltar(ActionMapping mapping, ActionForm form,
@@ -84,34 +112,15 @@ public class AtividadesAction extends BaseDispatchAction {
         return mapping.findForward("retorno");       
     }
     
-    public ActionForward confirmaAprovar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retorno");       
-    }
-    
     public ActionForward reprovar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retorno");       
-    }
-    
-    public ActionForward confirmaReprovar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retorno");       
-    }
-    
-    public ActionForward abrePopUpCadastrarFuncionario(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retorno");       
-    }
-
-    public ActionForward abrePopUpCadastrarAtividade(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         
         try {
+
             AtividadesForm formulario = (AtividadesForm) form;
             
             ListaDominios listaDominios = new ListaDominios();
-        
+            
             formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
             formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
             
@@ -119,6 +128,11 @@ public class AtividadesAction extends BaseDispatchAction {
             e.printStackTrace();
         }       
         
+        return mapping.findForward("retorno");       
+    }
+
+    public ActionForward retornoReprovar(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("retorno");       
     }
     
@@ -129,14 +143,19 @@ public class AtividadesAction extends BaseDispatchAction {
             AtividadesForm formulario = (AtividadesForm) form;
             
             ListaDominios listaDominios = new ListaDominios();
-        
-            formulario.setListaTipoAtividades(listaDominios.getListaTipoAtividades()) ;
+            
+            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
             formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
             
         } catch (IOException e) {
             e.printStackTrace();
-        }       
+        }
         
+       return mapping.findForward("retorno");      
+    }
+
+    public ActionForward retornoCadastrarAtividade(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("retorno");      
     }
 
@@ -179,21 +198,8 @@ public class AtividadesAction extends BaseDispatchAction {
 		lista.add(criaAtividadeVO());
 		lista.add(criaAtividadeVO());
 		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
+		
+		
 		
 		
 		formulario.setListaAtividadesVO(lista);

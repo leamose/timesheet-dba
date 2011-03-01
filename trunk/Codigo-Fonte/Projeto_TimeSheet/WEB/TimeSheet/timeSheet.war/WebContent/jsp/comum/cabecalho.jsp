@@ -61,11 +61,13 @@
 			</table>			
 		</div>
 		<div class="barraIcones">
-			<html:form action="/funcionario/cadastarFuncionario" method="post">
-				<a href="#" onclick="javascript:open_popPp();">
+			<html:form action="/funcionario/cadastrarFuncionario" method="post">
+				<a href="#" onclick="javascript:cadastrarAtividades();">
 					<html:img src="${contexto}/WebContent/img/novoContratoIcone.png" title="atividade"/></a>					
-				<a href="#" onclick="javascript:open_popPpFuncionario();">
+				<a href="#" onclick="javascript:cadastrarFuncionario();">
 					<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/></a>
+				<a href="#" onclick="javascript:configurar();">
+					<html:img src="${contexto}/WebContent/img/configurarQuestionarios.png" title="configurar"/></a>
 				<a href="#" onclick="javascript:sair();">
 			    	<html:img src="${contexto}/WebContent/img/sair.png" alt="sair"/>
 			    </a>

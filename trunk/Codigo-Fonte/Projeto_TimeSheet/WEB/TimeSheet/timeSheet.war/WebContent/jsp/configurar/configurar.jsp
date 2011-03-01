@@ -16,55 +16,29 @@
 					<div class="formulario">
 						
 						
-				    	<div class="foco">
-				   			<div class="labelDetalhar" style="width:150px;">Nome: *</div>
-				   			<div class="input_position">
-				          		<html:text styleClass="campo" name="form" property="nome" size="95"/>
-				          	</div>
-						</div>
-					
-						<div class="foco" >
-				   			<div class="labelDetalhar" style="width:150px;">Cargo:</div>
-				   			<div class="input_position">
-				          		<html:text styleClass="campo" name="form" property="cargo" size="62"/>
-				          	</div>
-						</div>	
-				        <div class="foco">
-				   			<div class="labelDetalhar" style="width:40px;">Chefe:</div>
-				          	<div class="input_position">
-				          		<html:checkbox styleClass="campo" property="chefe" />
-				          	</div>
-						</div>
-			            <div class="foco" >
-				   			<div class="labelDetalhar" style="width:40px;">Férias:</div>
-				          	<div class="input_position">
-				          		<html:checkbox styleClass="campo" property="ferias" />
-				          	</div>
-						</div>
-				    
-				    	<div class="foco" style="width:99%;">
+				    	<div class="foco" style="width:49%;">
 			                <div class="labelDetalhar" style="width:150px;">Hora Trabalho Início:</div>
 			                <div class="input_position">
-			                	<html:text styleClass="campo" name="form" property="hora_trabalho_fim"/>
+			                	<html:text styleClass="campo" name="form" property="hora_trabalho_fim" size="15"/>
 			                </div>
 			            </div>
 				    	<div class="foco">
-			                <div class="labelDetalhar" style="width:150px;">Hora Trabalho Fim:</div>
+			                <div class="labelDetalhar" style="width:130px;">Hora Trabalho Fim:</div>
 			                <div class="input_position">
-			                	<html:text styleClass="campo" name="form" property="hora_trabalho_fim"/>
+			                	<html:text styleClass="campo" name="form" property="hora_trabalho_fim" size="16"/>
 			                </div>
 			            </div>
-				    	<div class="foco" style="width:99%;">
+				    	<div class="foco" style="width:50%;">
 			                <div class="labelDetalhar" style="width:150px;">Hora Almoco Início:</div>
 							<div class="input_position">			                	
-			                	<html:text styleClass="campo" name="form" property="hora_almoco_inicio"/>
+			                	<html:text styleClass="campo" name="form" property="hora_almoco_inicio" size="15"/>
 			                </div>
 			                	
 			            </div>
 				    	<div class="foco" >
-			                <div class="labelDetalhar" style="width:150px;">Hora Almoco Fim:</div>
+			                <div class="labelDetalhar" style="width:120px;">Hora Almoco Fim:</div>
 			               	<div class="input_position">	
-			               		<html:text styleClass="campo" name="form" property="hora_trabalho_fim"/>
+			               		<html:text styleClass="campo" name="form" property="hora_trabalho_fim" size="16"/>
 			               	</div>
 			            </div>			            
 			            
