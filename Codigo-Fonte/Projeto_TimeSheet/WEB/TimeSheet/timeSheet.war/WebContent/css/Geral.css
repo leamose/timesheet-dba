@@ -54,11 +54,7 @@ text-align:center;
 
 img {border:none;}
 
-.corpo {
-	width:100%;
-	height:auto;
-	padding-bottom:70px;
-}
+#corpo { width:996px; margin:auto; background-image:url(../img/main.png); }
 
 .conteudo {
 	width:800px;
@@ -108,7 +104,7 @@ img {border:none;}
 
 .infoUsuario {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; float:right; margin-right:20px; margin-top:10px;}
 
-.formulario { width:100%; background-color:#FFF; display: table-cell; padding-top:5px; padding-bottom:5px; }
+.formulario { background-color:#FFF; display: table-cell; padding-top:5px; padding-bottom:5px; }
 
 .formulario-listagem {
 	width:800px;
@@ -116,7 +112,8 @@ img {border:none;}
 	margin-bottom:15px;
 }
 
-.final_formulario { width:100%; height:55px; background-color:#FFF; border-top:1px solid #00779e; text-align:right;  }
+
+.final_formulario { width:100%; height:55px; border-top:1px solid #00779e; background-image:url(../img/final_form.png); text-align:right;  }
 
 .final_formulario img{margin-top:5px; margin-right:20px; cursor:pointer; text-decoration:none; }
 
@@ -164,7 +161,7 @@ img {border:none;}
 .label {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
 
 .labelDetalhar {
-	width:110px;	
+	width:105px;	
 	float:left;
 	padding-top:1px; 
 	padding-bottom:1px;
@@ -180,7 +177,7 @@ img {border:none;}
 
 .campoErro { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid red; background-color:#ece9d8;}
 
-.botoesMeio { float:right; padding-right:10px; padding-top:10px; padding-bottom:20px;}
+.botoesMeio { float:right; padding-right:35px; padding-top:10px; padding-bottom:20px;}
 
 .boxBotoesVertical {width:30px; height:130px; text-align:center; float:right; margin-left:10px;}
 .boxBotoesVertical img{ margin-right:2px; margin-top:5px;}
@@ -197,7 +194,7 @@ img {border:none;}
 
 
 
-.lista { width:99%; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal; margin:10px; margin-bottom:0px;}
+.lista { width:99%; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal;height:500px;}
 
 .lista th {  font-weight:normal; background-color:#ece9d8; border-left:1px solid #FFF; text-align:left; padding-left:2px; padding-right:2px; vertical-align:top; }
 

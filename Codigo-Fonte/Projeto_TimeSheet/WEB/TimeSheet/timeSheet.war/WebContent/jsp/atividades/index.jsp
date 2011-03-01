@@ -13,23 +13,23 @@
 	
 		<div id="simplediv2" class="menupop">
 		    <ul>
-		        <li><a href="#">Detalhar atividade</a></li>
-		        <li><a href="#">Alterar atividade</a></li>
-		        <li><a href="#">Excluir atividade</a></li>
-		        <li><a href="#">Aprovar atividade</a></li>
-		        <li><a href="#">Recusar atividade</li>
+		    	<li><a href="#" onclick="javascript:detalharAtividade();">Detalhar atividade</a></li>
+				<li><a href="#" onclick="javascript:alterarAtividade();">Alterar atividade</a></li>
+				<li><a href="#" onclick="javascript:excluirAtividade();">Excluir atividade</a></li>
+				<li><a href="#" onclick="javascript:aprovarAtividade();">Aprovar atividade</a></li>
+				<li><a href="#" onclick="javascript:reprovarAtividade();">Reprovar atividade</a></li>
 		    </ul>
 		</div>
 	
 		<!-- MIOLO -->
-		<div id="miolo" style="background-color:#fff; background-image:none;height:79,8%;">
+		<div id="miolo" style="background-color:#fff; background-image:none;height:92%;">
 			<div class="botoesJanela">			
 				<!-- DATA DO CALENDARIO -->
 				<form action="">
 					<table cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="150px;">&nbsp;</td>
-							<th valign="middle">DATA DA ATIVIDADE:&nbsp; </td>
+							<th valign="middle">DATA DA ATIVIDADE:&nbsp; </th>
 							<td valign="middle">
 								<input onclick="ds_sh(this);" name="date" readonly="readonly" style="cursor: text" size="8"/>
 							</td>
@@ -43,13 +43,13 @@
 				
 			</div>					
 			<html:form action="/atividade/inicio.do">
-				<display:table name="${listaAtividades}" style="width:98%;" class="lista" id="tabela" 
-					length="100" pagesize="20" requestURI="/atividade/inicio.do" cellspacing="0"
+				<display:table name="${listaAtividades}" style="width:99%;" class="lista" id="tabela" 
+					length="100" pagesize="30" requestURI="/atividade/inicio.do" cellspacing="0"
 					 htmlId="resultado">
 					<display:column>
 						<html:img  src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>
 						<span class="h1"><a href="#" class="link" rel="simplediv2">
-							<img src="${contexto}/WebContent/img/setaPop.png" width="10" height="10" /></a></span>
+							<img src="${contexto}/WebContent/img/setaPop.png"/></a></span>
 						<!--
 							<html:img src="${contexto}/WebContent/img/reprov_mao.gif" title="aprovado"/>
 							<html:img src="${contexto}/WebContent/img/aguardando_aprov.gif" title="aprovado"/>
@@ -62,25 +62,27 @@
 					<display:column property="saldoDiario" title="Saldo"/>						
 					<display:column property="numeroProjeto" title="No. Projeto"/>
 					<display:column property="descricaoAtividade" title="Atividade" />	
-					<display:column property="ultimaAtividade" title="Ultima atividade"/>	
-							
+					<display:column property="ultimaAtividade" title="Ultima atividade"/>
 				</display:table>
 				
-				<div style="float:left; padding-right: 15px;">
-				<table align="center">
-				 <tr>
-				   <td><font face="tahoma,arial,  helvetica" size="2"><img src="${contexto}/WebContent/img/aprov_mao.gif">Aprovado</font></td>
-				   <td>&nbsp;</td>
-				   <td><font face="tahoma,arial,  helvetica" size="2"><img src="${contexto}/WebContent/img/reprov_mao.gif">Reprovado</font></td> 
-				   <td>&nbsp;</td>
-				   <td><font face=" tahoma,arial, helvetica" size="2"><img src="${contexto}/WebContent/img/aguardando_aprov.gif">Aguardando Aprovação</font></td>
-				
-				 </tr>
-				</table>
+				<div style="float:left; padding-right: 15px;padding-top: 30px; ">
+					<table align="center">
+					 <tr>
+					   <td><font face="tahoma,arial,  helvetica" size="2">
+					   		<img src="${contexto}/WebContent/img/aprov_mao.gif">Aprovado</font></td>
+					   <td>&nbsp;</td>
+					   <td><font face="tahoma,arial,  helvetica" size="2">
+					   		<img src="${contexto}/WebContent/img/reprov_mao.gif">Reprovado</font></td> 
+					   <td>&nbsp;</td>
+					   <td><font face=" tahoma,arial, helvetica" size="2">
+					   		<img src="${contexto}/WebContent/img/aguardando_aprov.gif">Aguardando Aprovação</font></td>
+					
+					 </tr>
+					</table>
 				</div>
 					
 				
-				<div style="float:right; padding-right: 15px;">Aceitar Todos :  <html:checkbox name="form" property="observacao"/></div>
+				<div style="float:right; padding-right: 25px; padding-top: 30px;padding-bottom:10px">Aceitar Todos :  <html:checkbox name="form" property="observacao"/></div>
 			</html:form>
 		</div>   	
 		

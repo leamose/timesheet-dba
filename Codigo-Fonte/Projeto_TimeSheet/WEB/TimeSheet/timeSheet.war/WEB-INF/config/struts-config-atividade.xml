@@ -21,7 +21,14 @@
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/cadastroAtividades.jsp"/>
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
+		</action>
+
+	    <action path="/atividade/retornoCadastrarAtividade" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 		
 		 <action path="/atividade/consultar" 
@@ -35,42 +42,49 @@
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/WebContent/jsp/comum/confirmarSalvar.jsp"/>
+			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 
 		 <action path="/atividade/reprovar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/WebContent/jsp/comum/confirmarSalvar.jsp"/>
-		</action>
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
+		</action>   	   
 
-   	    <action path="/atividade/confirmaAprovar" 
+		 <action path="/atividade/retornoReprovar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
 			<forward name="retorno" path="/atividade/inicio.do"/>
-		</action>
-
-		 <action path="/atividade/confirmaReprovar" 
-				type="br.com.dba.timesheet.web.action.AtividadesAction"
-				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/atividade/inicio.do"/>
-		</action>
+		</action>   	   
 	    
 	    <action path="/atividade/detalhar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/cadastroAtividades.jsp"/>
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
+		</action>
+
+	    <action path="/atividade/retornoDetalhar" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 	    
 	    <action path="/atividade/alterar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/cadastroAtividades.jsp"/>
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
+		</action>
+		
+		<action path="/atividade/retornoAlterar" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 	    
 	    <action path="/atividade/excluir" 
@@ -81,6 +95,13 @@
 		</action>
 		
 	    <action path="/atividade/salvar" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/atividade/inicio.do"/>
+		</action>
+		
+		<action path="/atividade/retornoSalvar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
@@ -102,13 +123,7 @@
 				scope="request">
 			<forward name="voltar" path="/atividade/inicio.do"/>
 		</action>
-
-	    <action path="/atividade/abrePopUpCadastrarAtividade" 
-				type="br.com.dba.timesheet.web.action.AtividadesAction"
-				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
-		</action>
+		
 	</action-mappings>	
 	
 </struts-config>

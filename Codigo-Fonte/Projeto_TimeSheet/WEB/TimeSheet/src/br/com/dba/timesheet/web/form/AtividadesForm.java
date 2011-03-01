@@ -7,7 +7,6 @@ import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.dominios.Dominio;
 import br.com.dba.timesheet.vo.AtividadeVO;
-import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
 
 public class AtividadesForm extends ValidatorForm {
 	
@@ -24,7 +23,7 @@ public class AtividadesForm extends ValidatorForm {
 	private Date data_hora_inicio;	
 	private Date data_hora_fim;		
 	private String observacao;	
-	private Boolean alteracao_data_avaliacao;	
+	private Boolean alteracao_data_avaliacao;
 	private List<Dominio> listaTipoAtividades;
 	private List<Dominio> listaDiasDaSemana;
 	private List<AtividadeVO> listaAtividadesVO;
