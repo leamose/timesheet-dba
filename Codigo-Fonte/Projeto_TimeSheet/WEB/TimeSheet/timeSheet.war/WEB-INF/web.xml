@@ -28,7 +28,8 @@
             <param-name>config</param-name>
             <param-value>/WEB-INF/config/struts-config.xml,
             /WEB-INF/config/struts-config-funcionario.xml,
-			/WEB-INF/config/struts-config-atividade.xml</param-value>
+			/WEB-INF/config/struts-config-atividade.xml,
+			/WEB-INF/config/struts-config-configurar.xml</param-value>
         </init-param>
         <init-param>
             <param-name>convertNull</param-name>

@@ -93,6 +93,14 @@ img {border:none;}
 	margin-right:15px;
 }
 
+.input_position_total {
+	padding-top:0px;
+	float: inherit;
+	text-align:center; 
+	margin-left:8px;
+	margin-right:8px;
+}
+
 .barra-titulo {
 	background:url(../img/bg_login.jpg) repeat-x;
 	height:28px;
@@ -114,6 +122,8 @@ img {border:none;}
 
 
 .final_formulario { width:100%; height:55px; border-top:1px solid #00779e; background-image:url(../img/final_form.png); text-align:right;  }
+
+.final_formulario_popUp { width:100%; height:55px; border-top:1px solid #00779e; text-align:right;  }
 
 .final_formulario img{margin-top:5px; margin-right:20px; cursor:pointer; text-decoration:none; }
 
@@ -179,6 +189,8 @@ img {border:none;}
 
 .botoesMeio { float:right; padding-right:35px; padding-top:10px; padding-bottom:20px;}
 
+.botoesMeioPopUp { float:right; padding-right:1px; padding-top:10px; padding-bottom:5px;}
+
 .boxBotoesVertical {width:30px; height:130px; text-align:center; float:right; margin-left:10px;}
 .boxBotoesVertical img{ margin-right:2px; margin-top:5px;}
 
@@ -194,7 +206,7 @@ img {border:none;}
 
 
 
-.lista { width:99%; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal;height:500px;}
+.lista { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal;}
 
 .lista th {  font-weight:normal; background-color:#ece9d8; border-left:1px solid #FFF; text-align:left; padding-left:2px; padding-right:2px; vertical-align:top; }
 

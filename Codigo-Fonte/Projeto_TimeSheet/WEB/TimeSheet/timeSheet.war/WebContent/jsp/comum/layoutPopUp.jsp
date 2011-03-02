@@ -9,9 +9,19 @@
 		<link href="${contexto}/WebContent/css/Geral.css" rel="stylesheet" type="text/css" />
 		<link href="${contexto}/WebContent/css/default.css" rel="stylesheet" type="text/css" />
 		<link href="${contexto}/WebContent/css/mac_os_x.css" rel="stylesheet" type="text/css" />
-		<link type="text/css" rel="stylesheet" href="${contexto}/WebContent/css/calendario.css"/>
-		<link rel="stylesheet" href="${contexto}/WebContent/css/tooltip.css" media="screen"/>
+		<link href="${contexto}/WebContent/css/submodal.css" rel="stylesheet" type="text/css"/>		
+		<link href="${contexto}/WebContent/css/calendario.css" rel="stylesheet" type="text/css"/>
+		<link href="${contexto}/WebContent/css/tooltip.css" media="screen" rel="stylesheet" type="text/css"/>
+		
 		<script type="text/javascript" src="${contexto}/WebContent/js/geral.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/prototype.js"> </script> 
+    	<script type="text/javascript" src="${contexto}/WebContent/js/window.js"> </script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/submodal.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/submodalsource.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/tooltip.js"></script>
+    	<script type="text/javascript" src="${contexto}/WebContent/js/jquery.js"></script>
+    	<script type="text/javascript" src="${contexto}/WebContent/js/splitter.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/popupmenu.js"></script>
 
 		<script type="text/javascript">
 			var contexto = '${contexto}';
@@ -19,7 +29,7 @@
 
 	</head>
 
-    <body >
+    <body style="background-image:none; background-color:#FFF;">
 		<tiles:insert name="corpo" />
     </body>
 </html>

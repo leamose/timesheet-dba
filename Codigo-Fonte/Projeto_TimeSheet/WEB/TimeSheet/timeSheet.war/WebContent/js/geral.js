@@ -106,6 +106,17 @@ function returnSalvarPopUp() {
 	form.submit();
 }
 
+//PESQUISAR FUNCIONARIO
+function pesquisarFuncionario() {	
+	open_popPpPesquisaFunc(contexto + '/funcionario/consultar.do', retornoPesquisarFuncionario, "Pesquisa Funcionario") ;
+}
+
+function retornoPesquisarFuncionario() {	
+	var form = document.forms[0];
+	form.action = contexto + '/funcionario/retornoConsultar.do';
+	form.submit();
+}
+
 function confirmaOperacao() {
 	window.parent.hidePopWin(true);	
 }	
@@ -118,6 +129,13 @@ function cancelaOperacao() {
 function open_popPpAtividade(url, urlRetorno, titulo) {
 	var largura = 720;
 	var altura = 318;
+	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
+}
+
+//ABRE POPUP PESQUISA FUNCIONARIOS
+function open_popPpPesquisaFunc(url, urlRetorno, titulo) {
+	var largura = 720;
+	var altura = 300;
 	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
 }
 
