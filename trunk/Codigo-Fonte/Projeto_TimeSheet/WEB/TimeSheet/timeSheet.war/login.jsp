@@ -12,14 +12,6 @@
 		<script type="text/javascript" src="${contexto}/WebContent/js/servidor.js"> </script>
 		<link href="${contexto}/WebContent/css/default.css" rel="stylesheet" type="text/css" />
 		<link href="${contexto}/WebContent/css/mac_os_x.css" rel="stylesheet" type="text/css" />
-		
-		
-		<script type="text/javascript">
-			function logIn() {
-				document.forms[0].submit();
-			}
-		</script>
-		
 	</head>
 
 	<body>
@@ -49,7 +41,7 @@
 										class="campoLogin"/>
 								</div>								
 								<br><br>
-								<a href="#" class="button" onclick="logIn();">	
+								<a href="#" class="button" onclick="javascript:document.forms[0].submit();">	
 									<img src="${contexto}/WebContent/img/entrar.png"/>
 								</a>
 							</html:form>

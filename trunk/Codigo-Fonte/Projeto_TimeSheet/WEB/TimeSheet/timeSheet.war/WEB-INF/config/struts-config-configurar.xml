@@ -6,28 +6,28 @@
 <struts-config>
 
     <form-beans>
-		<form-bean name="atividadeForm" type="br.com.dba.timesheet.web.form.ConfigurarForm" />        
+		<form-bean name="configurarForm" type="br.com.dba.timesheet.web.form.ConfigurarForm" />        
     </form-beans>
 
     <action-mappings>
     		
 	    <action path="/configurar/inicio" 
 				type="br.com.dba.timesheet.web.action.ConfigurarAction"
-				name="atividadeForm" 
+				name="configurarForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="cadastro" path="/WebContent/jsp/configurar/configurar.jsp"/>
 		</action>	   
 	    
 	    <action path="/configurar/salvar" 
 				type="br.com.dba.timesheet.web.action.ConfigurarAction"
-				name="atividadeForm" 
+				name="configurarForm" 
 				input="/WebContent/jsp/index.html">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 		
 	    <action path="/configurar/operacaoCancelada" 
 				type="br.com.dba.timesheet.web.action.ConfigurarAction"
-				name="atividadeForm" 
+				name="configurarForm" 
 				input="/WebContent/jsp/index.html"
 				scope="request">
 			<forward name="retorno" path="/atividade/inicio.do"/>
@@ -35,7 +35,7 @@
 		
 	    <action path="/configurar/voltar" 
 				type="br.com.dba.timesheet.web.action.ConfigurarAction"
-				name="atividadeForm" 
+				name="configurarForm" 
 				input="/WebContent/jsp/index.html"
 				scope="request">
 			<forward name="voltar" path="/atividade/inicio.do"/>

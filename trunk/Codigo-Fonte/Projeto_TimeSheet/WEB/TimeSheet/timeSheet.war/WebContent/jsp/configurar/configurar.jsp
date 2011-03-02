@@ -8,22 +8,28 @@
 		<div id="main">
 			<div id="corpo">
 				<div class="cabecalho">
-			    	<div class="titulo-formulario-pesquisa">Cadastro de Funcionário</div>
+			    	<div class="titulo-formulario-pesquisa">Configuração</div>
 				</div>
 			
 				<html:form action="/funcionario/salvar" method="post">
 				    
 					<div class="formulario">
-						
-						
-				    	<div class="foco" style="width:49%;">
+						<!-- Espaco para mensagens -->
+						    	<div class="boxMensagemS">
+						          	<div class="textoMensagemS">Alguns erros foram encontrados. Por favor, reveja os campos assinalados em vermelho.</div>
+						            <div class="iconeMensagemS">
+						            	<html:img src="${contexto}/WebContent/img/block.png" width="32" height="32" />
+						            </div>
+						        </div>	
+					
+				    	<div class="foco" style="width:50%;">
 			                <div class="labelDetalhar" style="width:150px;">Hora Trabalho Início:</div>
 			                <div class="input_position">
 			                	<html:text styleClass="campo" name="form" property="hora_trabalho_fim" size="15"/>
 			                </div>
 			            </div>
 				    	<div class="foco">
-			                <div class="labelDetalhar" style="width:130px;">Hora Trabalho Fim:</div>
+			                <div class="labelDetalhar" style="width:150px;">Hora Trabalho Fim:</div>
 			                <div class="input_position">
 			                	<html:text styleClass="campo" name="form" property="hora_trabalho_fim" size="16"/>
 			                </div>
@@ -36,19 +42,114 @@
 			                	
 			            </div>
 				    	<div class="foco" >
-			                <div class="labelDetalhar" style="width:120px;">Hora Almoco Fim:</div>
+			                <div class="labelDetalhar" style="width:150px;">Hora Almoco Fim:</div>
 			               	<div class="input_position">	
 			               		<html:text styleClass="campo" name="form" property="hora_trabalho_fim" size="16"/>
 			               	</div>
-			            </div>			            
+			            </div>
+				    	<div class="foco" style="width:50%;">
+			                <div class="labelDetalhar" style="width:150px;">Mínimo:</div>
+			               	<div class="input_position">	
+			               		<html:text styleClass="campo" name="form" property="mininoAlmoco" size="15"/>
+			               	</div>
+			            </div>
+				    	
+			            
+			            
+			            <div class="subtitulo" style="width:590px; margin-bottom:1px; margin-top:10px;">Total horas no mês</div>
+
+						<table style="width:800px;" class="paneEstatistica" border="0" cellspacing="0" cellpadding="0">
+						  <tr>
+						
+						    <th class="h1">Janeiro</th>
+						    <th class="h1">Fevereiro</th>
+						    <th class="h1">Março</th>
+						    <th class="h1">Abril</th>
+						    <th class="h1">Maio</th>
+						    <th class="h1">Junho</th>
+						    <th class="h1">Julho</th>
+						    <th class="h1">Agosto</th>
+						    <th class="h1">Setembro</th>
+						    <th class="h1">Outubro</th>
+						    <th class="h1">Novembro</th>
+						    <th class="h1">Dezembro</th>
+						    </tr>
+						  <tr>
+						    <th>	
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>
+						    <th>	
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>						    
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>						    
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>						    
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>						    
+						   <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>						    
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>
+						    <th>
+						    	<div class="input_position_total">	
+			               			<html:text styleClass="campo" name="form" property="totalHorasMes" size="3"/>
+			               		</div>
+			               	</th>						    
+						  </tr>						  
+						  </table>
+			            
+			            
+			            
 			            
 				    </div>							
+					
 					<div class="final_formulario" >
 						<html:img src="${contexto}/WebContent/img/salvar.png" width="43" height="43" 
 					    	onclick="javascript:document.forms[0].submit();"/>					    	
 					    <html:img src="${contexto}/WebContent/img/voltar.png" width="54" height="43" alt="voltar" 
 					    	onclick="javascript:voltar();"/>
-					</div>					    
+					</div>
+										    
 				</html:form>
 			</div>							
 		</div>				

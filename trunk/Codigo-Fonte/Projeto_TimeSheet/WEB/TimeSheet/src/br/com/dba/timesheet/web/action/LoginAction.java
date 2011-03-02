@@ -13,12 +13,12 @@ public class LoginAction extends BaseDispatchAction {
 	
 	public ActionForward logar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("index");		
+		return mapping.findForward("retorno");		
 	}
 
 	public ActionForward login(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
-	    return mapping.findForward("logar");		
+	    return mapping.findForward("retorno");		
 	}
 	
 }

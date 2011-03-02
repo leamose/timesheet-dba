@@ -25,6 +25,19 @@
 				input="/WebContent/jsp/index.html">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
+
+	    <action path="/funcionario/consultar" 
+				type="br.com.dba.timesheet.web.action.FuncionarioAction"
+				name="funcionarioForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/WebContent/jsp/cadastroFuncionario/popUpConsultaFuncionario.jsp"/>
+		</action>
+	    <action path="/funcionario/retornoConsultar" 
+				type="br.com.dba.timesheet.web.action.FuncionarioAction"
+				name="funcionarioForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/funcionario/cadastrarFuncionario.do"/>
+		</action>
 	</action-mappings>	
 	    
 </struts-config>

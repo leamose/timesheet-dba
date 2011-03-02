@@ -15,14 +15,14 @@
 			type="br.com.dba.timesheet.web.action.LoginAction"
 			name="loginForm"
 			scope="request">
-			<forward name="logar" path="/login.jsp"/>
+			<forward name="retorno" path="/login.jsp"/>
 		</action>		
 		
 		<action path="/inicio/logar" 
 			type="br.com.dba.timesheet.web.action.LoginAction"
 			name="loginForm"
 			scope="request">
-			<forward name="index" path="/atividade/inicio.do"/>
+			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 	</action-mappings>
 	

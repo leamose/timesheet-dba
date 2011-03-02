@@ -1,8 +1,10 @@
 package br.com.dba.timesheet.web.form;
 
-import java.sql.Date;
+import java.util.List;
 
 import org.apache.struts.validator.ValidatorForm;
+
+import br.com.dba.timesheet.vo.FuncionarioVO;
 
 public class FuncionarioForm extends ValidatorForm {
 	
@@ -19,6 +21,7 @@ public class FuncionarioForm extends ValidatorForm {
 	private Integer hora_almoco_inicio;
 	private Integer hora_almoco_fim;
 	private Boolean ferias;
+	private List<FuncionarioVO> listaFuncionarios;
 	
 	
 	public Integer getSubstituto_id() {
@@ -87,5 +90,17 @@ public class FuncionarioForm extends ValidatorForm {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+    /**
+     * @return the listaFuncionarios
+     */
+    public List<FuncionarioVO> getListaFuncionarios() {
+        return listaFuncionarios;
+    }
+    /**
+     * @param listaFuncionarios the listaFuncionarios to set
+     */
+    public void setListaFuncionarios(List<FuncionarioVO> listaFuncionarios) {
+        this.listaFuncionarios = listaFuncionarios;
+    }
 		
 }
