@@ -8,7 +8,6 @@
 	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/hibernate-entitymanager.jar"/>
-	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/postgresql-8.0-325.jdbc3.jar"/>
 	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/jakarta-poi-1.5.1-final.jar"/>
 	<classpathentry kind="output" path="bin"/>

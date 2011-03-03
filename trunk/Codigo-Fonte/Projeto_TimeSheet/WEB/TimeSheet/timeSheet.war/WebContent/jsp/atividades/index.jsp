@@ -43,7 +43,7 @@
 				
 			</div>					
 			<html:form action="/atividade/inicio.do">
-				<display:table name="${listaAtividades}" style="width:100%;" class="lista" id="tabela" 
+				<display:table name="${form.listaAtividades}" style="width:100%;" class="lista" id="tabela" 
 					length="100" pagesize="30" requestURI="/atividade/inicio.do" cellspacing="0"
 					 htmlId="resultado">
 					<display:column>

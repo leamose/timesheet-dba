@@ -7,6 +7,7 @@ import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.dominios.Dominio;
 import br.com.dba.timesheet.vo.AtividadeVO;
+import br.com.dba.timesheet.vo.TimeSheetVO;
 
 public class AtividadesForm extends ValidatorForm {
 	
@@ -26,7 +27,8 @@ public class AtividadesForm extends ValidatorForm {
 	private Boolean alteracao_data_avaliacao;
 	private List<Dominio> listaTipoAtividades;
 	private List<Dominio> listaDiasDaSemana;
-	private List<AtividadeVO> listaAtividadesVO;
+//	private List<AtividadeVO> listaAtividadesVO;
+	private List<TimeSheetVO> listaTimeSheet;
 	private List<Dominio> listaAtividades;
 	
 	public String data;
@@ -358,20 +360,6 @@ public class AtividadesForm extends ValidatorForm {
     }
 
     /**
-     * @return the listaAtividadesVO
-     */
-    public List<AtividadeVO> getListaAtividadesVO() {
-        return listaAtividadesVO;
-    }
-
-    /**
-     * @param listaAtividadesVO the listaAtividadesVO to set
-     */
-    public void setListaAtividadesVO(List<AtividadeVO> listaAtividadesVO) {
-        this.listaAtividadesVO = listaAtividadesVO;
-    }
-
-    /**
      * @return the substituto_id
      */
     public Integer getSubstituto_id() {
@@ -509,6 +497,20 @@ public class AtividadesForm extends ValidatorForm {
      */
     public void setFerias(Boolean ferias) {
         this.ferias = ferias;
+    }
+
+    /**
+     * @return the listaTimeSheet
+     */
+    public List<TimeSheetVO> getListaTimeSheet() {
+        return listaTimeSheet;
+    }
+
+    /**
+     * @param listaTimeSheet the listaTimeSheet to set
+     */
+    public void setListaTimeSheet(List<TimeSheetVO> listaTimeSheet) {
+        this.listaTimeSheet = listaTimeSheet;
     }
 	
 }
