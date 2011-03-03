@@ -50,10 +50,10 @@ public class FuncionarioAction extends BaseDispatchAction {
 	    vo.setCargo("Fabio Oliveira de Pinho");
 	    vo.setChefe(false);
 	    vo.setFerias(false);
-	    vo.setHora_trabalho_inicio(8);
-	    vo.setHora_trabalho_fim(18);
-	    vo.setHora_almoco_inicio(12);
-	    vo.setHora_almoco_fim(14);
+	    vo.setHoraAlmocoInicio(8);
+	    vo.setHoraAlmocoFim(18);
+	    vo.setHoraTrabalhoFim(12);
+	    vo.setHoraTrabalhoInicio(14);
 	    
 	    
 	    List<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>();

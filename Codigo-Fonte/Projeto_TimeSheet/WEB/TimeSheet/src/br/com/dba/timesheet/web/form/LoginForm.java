@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts.validator.ValidatorForm;
 
-import br.com.dba.timesheet.vo.Tipo_AtividadeVO;
+import br.com.dba.timesheet.vo.TipoAtividadeVO;
 
 public class LoginForm extends ValidatorForm {
 	
@@ -14,25 +14,27 @@ public class LoginForm extends ValidatorForm {
 	
 	private String senha;
 	
-	public Integer getTipo_atividade_id() {
-		return tipo_atividade_id;
+	private Integer tipoAtividade;
+	
+	private List<TipoAtividadeVO> listaAtividades;
+	
+	public Integer getTipoAtividade() {
+		return tipoAtividade;
 	}
 
-	public void setTipo_atividade_id(Integer tipo_atividade_id) {
-		this.tipo_atividade_id = tipo_atividade_id;
+	public void setTipoAtividade(Integer tipo_atividade_id) {
+		this.tipoAtividade = tipo_atividade_id;
 	}
 
-	public List<Tipo_AtividadeVO> getListaAtividades() {
+	public List<TipoAtividadeVO> getListaAtividades() {
 		return listaAtividades;
 	}
 
-	public void setListaAtividades(List<Tipo_AtividadeVO> listaAtividades) {
+	public void setListaAtividades(List<TipoAtividadeVO> listaAtividades) {
 		this.listaAtividades = listaAtividades;
 	}
 
-	private Integer tipo_atividade_id;
 	
-	private List<Tipo_AtividadeVO> listaAtividades;
 
 	public String getUsuario() {
 		return usuario;

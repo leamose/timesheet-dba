@@ -12,8 +12,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import br.com.dba.timesheet.dominios.ListaDominios;
+import br.com.dba.timesheet.ejb.TimesheetDelegate;
+import br.com.dba.timesheet.exceptions.ErroInternoException;
+import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 import br.com.dba.timesheet.vo.AtividadeVO;
+import br.com.dba.timesheet.vo.TimeSheetVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
 
 
@@ -22,12 +26,20 @@ public class AtividadesAction extends BaseDispatchAction {
 	public ActionForward inicio(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		AtividadesForm formulario = (AtividadesForm) form;
-
-		List<AtividadeVO> listaAtividades = montaListaAtividades(formulario);
-		
-		
-		request.setAttribute("listaAtividades", listaAtividades);
+	    try {
+    		AtividadesForm formulario = (AtividadesForm) form;
+    
+                List<TimeSheetVO> listaTimeSheet = TimesheetDelegate.getInstancia().listarTodosTimeSheet();
+    		
+    //		List<AtividadeVO> listaAtividades = montaListaAtividades(formulario);
+    		
+    		formulario.setListaTimeSheet(listaTimeSheet);
+    //		request.setAttribute("listaAtividades", listaAtividades);
+		} catch (ErroInternoException e) {
+		    e.printStackTrace();
+		} catch (ParametroInvalidoException e) {
+		    e.printStackTrace();
+		}
 		
 		return mapping.findForward("cadastro");		
 	}
@@ -39,6 +51,12 @@ public class AtividadesAction extends BaseDispatchAction {
 	
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
+	    
+	    AtividadesForm formulario = (AtividadesForm) form;
+	    
+	    TimeSheetVO vo = new TimeSheetVO();
+	    
+//	    vo.setd
 	    
 	    return mapping.findForward("retorno");        
 	}
@@ -202,7 +220,7 @@ public class AtividadesAction extends BaseDispatchAction {
 		
 		
 		
-		formulario.setListaAtividadesVO(lista);
+//		formulario.setListaAtividadesVO(lista);
 		return lista;
 	}
 	
