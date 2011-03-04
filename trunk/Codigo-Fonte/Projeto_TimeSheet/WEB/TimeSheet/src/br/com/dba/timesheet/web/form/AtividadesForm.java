@@ -7,6 +7,9 @@ import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.dominios.Dominio;
 import br.com.dba.timesheet.vo.AtividadeVO;
+import br.com.dba.timesheet.vo.ClienteVO;
+import br.com.dba.timesheet.vo.MetodologiaVO;
+import br.com.dba.timesheet.vo.OPVO;
 import br.com.dba.timesheet.vo.TimeSheetVO;
 
 public class AtividadesForm extends ValidatorForm {
@@ -14,7 +17,10 @@ public class AtividadesForm extends ValidatorForm {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Integer atividade_original_id;
+	private String atividade;
+	private String cliente;
+	private String op;
+	private String metodologia;
 	private Integer tipo_atividade_id;
 	private Integer projeto_id;	
 	private Integer metodologia_id;	
@@ -24,12 +30,13 @@ public class AtividadesForm extends ValidatorForm {
 	private Date data_hora_inicio;	
 	private Date data_hora_fim;		
 	private String observacao;	
-	private Boolean alteracao_data_avaliacao;
-	private List<Dominio> listaTipoAtividades;
+	private Boolean alteracao_data_avaliacao;	
 	private List<Dominio> listaDiasDaSemana;
-//	private List<AtividadeVO> listaAtividadesVO;
 	private List<TimeSheetVO> listaTimeSheet;
-	private List<Dominio> listaAtividades;
+	private List<AtividadeVO> listaAtividades;
+	private List<ClienteVO> listaClientes;
+	private List<MetodologiaVO> listaMetodologias;
+	private List<OPVO> listaOPs;
 	
 	public String data;
 	public String diaAtividade;
@@ -60,33 +67,25 @@ public class AtividadesForm extends ValidatorForm {
     private Integer hora_almoco_fim;
     private Boolean ferias;
 	
-	public List<Dominio> getListaAtividades() {
+	public List<AtividadeVO> getListaAtividades() {
 		return listaAtividades;
 	}
 
-	public void setListaAtividades(List<Dominio> listaAtividades) {
+	public void setListaAtividades(List<AtividadeVO> listaAtividades) {
 		this.listaAtividades = listaAtividades;
 	}
 
-	public List<Dominio> getListaTipoAtividades() {
-		return listaTipoAtividades;
-	}
-	
-	public void setListaTipoAtividades(List<Dominio> listaAtividades) {
-		this.listaTipoAtividades = listaAtividades;
-	}
-	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getAtividade_original_id() {
-		return atividade_original_id;
+	public String getAtividade() {
+		return atividade;
 	}
-	public void setAtividade_original_id(Integer atividade_original_id) {
-		this.atividade_original_id = atividade_original_id;
+	public void setAtividade(String atividade) {
+		this.atividade = atividade;
 	}
 	public Integer getTipo_atividade_id() {
 		return tipo_atividade_id;
@@ -511,6 +510,90 @@ public class AtividadesForm extends ValidatorForm {
      */
     public void setListaTimeSheet(List<TimeSheetVO> listaTimeSheet) {
         this.listaTimeSheet = listaTimeSheet;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public String getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * @return the listaClientes
+     */
+    public List<ClienteVO> getListaClientes() {
+        return listaClientes;
+    }
+
+    /**
+     * @param listaClientes the listaClientes to set
+     */
+    public void setListaClientes(List<ClienteVO> listaClientes) {
+        this.listaClientes = listaClientes;
+    }
+
+    /**
+     * @return the listaOPs
+     */
+    public List<OPVO> getListaOPs() {
+        return listaOPs;
+    }
+
+    /**
+     * @param listaOPs the listaOPs to set
+     */
+    public void setListaOPs(List<OPVO> listaOPs) {
+        this.listaOPs = listaOPs;
+    }
+
+    /**
+     * @return the op
+     */
+    public String getOp() {
+        return op;
+    }
+
+    /**
+     * @param op the op to set
+     */
+    public void setOp(String op) {
+        this.op = op;
+    }
+
+    /**
+     * @return the listaMetodologias
+     */
+    public List<MetodologiaVO> getListaMetodologias() {
+        return listaMetodologias;
+    }
+
+    /**
+     * @param listaMetodologias the listaMetodologias to set
+     */
+    public void setListaMetodologias(List<MetodologiaVO> listaMetodologias) {
+        this.listaMetodologias = listaMetodologias;
+    }
+
+    /**
+     * @return the metodologia
+     */
+    public String getMetodologia() {
+        return metodologia;
+    }
+
+    /**
+     * @param metodologia the metodologia to set
+     */
+    public void setMetodologia(String metodologia) {
+        this.metodologia = metodologia;
     }
 	
 }

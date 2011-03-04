@@ -48,7 +48,7 @@ public class FuncionarioAction extends BaseDispatchAction {
 	    FuncionarioVO vo = new FuncionarioVO();	    
 	    vo.setNome("Fabio Oliveira de Pinho");
 	    vo.setCargo("Fabio Oliveira de Pinho");
-	    vo.setChefe(false);
+	    vo.setIndicaChefe(false);
 	    vo.setFerias(false);
 	    vo.setHoraAlmocoInicio(8);
 	    vo.setHoraAlmocoFim(18);

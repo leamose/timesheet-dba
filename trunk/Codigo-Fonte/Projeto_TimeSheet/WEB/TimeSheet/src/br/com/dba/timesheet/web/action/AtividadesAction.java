@@ -1,7 +1,6 @@
 package br.com.dba.timesheet.web.action;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,23 +16,31 @@ import br.com.dba.timesheet.exceptions.ErroInternoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 import br.com.dba.timesheet.vo.AtividadeVO;
+import br.com.dba.timesheet.vo.ClienteVO;
+import br.com.dba.timesheet.vo.MetodologiaVO;
+import br.com.dba.timesheet.vo.OPVO;
 import br.com.dba.timesheet.vo.TimeSheetVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
 
 
 public class AtividadesAction extends BaseDispatchAction {
 	
+    private List<AtividadeVO> listarTodasAtividades = null;
+    private List<ClienteVO> listarTodosClientes = null;
+    private List<OPVO> listarTodasOPs = null;
+    private List<MetodologiaVO> listarTodasMetodologias = null;
+    
 	public ActionForward inicio(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 	    try {
     		AtividadesForm formulario = (AtividadesForm) form;
     
-                List<TimeSheetVO> listaTimeSheet = TimesheetDelegate.getInstancia().listarTodosTimeSheet();
+                List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().listarTodosTimeSheet();
     		
-    //		List<AtividadeVO> listaAtividades = montaListaAtividades(formulario);
     		
     		formulario.setListaTimeSheet(listaTimeSheet);
+    		
     //		request.setAttribute("listaAtividades", listaAtividades);
 		} catch (ErroInternoException e) {
 		    e.printStackTrace();
@@ -42,7 +49,7 @@ public class AtividadesAction extends BaseDispatchAction {
 		}
 		
 		return mapping.findForward("cadastro");		
-	}
+	}   
 	
 	public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -52,11 +59,25 @@ public class AtividadesAction extends BaseDispatchAction {
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
 	    
-	    AtividadesForm formulario = (AtividadesForm) form;
+	    try {
+    	    AtividadesForm formulario = (AtividadesForm) form;
+    	    
+    	    TimeSheetVO vo = new TimeSheetVO();
 	    
-	    TimeSheetVO vo = new TimeSheetVO();
-	    
-//	    vo.setd
+            vo.setAtividade(getTimeSheetDelegate().getAtividade(Integer.valueOf(formulario.getAtividade())));
+            vo.setDataHoraInicio(formulario.getData_hora_inicio());
+            vo.setDataHoraFim(formulario.getData_hora_fim());
+            vo.setCliente(getTimeSheetDelegate().getCliente(Integer.valueOf(formulario.getCliente())));
+            vo.setMetodologia(getTimeSheetDelegate().getMetodologia(Integer.valueOf(formulario.getMetodologia())));
+            vo.setOp(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getOp())));
+            
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	    
 	    return mapping.findForward("retorno");        
 	}
@@ -75,7 +96,7 @@ public class AtividadesAction extends BaseDispatchAction {
             
             ListaDominios listaDominios = new ListaDominios();
             
-            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
+            formulario.setListaAtividades(getListarTodasAtividades()) ;
             formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
             
         } catch (IOException e) {
@@ -84,6 +105,7 @@ public class AtividadesAction extends BaseDispatchAction {
         
 		return mapping.findForward("retorno");        
 	}
+
 
 	public ActionForward retornoAlterar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
@@ -100,7 +122,7 @@ public class AtividadesAction extends BaseDispatchAction {
             
             ListaDominios listaDominios = new ListaDominios();
             
-            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
+            formulario.setListaAtividades(getListarTodasAtividades()) ;
             formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
             
         } catch (IOException e) {
@@ -139,7 +161,7 @@ public class AtividadesAction extends BaseDispatchAction {
             
             ListaDominios listaDominios = new ListaDominios();
             
-            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
+            formulario.setListaAtividades(getListarTodasAtividades()) ;
             formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
             
         } catch (IOException e) {
@@ -162,8 +184,8 @@ public class AtividadesAction extends BaseDispatchAction {
             
             ListaDominios listaDominios = new ListaDominios();
             
-            formulario.setListaAtividades(listaDominios.getListaAtividades()) ;
-            formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
+            //Lista para as combos.
+            preencherFormulario(formulario, listaDominios);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -172,56 +194,154 @@ public class AtividadesAction extends BaseDispatchAction {
        return mapping.findForward("retorno");      
     }
 
+
     public ActionForward retornoCadastrarAtividade(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("retorno");      
     }
 
-	public AtividadeVO criaAtividadeVO() {
-		
-		AtividadeVO atividadeVO = new AtividadeVO();
-		
-		atividadeVO.setData("Seg 23/2/2011");
-		atividadeVO.setDescricaoAtividade("Ajuste de artefato proveniente da qualidade");
-		atividadeVO.setInicioPrevisto("08:00");
-		atividadeVO.setTerminoPrevisto("18:00");
-		atividadeVO.setHorasDiarias("8");
-		atividadeVO.setSaldoDiario("8");
-		atividadeVO.setDescricaoOp("DCX003458 - Cliente");
-		atividadeVO.setDescricaoMetodologia("MP");
-		atividadeVO.setNumeroProjeto("123");
-		atividadeVO.setProdutoServico("3");
-		atividadeVO.setOutros("Teste");
-		atividadeVO.setObservacoes("Teste Observacao");
-		atividadeVO.setUltimaAtividade("23/2/2011 - Fabio Pinho");
-		
-		return atividadeVO;
-	}	
+    //*********************************************
+    //* METODOS AUXILIARES :
+    //*********************************************
+    public void preencherFormulario(AtividadesForm formulario,
+            ListaDominios listaDominios) throws IOException {
+        
+        formulario.setListaAtividades(getListarTodasAtividades()) ;
+        formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
+        formulario.setListaClientes(getListarTodosClientes());
+        formulario.setListaOPs(getListarTodasOPs());
+        formulario.setListaMetodologias(getListarTodasMetodologias());
+        
+    }
 
-    public List<AtividadeVO> montaListaAtividades(AtividadesForm formulario) {
-		List<AtividadeVO> lista = new ArrayList<AtividadeVO>();
-		
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		lista.add(criaAtividadeVO());
-		
-		
-		
-		
-//		formulario.setListaAtividadesVO(lista);
-		return lista;
-	}
-	
+    //************************************
+    //* GETTER's e SETTER's
+    //************************************
+    
+    /**
+     * @return the listarTodasAtividades
+     */
+    public List<AtividadeVO> getListarTodasAtividades() {
+        try {
+           if (this.listarTodasAtividades == null) {
+               this.listarTodasAtividades = listarTodosAtividades();
+           }
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }        
+        return this.listarTodasAtividades;
+    }
+
+    /**
+     * @param listarTodasAtividades the listarTodasAtividades to set
+     */
+    public void setListarTodasAtividades(List<AtividadeVO> listarTodasAtividades) {
+        this.listarTodasAtividades = listarTodasAtividades;
+    }
+
+    /**
+     * @return the listarTodosClientes
+     */
+    public List<ClienteVO> getListarTodosClientes() {
+        try {
+            if (listarTodosClientes == null) {
+                    listarTodosClientes = listarTodosClientes();
+            }
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return listarTodosClientes;
+    }
+
+    /**
+     * @param listarTodosClientes the listarTodosClientes to set
+     */
+    public void setListarTodosClientes(List<ClienteVO> listarTodosClientes) {
+        this.listarTodosClientes = listarTodosClientes;
+    }
+
+    /**
+     * @return the listarTodasOPs
+     */
+    public List<OPVO> getListarTodasOPs() {
+        try {
+            if (listarTodasOPs == null) {
+                    listarTodasOPs = listarTodasOPs();
+            }
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }            
+
+        return listarTodasOPs;
+        
+    }
+    
+    /**
+     * @param listarTodasOPs the listarTodasOPs to set
+     */
+    public void setListarTodasOPs(List<OPVO> listarTodasOPs) {
+        this.listarTodasOPs = listarTodasOPs;
+    }
+    
+    /**
+     * @return the listarTodasMetodologias
+     */
+    public List<MetodologiaVO> getListarTodasMetodologias() {
+        try {
+            if (listarTodasMetodologias == null) {
+                    listarTodasMetodologias = listarTodasMetodologias();
+            }
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }            
+
+        return listarTodasMetodologias;
+    }
+
+    /**
+     * @param listarTodasMetodologias the listarTodasMetodologias to set
+     */
+    public void setListarTodasMetodologias(
+            List<MetodologiaVO> listarTodasMetodologias) {
+        this.listarTodasMetodologias = listarTodasMetodologias;
+    }
+    
+    //*********************************************
+    //* CONSULTAS :
+    //*********************************************
+    public List<AtividadeVO> listarTodosAtividades()
+    throws ParametroInvalidoException {
+        return getTimeSheetDelegate().listarTodosAtividades();
+    }
+
+    public List<ClienteVO> listarTodosClientes()
+    throws ParametroInvalidoException {
+        return getTimeSheetDelegate().listarTodosCliente();
+    }
+
+    public List<OPVO> listarTodasOPs()
+    throws ParametroInvalidoException {
+        return getTimeSheetDelegate().listarTodasOPs();
+    }
+
+    public List<MetodologiaVO> listarTodasMetodologias()
+    throws ParametroInvalidoException {
+        return getTimeSheetDelegate().listarTodasMetodologias();
+    }
+    
+
+    //*********************************************
+    //* DELEGATE :
+    //*********************************************
+    public TimesheetDelegate getTimeSheetDelegate() {
+        return TimesheetDelegate.getInstancia();
+    }
+
+
+
+    
 }
