@@ -8,7 +8,7 @@ package br.com.dba.timesheet.vo;
  * @author Fábio Oliveira de Pinho
  * @version 1.0
  */
-public class AtividadeVO {
+public class TimeSheet_AtividadesVO {
 
     public String data;
     public String inicioPrevisto;
