@@ -14,9 +14,9 @@ function cadastrarAtividades() {
 }
 
 function retornoCadastrarAtividades() {
-	var form = document.forms[0];
-	form.action = contexto + '/atividade/retornoCadastrarAtividade.do'; 
-	form.submit();
+	/*var form = document.forms[0];
+	form.action = contexto + '/atividade/salvar.do';
+	form.submit();*/
 }
 
 function configurar() {
@@ -97,12 +97,6 @@ function reprovarAtividade() {
 function returnoReprovarAtividade() {
 	var form = document.forms[0];
 	form.action = contexto + '/atividade/retornoReprovar.do'; 
-	form.submit();
-}
-
-function returnSalvarPopUp() {	
-	var form = document.forms[0];
-	form.action = contexto + '/atividade/inicio.do';
 	form.submit();
 }
 

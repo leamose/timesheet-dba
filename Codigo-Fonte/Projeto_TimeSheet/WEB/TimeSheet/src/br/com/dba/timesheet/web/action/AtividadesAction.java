@@ -19,6 +19,7 @@ import br.com.dba.timesheet.vo.AtividadeVO;
 import br.com.dba.timesheet.vo.ClienteVO;
 import br.com.dba.timesheet.vo.MetodologiaVO;
 import br.com.dba.timesheet.vo.OPVO;
+import br.com.dba.timesheet.vo.ProdutoServicoVO;
 import br.com.dba.timesheet.vo.TimeSheetVO;
 import br.com.dba.timesheet.web.form.AtividadesForm;
 
@@ -29,6 +30,7 @@ public class AtividadesAction extends BaseDispatchAction {
     private List<ClienteVO> listarTodosClientes = null;
     private List<OPVO> listarTodasOPs = null;
     private List<MetodologiaVO> listarTodasMetodologias = null;
+    private List<ProdutoServicoVO> listarTodosProdutosServicos = null;
     
 	public ActionForward inicio(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -36,7 +38,7 @@ public class AtividadesAction extends BaseDispatchAction {
 	    try {
     		AtividadesForm formulario = (AtividadesForm) form;
     
-                List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().listarTodosTimeSheet();
+            List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().listarTodosTimeSheet();
     		
     		
     		formulario.setListaTimeSheet(listaTimeSheet);
@@ -63,13 +65,25 @@ public class AtividadesAction extends BaseDispatchAction {
     	    AtividadesForm formulario = (AtividadesForm) form;
     	    
     	    TimeSheetVO vo = new TimeSheetVO();
-	    
-            vo.setAtividade(getTimeSheetDelegate().getAtividade(Integer.valueOf(formulario.getAtividade())));
+    	    
+    	    //COMBOS
+            vo.setAtividade(getTimeSheetDelegate().getAtividade(Integer.valueOf(formulario.getCodigoAtividade())));
+            vo.setCliente(getTimeSheetDelegate().getCliente(Integer.valueOf(formulario.getCodigoCliente())));
+            vo.setMetodologia(getTimeSheetDelegate().getMetodologia(Integer.valueOf(formulario.getCodigoMetodologia())));
+            vo.setOp(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getCodigoOp())));
+            vo.setProdutoServico(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getCodigoProdutoServico())));
+            
+            
+            //TEXTOS
             vo.setDataHoraInicio(formulario.getData_hora_inicio());
             vo.setDataHoraFim(formulario.getData_hora_fim());
-            vo.setCliente(getTimeSheetDelegate().getCliente(Integer.valueOf(formulario.getCliente())));
-            vo.setMetodologia(getTimeSheetDelegate().getMetodologia(Integer.valueOf(formulario.getMetodologia())));
-            vo.setOp(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getOp())));
+            vo.setObservacao(formulario.getObservacao());
+//            vo.setProjeto( formulario.getNumeroProjeto());
+            vo.setOutrasAtividades(formulario.getOutros());
+            
+            getTimeSheetDelegate().salvarTimeSheet(vo);
+            
+            
             
         } catch (NumberFormatException e) {
             // TODO Auto-generated catch block
@@ -310,6 +324,29 @@ public class AtividadesAction extends BaseDispatchAction {
         this.listarTodasMetodologias = listarTodasMetodologias;
     }
     
+    /**
+     * @return the listarTodosProdutosServicos
+     */
+    public List<ProdutoServicoVO> getListarTodosProdutosServicos() {
+        try {
+            if (listarTodosProdutosServicos == null) {
+                listarTodosProdutosServicos = listarTodosProdutoServico();            
+            }
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return listarTodosProdutosServicos;
+    }
+
+    /**
+     * @param listarTodosProdutosServicos the listarTodosProdutosServicos to set
+     */
+    public void setListarTodosProdutosServicos(
+            List<ProdutoServicoVO> listarTodosProdutosServicos) {
+        this.listarTodosProdutosServicos = listarTodosProdutosServicos;
+    }
+
     //*********************************************
     //* CONSULTAS :
     //*********************************************
@@ -331,6 +368,11 @@ public class AtividadesAction extends BaseDispatchAction {
     public List<MetodologiaVO> listarTodasMetodologias()
     throws ParametroInvalidoException {
         return getTimeSheetDelegate().listarTodasMetodologias();
+    }
+
+    public List<ProdutoServicoVO> listarTodosProdutoServico()
+    throws ParametroInvalidoException {
+        return getTimeSheetDelegate().listarTodosProdutoServico();
     }
     
 
