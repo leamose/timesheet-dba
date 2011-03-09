@@ -10,6 +10,7 @@ import br.com.dba.timesheet.vo.AtividadeVO;
 import br.com.dba.timesheet.vo.ClienteVO;
 import br.com.dba.timesheet.vo.MetodologiaVO;
 import br.com.dba.timesheet.vo.OPVO;
+import br.com.dba.timesheet.vo.ProdutoServicoVO;
 import br.com.dba.timesheet.vo.TimeSheetVO;
 
 public class AtividadesForm extends ValidatorForm {
@@ -17,17 +18,41 @@ public class AtividadesForm extends ValidatorForm {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String atividade;
-	private String cliente;
-	private String op;
-	private String metodologia;
-	private Integer tipo_atividade_id;
-	private Integer projeto_id;	
-	private Integer metodologia_id;	
-	private Integer op_id;	
-	private Integer cliente_id;	
-	private Integer funcionario_id;	
-	private Date data_hora_inicio;	
+	private String codigoAtividade;
+	private String codigoCliente;
+	private String codigoOp;
+	private String codigoMetodologia;
+	private String codigoProdutoServico;		
+	/**
+     * @return the codigoProdutoServico
+     */
+    public String getCodigoProdutoServico() {
+        return codigoProdutoServico;
+    }
+
+    /**
+     * @param codigoProdutoServico the codigoProdutoServico to set
+     */
+    public void setCodigoProdutoServico(String codigoProdutoServico) {
+        this.codigoProdutoServico = codigoProdutoServico;
+    }
+
+    /**
+     * @return the listaProdutosServicos
+     */
+    public List<ProdutoServicoVO> getListaProdutosServicos() {
+        return listaProdutosServicos;
+    }
+
+    /**
+     * @param listaProdutosServicos the listaProdutosServicos to set
+     */
+    public void setListaProdutosServicos(
+            List<ProdutoServicoVO> listaProdutosServicos) {
+        this.listaProdutosServicos = listaProdutosServicos;
+    }
+
+    private Date data_hora_inicio;	
 	private Date data_hora_fim;		
 	private String observacao;	
 	private Boolean alteracao_data_avaliacao;	
@@ -37,21 +62,21 @@ public class AtividadesForm extends ValidatorForm {
 	private List<ClienteVO> listaClientes;
 	private List<MetodologiaVO> listaMetodologias;
 	private List<OPVO> listaOPs;
+	private List<ProdutoServicoVO> listaProdutosServicos;
 	
-	public String data;
-	public String diaAtividade;
-    public String inicioPrevisto;
-    public String terminoPrevisto;
-    public String horasDiarias;
-    public String saldoDiario;
-    public String descricaoOp;
-    public String descricaoMetodologia;
-    public String numeroProjeto;
-    public String descricaoAtividade;
-    public String produtoServico;
-    public String descricaoProjeto;
-    public String outros;
-    public String observacoes;	
+	private String data;
+	private String diaAtividade;
+    private String inicioPrevisto;
+    private String terminoPrevisto;
+    private String horasDiarias;
+    private String saldoDiario;
+    private String descricaoOp;
+    private String descricaoMetodologia;
+    private String numeroProjeto;
+    private String descricaoAtividade;    
+    private String descricaoProjeto;
+    private String outros;
+    private String observacoes;	
     
     /**
      * Funcionario Form
@@ -81,48 +106,12 @@ public class AtividadesForm extends ValidatorForm {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getAtividade() {
-		return atividade;
+	public String getCodigoAtividade() {
+		return codigoAtividade;
 	}
-	public void setAtividade(String atividade) {
-		this.atividade = atividade;
-	}
-	public Integer getTipo_atividade_id() {
-		return tipo_atividade_id;
-	}
-	public void setTipo_atividade_id(Integer tipo_atividade_id) {
-		this.tipo_atividade_id = tipo_atividade_id;
-	}
-	public Integer getProjeto_id() {
-		return projeto_id;
-	}
-	public void setProjeto_id(Integer projeto_id) {
-		this.projeto_id = projeto_id;
-	}
-	public Integer getMetodologia_id() {
-		return metodologia_id;
-	}
-	public void setMetodologia_id(Integer metodologia_id) {
-		this.metodologia_id = metodologia_id;
-	}
-	public Integer getOp_id() {
-		return op_id;
-	}
-	public void setOp_id(Integer op_id) {
-		this.op_id = op_id;
-	}
-	public Integer getCliente_id() {
-		return cliente_id;
-	}
-	public void setCliente_id(Integer cliente_id) {
-		this.cliente_id = cliente_id;
-	}
-	public Integer getFuncionario_id() {
-		return funcionario_id;
-	}
-	public void setFuncionario_id(Integer funcionario_id) {
-		this.funcionario_id = funcionario_id;
-	}
+	public void setCodigoAtividade(String atividade) {
+		this.codigoAtividade = atividade;
+	}	
 	public Date getData_hora_inicio() {
 		return data_hora_inicio;
 	}
@@ -273,21 +262,7 @@ public class AtividadesForm extends ValidatorForm {
     public void setDescricaoAtividade(String descricaoAtividade) {
         this.descricaoAtividade = descricaoAtividade;
     }
-
-    /**
-     * @return the produtoServico
-     */
-    public String getProdutoServico() {
-        return produtoServico;
-    }
-
-    /**
-     * @param produtoServico the produtoServico to set
-     */
-    public void setProdutoServico(String produtoServico) {
-        this.produtoServico = produtoServico;
-    }
-
+   
     /**
      * @return the descricaoProjeto
      */
@@ -515,15 +490,15 @@ public class AtividadesForm extends ValidatorForm {
     /**
      * @return the cliente
      */
-    public String getCliente() {
-        return cliente;
+    public String getCodigoCliente() {
+        return codigoCliente;
     }
 
     /**
      * @param cliente the cliente to set
      */
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public void setCodigoCliente(String cliente) {
+        this.codigoCliente = cliente;
     }
 
     /**
@@ -557,15 +532,15 @@ public class AtividadesForm extends ValidatorForm {
     /**
      * @return the op
      */
-    public String getOp() {
-        return op;
+    public String getCodigoOp() {
+        return codigoOp;
     }
 
     /**
      * @param op the op to set
      */
-    public void setOp(String op) {
-        this.op = op;
+    public void setCodigoOp(String op) {
+        this.codigoOp = op;
     }
 
     /**
@@ -585,15 +560,15 @@ public class AtividadesForm extends ValidatorForm {
     /**
      * @return the metodologia
      */
-    public String getMetodologia() {
-        return metodologia;
+    public String getCodigoMetodologia() {
+        return codigoMetodologia;
     }
 
     /**
      * @param metodologia the metodologia to set
      */
-    public void setMetodologia(String metodologia) {
-        this.metodologia = metodologia;
+    public void setCodigoMetodologia(String metodologia) {
+        this.codigoMetodologia = metodologia;
     }
 	
 }

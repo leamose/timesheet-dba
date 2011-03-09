@@ -61,7 +61,7 @@
 			</table>			
 		</div>
 		<div class="barraIcones">
-			<html:form action="/funcionario/cadastrarFuncionario" method="post">
+			<html:form action="/atividade/inicio" method="post">
 				<a href="#" onclick="javascript:cadastrarAtividades();">
 					<html:img src="${contexto}/WebContent/img/novoContratoIcone.png" title="atividade"/></a>					
 				<a href="#" onclick="javascript:cadastrarFuncionario();">
