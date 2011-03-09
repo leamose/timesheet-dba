@@ -71,7 +71,7 @@ public class AtividadesAction extends BaseDispatchAction {
             vo.setCliente(getTimeSheetDelegate().getCliente(Integer.valueOf(formulario.getCodigoCliente())));
             vo.setMetodologia(getTimeSheetDelegate().getMetodologia(Integer.valueOf(formulario.getCodigoMetodologia())));
             vo.setOp(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getCodigoOp())));
-            vo.setProdutoServico(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getCodigoProdutoServico())));
+            vo.setProdutoServico(getTimeSheetDelegate().getProdutoServico(Integer.valueOf(formulario.getCodigoProdutoServico())));
             
             
             //TEXTOS
