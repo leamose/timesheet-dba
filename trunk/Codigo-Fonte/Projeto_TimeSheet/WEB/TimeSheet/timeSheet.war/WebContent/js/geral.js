@@ -1,5 +1,19 @@
-function habilitarDiv(div){
+function outros(div){
 	document.getElementById(div).style.display = '';				
+}
+
+function outrasAtividades(form){
+	
+	for (var i = 0; i < form.codigoAtividade.options.length; i++) {
+        if (form.codigoAtividade.options[i].selected){
+        	if(form.codigoAtividade.options[i].value == 6){        		
+        		document.getElementById('outros').style.display = '';
+        	}else{
+        		document.getElementById('outros').style.display = 'none';
+        	}
+        }
+      }
+	
 }
 
 function operacaoCancelada() {
@@ -51,8 +65,8 @@ function retornoDetalharAtividade() {
 }
 
 //ALTERAR
-function alterarAtividade() {
-	open_popPpAtividade(contexto + '/atividade/alterar.do', retornoAlterarAtividade, "Alterar Atividade") ;
+function alterarAtividade(codigoTimeSheet) {
+	open_popPpAtividade(contexto + '/atividade/alterar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=alterar', retornoAlterarAtividade, "Alterar Atividade") ;
 }
 
 function retornoAlterarAtividade() {
@@ -122,7 +136,7 @@ function cancelaOperacao() {
 //ABRE POPUP ATIVIDADES
 function open_popPpAtividade(url, urlRetorno, titulo) {
 	var largura = 720;
-	var altura = 415;
+	var altura = 365;
 	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
 }
 
@@ -139,6 +153,11 @@ function open_popPpFuncionario(url, urlRetorno, titulo) {
 	var altura = 252;
 	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
 }
+
+
+
+
+
 
 //METODOS DE VALIDACAO
 function vazio(texto) {
@@ -157,9 +176,6 @@ function SaltaCampo(campo,prox,tammax,teclapres)
 {
 	var tecla = teclapres;
 	vr = document.forms[0][campo].value;
-
-	if(vazio(document.all.item(document.activeElement.getAttribute('name')).value))
-		document.all.item(document.activeElement.getAttribute('name')).value = '';
 	
 	if( tecla == 109 || tecla == 189 || tecla == 188 || tecla == 110 || tecla == 111 || tecla == 223 || tecla == 108 )
 	{
@@ -191,8 +207,6 @@ function FormataData(Campo,teclapres)
 	vr = vr.replace( "/", "" );
 	vr = vr.replace( "/", "" );
 	tam = vr.length + 1;
-
-	if(vazio(document.all.item(document.activeElement.getAttribute('name')).value)) document.all.item(document.activeElement.getAttribute('name')).value = '';
 
 	if ( tecla != 9 && tecla != 8 && tecla != 46 )
 	{
@@ -298,8 +312,6 @@ function FormataHora(Campo,teclapres)
 	vr = vr.replace( ":", "" );
 	tam = vr.length + 1;
 
-	if(vazio(document.all.item(document.activeElement.getAttribute('name')).value)) document.all.item(document.activeElement.getAttribute('name')).value = '';
-
 	if ( tecla != 9 && tecla != 8 && tecla != 46 )
 		if ( tam > 2 && tam <= 5 )
 			document.forms[0][Campo].value = vr.substr( 0, tam - 2  ) + ':' + vr.substr( tam - 2, tam );
@@ -382,5 +394,87 @@ if (document.tarefa.data_final.value != "") {
 }
 	
 }
+
+function ValidaCampoTexto(){
+
+	for (i=0; i < document.tarefa.elements.length;i++){
+		if ((document.tarefa.elements[i].type == "textarea") || (document.tarefa.elements[i].type == "text")){
+			for(j=0; j < document.tarefa.elements[i].value.length;j++){
+				ch = document.tarefa.elements[i].value.charAt(j);
+				if ((ch=='"') || (ch=="'")){
+					alert("Caracter inválido --> " +(ch));
+					flag = true;
+					document.tarefa.elements[i].focus();
+				}
+			}					 
+		}    
+	}	
+}
+
+function salvar() {
+
+	if (document.forms[0].data.value == ""){
+       alert("Esqueceu de especificar a data da atividade ");
+       document.forms[0].data.focus();
+       return;
+    }
+
+    if (document.forms[0].dataHoraInicio.value == ""){
+	   alert("Esqueceu de especificar a data inicial da atividade ");
+	   document.forms[0].dataHoraInicio.focus();
+	   return;
+    }
+
+    if (document.forms[0].dataHoraFim.value == ""){
+       alert("Esqueceu de especificar a data final da atividade ");
+       document.forms[0].dataHoraFim.focus();
+       return;
+    }
+
+    if (document.forms[0].dataHoraInicio.value == ""){
+       alert("Esqueceu de especificar a hora que a atividade foi iniciada ");
+       document.forms[0].dataHoraInicio.focus();
+       return;
+    }
+
+    if (document.forms[0].dataHoraFim.value == ""){
+	     alert("Esqueceu de especificar a hora que a atividade foi finalizada ");
+	     document.forms[0].dataHoraFim.focus();
+	     return;
+    }
+	
+	if(document.forms[0].op.value == '#') {
+		alert("Esqueceu de selecionar uma OP !");
+		document.forms[0].op.focus();
+		return;
+	}
+	if(document.forms[0].codigoMetodologia.value == '#') {
+		alert("Esqueceu de selecionar uma Metodologia !");
+		document.forms[0].codigoMetodologia.focus();
+		return;
+	}
+	if(document.forms[0].codigoCliente.value == '#') {
+		alert("Esqueceu de selecionar uma Cliente !");
+		document.forms[0].codigoCliente.focus();
+		return;
+	}
+	if(document.forms[0].codigoAtividade.value == '#') {
+		alert("Esqueceu de selecionar uma Atividade !");
+		document.forms[0].codigoAtividade.focus();
+		return;
+	}
+	if(document.forms[0].codigoProdutoServico.value == '#') {
+		alert("Esqueceu de selecionar uma Produto / Serviço !");
+		document.forms[0].codigoProdutoServico.focus();
+		return;
+	}
+	
+	document.forms[0].submit();
+	
+	confirmaOperacao();
+
+}     
+
+
 
 
