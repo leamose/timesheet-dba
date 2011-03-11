@@ -4,21 +4,21 @@ VALUES (1, 'Elaboração');
 
 INSERT INTO ts.tipoatividade(
 codigotipoatividade, descricao)
-VALUES (1, 'Validação');
+VALUES (2, 'Validação');
 
 INSERT INTO ts.tipoatividade(
 codigotipoatividade, descricao)
-VALUES (2, 'Ajustes(Retrabalho de qualidade)');
+VALUES (3, 'Ajustes(Retrabalho de qualidade)');
 
 INSERT INTO ts.tipoatividade(
 codigotipoatividade, descricao)
-VALUES (3, 'Correção');
+VALUES (4, 'Correção');
 
 INSERT INTO ts.tipoatividade(
 codigotipoatividade, descricao)
-VALUES (4, 'Não mensurável');
+VALUES (5, 'Não mensurável');
 
 INSERT INTO ts.tipoatividade(
 codigotipoatividade, descricao)
-VALUES (5, 'Outros');
+VALUES (6, 'Outros');
     

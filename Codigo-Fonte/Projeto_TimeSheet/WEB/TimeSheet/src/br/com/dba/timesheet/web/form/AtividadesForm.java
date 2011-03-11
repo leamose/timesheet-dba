@@ -1,29 +1,76 @@
 package br.com.dba.timesheet.web.form;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.dominios.Dominio;
-import br.com.dba.timesheet.vo.AtividadeVO;
-import br.com.dba.timesheet.vo.ClienteVO;
-import br.com.dba.timesheet.vo.MetodologiaVO;
-import br.com.dba.timesheet.vo.OPVO;
-import br.com.dba.timesheet.vo.ProdutoServicoVO;
-import br.com.dba.timesheet.vo.TimeSheetVO;
+import br.com.dba.timesheet.pojo.Atividade;
+import br.com.dba.timesheet.pojo.Cliente;
+import br.com.dba.timesheet.pojo.Funcionario;
+import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
+import br.com.dba.timesheet.pojo.Metodologia;
+import br.com.dba.timesheet.pojo.OP;
+import br.com.dba.timesheet.pojo.ProdutoServico;
+import br.com.dba.timesheet.pojo.Projeto;
+import br.com.dba.timesheet.pojo.TimeSheet;
+import br.com.dba.timesheet.pojo.Usuario;
 
 public class AtividadesForm extends ValidatorForm {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	private String acao; 
 	private String codigoAtividade;
 	private String codigoCliente;
 	private String codigoOp;
 	private String codigoMetodologia;
 	private String codigoProdutoServico;		
-	/**
+	private String codigoTimeSheet;		
+
+    private String dataHoraInicio;	
+	private String dataHoraFim;		
+	private String observacao;	
+	private Boolean alteracao_data_avaliacao;	
+	
+	private String data;
+	private String diaAtividade;
+    private String inicioPrevisto;
+    private String terminoPrevisto;
+    private String horasDiarias;
+    private String saldoDiario;
+    private String descricaoOp;
+    private String descricaoMetodologia;
+    private String numeroProjeto;
+    private String nomeProjeto;
+    private String descricaoAtividade;    
+    private String descricaoProjeto;
+    private String outros;    	
+
+    //Listas
+    private List<Dominio> listaDiasDaSemana;
+    private List<TimeSheet> listaTimeSheet;
+    private List<Atividade> listaAtividades;
+    private List<Cliente> listaClientes;
+    private List<Metodologia> listaMetodologias;
+    private List<OP> listaOPs;
+    private List<ProdutoServico> listaProdutosServicos;
+
+    
+    //POJO's
+    private TimeSheet timeSheet;
+    private Atividade atividades;
+    private Cliente clientes;
+    private Metodologia metodologias;
+    private OP oPs;
+    private ProdutoServico produtosServicos;
+    private HistoricoTimeSheet historicoTimeSheet;
+    private Usuario usuario;
+    private Funcionario funcionario;
+    private Projeto projeto;
+    
+    /**
      * @return the codigoProdutoServico
      */
     public String getCodigoProdutoServico() {
@@ -40,7 +87,7 @@ public class AtividadesForm extends ValidatorForm {
     /**
      * @return the listaProdutosServicos
      */
-    public List<ProdutoServicoVO> getListaProdutosServicos() {
+    public List<ProdutoServico> getListaProdutosServicos() {
         return listaProdutosServicos;
     }
 
@@ -48,55 +95,16 @@ public class AtividadesForm extends ValidatorForm {
      * @param listaProdutosServicos the listaProdutosServicos to set
      */
     public void setListaProdutosServicos(
-            List<ProdutoServicoVO> listaProdutosServicos) {
+            List<ProdutoServico> listaProdutosServicos) {
         this.listaProdutosServicos = listaProdutosServicos;
     }
-
-    private Date data_hora_inicio;	
-	private Date data_hora_fim;		
-	private String observacao;	
-	private Boolean alteracao_data_avaliacao;	
-	private List<Dominio> listaDiasDaSemana;
-	private List<TimeSheetVO> listaTimeSheet;
-	private List<AtividadeVO> listaAtividades;
-	private List<ClienteVO> listaClientes;
-	private List<MetodologiaVO> listaMetodologias;
-	private List<OPVO> listaOPs;
-	private List<ProdutoServicoVO> listaProdutosServicos;
-	
-	private String data;
-	private String diaAtividade;
-    private String inicioPrevisto;
-    private String terminoPrevisto;
-    private String horasDiarias;
-    private String saldoDiario;
-    private String descricaoOp;
-    private String descricaoMetodologia;
-    private String numeroProjeto;
-    private String descricaoAtividade;    
-    private String descricaoProjeto;
-    private String outros;
-    private String observacoes;	
     
-    /**
-     * Funcionario Form
-     */
-    private Integer substituto_id;
-    private Integer chefe_id;
-    private String nome;
-    private String cargo;
-    private Boolean chefe;
-    private Integer hora_trabalho_inicio;
-    private Integer hora_trabalho_fim;
-    private Integer hora_almoco_inicio;
-    private Integer hora_almoco_fim;
-    private Boolean ferias;
 	
-	public List<AtividadeVO> getListaAtividades() {
+	public List<Atividade> getListaAtividades() {
 		return listaAtividades;
 	}
 
-	public void setListaAtividades(List<AtividadeVO> listaAtividades) {
+	public void setListaAtividades(List<Atividade> listaAtividades) {
 		this.listaAtividades = listaAtividades;
 	}
 
@@ -112,17 +120,17 @@ public class AtividadesForm extends ValidatorForm {
 	public void setCodigoAtividade(String atividade) {
 		this.codigoAtividade = atividade;
 	}	
-	public Date getData_hora_inicio() {
-		return data_hora_inicio;
+	public String getDataHoraInicio() {
+		return dataHoraInicio;
 	}
-	public void setData_hora_inicio(Date data_hora_inicio) {
-		this.data_hora_inicio = data_hora_inicio;
+	public void setDataHoraInicio(String data_hora_inicio) {
+		this.dataHoraInicio = data_hora_inicio;
 	}
-	public Date getData_hora_fim() {
-		return data_hora_fim;
+	public String getDataHoraFim() {
+		return dataHoraFim;
 	}
-	public void setData_hora_fim(Date data_hora_fim) {
-		this.data_hora_fim = data_hora_fim;
+	public void setDataHoraFim(String data_hora_fim) {
+		this.dataHoraFim = data_hora_fim;
 	}
 	public String getObservacao() {
 		return observacao;
@@ -292,20 +300,6 @@ public class AtividadesForm extends ValidatorForm {
     }
 
     /**
-     * @return the observacoes
-     */
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    /**
-     * @param observacoes the observacoes to set
-     */
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
-
-    /**
      * @return the diaAtividade
      */
     public String getDiaAtividade() {
@@ -331,159 +325,19 @@ public class AtividadesForm extends ValidatorForm {
      */
     public void setListaDiasDaSemana(List<Dominio> listaDiasDaSemana) {
         this.listaDiasDaSemana = listaDiasDaSemana;
-    }
-
-    /**
-     * @return the substituto_id
-     */
-    public Integer getSubstituto_id() {
-        return substituto_id;
-    }
-
-    /**
-     * @param substituto_id the substituto_id to set
-     */
-    public void setSubstituto_id(Integer substituto_id) {
-        this.substituto_id = substituto_id;
-    }
-
-    /**
-     * @return the chefe_id
-     */
-    public Integer getChefe_id() {
-        return chefe_id;
-    }
-
-    /**
-     * @param chefe_id the chefe_id to set
-     */
-    public void setChefe_id(Integer chefe_id) {
-        this.chefe_id = chefe_id;
-    }
-
-    /**
-     * @return the nome
-     */
-    public String getNome() {
-        return nome;
-    }
-
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * @return the cargo
-     */
-    public String getCargo() {
-        return cargo;
-    }
-
-    /**
-     * @param cargo the cargo to set
-     */
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    /**
-     * @return the chefe
-     */
-    public Boolean getChefe() {
-        return chefe;
-    }
-
-    /**
-     * @param chefe the chefe to set
-     */
-    public void setChefe(Boolean chefe) {
-        this.chefe = chefe;
-    }
-
-    /**
-     * @return the hora_trabalho_inicio
-     */
-    public Integer getHora_trabalho_inicio() {
-        return hora_trabalho_inicio;
-    }
-
-    /**
-     * @param hora_trabalho_inicio the hora_trabalho_inicio to set
-     */
-    public void setHora_trabalho_inicio(Integer hora_trabalho_inicio) {
-        this.hora_trabalho_inicio = hora_trabalho_inicio;
-    }
-
-    /**
-     * @return the hora_trabalho_fim
-     */
-    public Integer getHora_trabalho_fim() {
-        return hora_trabalho_fim;
-    }
-
-    /**
-     * @param hora_trabalho_fim the hora_trabalho_fim to set
-     */
-    public void setHora_trabalho_fim(Integer hora_trabalho_fim) {
-        this.hora_trabalho_fim = hora_trabalho_fim;
-    }
-
-    /**
-     * @return the hora_almoco_inicio
-     */
-    public Integer getHora_almoco_inicio() {
-        return hora_almoco_inicio;
-    }
-
-    /**
-     * @param hora_almoco_inicio the hora_almoco_inicio to set
-     */
-    public void setHora_almoco_inicio(Integer hora_almoco_inicio) {
-        this.hora_almoco_inicio = hora_almoco_inicio;
-    }
-
-    /**
-     * @return the hora_almoco_fim
-     */
-    public Integer getHora_almoco_fim() {
-        return hora_almoco_fim;
-    }
-
-    /**
-     * @param hora_almoco_fim the hora_almoco_fim to set
-     */
-    public void setHora_almoco_fim(Integer hora_almoco_fim) {
-        this.hora_almoco_fim = hora_almoco_fim;
-    }
-
-    /**
-     * @return the ferias
-     */
-    public Boolean getFerias() {
-        return ferias;
-    }
-
-    /**
-     * @param ferias the ferias to set
-     */
-    public void setFerias(Boolean ferias) {
-        this.ferias = ferias;
-    }
+    }    
 
     /**
      * @return the listaTimeSheet
      */
-    public List<TimeSheetVO> getListaTimeSheet() {
+    public List<TimeSheet> getListaTimeSheet() {
         return listaTimeSheet;
     }
 
     /**
      * @param listaTimeSheet the listaTimeSheet to set
      */
-    public void setListaTimeSheet(List<TimeSheetVO> listaTimeSheet) {
+    public void setListaTimeSheet(List<TimeSheet> listaTimeSheet) {
         this.listaTimeSheet = listaTimeSheet;
     }
 
@@ -504,28 +358,28 @@ public class AtividadesForm extends ValidatorForm {
     /**
      * @return the listaClientes
      */
-    public List<ClienteVO> getListaClientes() {
+    public List<Cliente> getListaClientes() {
         return listaClientes;
     }
 
     /**
      * @param listaClientes the listaClientes to set
      */
-    public void setListaClientes(List<ClienteVO> listaClientes) {
+    public void setListaClientes(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
 
     /**
      * @return the listaOPs
      */
-    public List<OPVO> getListaOPs() {
+    public List<OP> getListaOPs() {
         return listaOPs;
     }
 
     /**
      * @param listaOPs the listaOPs to set
      */
-    public void setListaOPs(List<OPVO> listaOPs) {
+    public void setListaOPs(List<OP> listaOPs) {
         this.listaOPs = listaOPs;
     }
 
@@ -546,14 +400,14 @@ public class AtividadesForm extends ValidatorForm {
     /**
      * @return the listaMetodologias
      */
-    public List<MetodologiaVO> getListaMetodologias() {
+    public List<Metodologia> getListaMetodologias() {
         return listaMetodologias;
     }
 
     /**
      * @param listaMetodologias the listaMetodologias to set
      */
-    public void setListaMetodologias(List<MetodologiaVO> listaMetodologias) {
+    public void setListaMetodologias(List<Metodologia> listaMetodologias) {
         this.listaMetodologias = listaMetodologias;
     }
 
@@ -569,6 +423,188 @@ public class AtividadesForm extends ValidatorForm {
      */
     public void setCodigoMetodologia(String metodologia) {
         this.codigoMetodologia = metodologia;
+    }
+
+    /**
+     * @return the nomeProjeto
+     */
+    public String getNomeProjeto() {
+        return nomeProjeto;
+    }
+
+    /**
+     * @param nomeProjeto the nomeProjeto to set
+     */
+    public void setNomeProjeto(String nomeProjeto) {
+        this.nomeProjeto = nomeProjeto;
+    }
+
+    /**
+     * @return the codigoTimeSheet
+     */
+    public String getCodigoTimeSheet() {
+        return codigoTimeSheet;
+    }
+
+    /**
+     * @param codigoTimeSheet the codigoTimeSheet to set
+     */
+    public void setCodigoTimeSheet(String codigoTimeSheet) {
+        this.codigoTimeSheet = codigoTimeSheet;
+    }
+
+    /**
+     * @return the acao
+     */
+    public String getAcao() {
+        return acao;
+    }
+
+    /**
+     * @param acao the acao to set
+     */
+    public void setAcao(String acao) {
+        this.acao = acao;
+    }
+
+    /**
+     * @return the timeSheet
+     */
+    public TimeSheet getTimeSheet() {
+        return timeSheet;
+    }
+
+    /**
+     * @param timeSheet the timeSheet to set
+     */
+    public void setTimeSheet(TimeSheet timeSheet) {
+        this.timeSheet = timeSheet;
+    }
+
+    /**
+     * @return the atividades
+     */
+    public Atividade getAtividades() {
+        return atividades;
+    }
+
+    /**
+     * @param atividades the atividades to set
+     */
+    public void setAtividades(Atividade atividades) {
+        this.atividades = atividades;
+    }
+
+    /**
+     * @return the clientes
+     */
+    public Cliente getClientes() {
+        return clientes;
+    }
+
+    /**
+     * @param clientes the clientes to set
+     */
+    public void setClientes(Cliente clientes) {
+        this.clientes = clientes;
+    }
+
+    /**
+     * @return the metodologias
+     */
+    public Metodologia getMetodologias() {
+        return metodologias;
+    }
+
+    /**
+     * @param metodologias the metodologias to set
+     */
+    public void setMetodologias(Metodologia metodologias) {
+        this.metodologias = metodologias;
+    }
+
+    /**
+     * @return the oPs
+     */
+    public OP getoPs() {
+        return oPs;
+    }
+
+    /**
+     * @param oPs the oPs to set
+     */
+    public void setoPs(OP oPs) {
+        this.oPs = oPs;
+    }
+
+    /**
+     * @return the produtosServicos
+     */
+    public ProdutoServico getProdutosServicos() {
+        return produtosServicos;
+    }
+
+    /**
+     * @param produtosServicos the produtosServicos to set
+     */
+    public void setProdutosServicos(ProdutoServico produtosServicos) {
+        this.produtosServicos = produtosServicos;
+    }
+
+    /**
+     * @return the historicoTimeSheet
+     */
+    public HistoricoTimeSheet getHistoricoTimeSheet() {
+        return historicoTimeSheet;
+    }
+
+    /**
+     * @param historicoTimeSheet the historicoTimeSheet to set
+     */
+    public void setHistoricoTimeSheet(HistoricoTimeSheet historicoTimeSheet) {
+        this.historicoTimeSheet = historicoTimeSheet;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     * @return the funcionario
+     */
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    /**
+     * @param funcionario the funcionario to set
+     */
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+    /**
+     * @return the projeto
+     */
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    /**
+     * @param projeto the projeto to set
+     */
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 	
 }

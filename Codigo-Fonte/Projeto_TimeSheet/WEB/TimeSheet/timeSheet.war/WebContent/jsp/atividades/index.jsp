@@ -5,24 +5,8 @@
 <tiles:insert definition=".mainLayout">	
 	<tiles:put name="corpo" type="string"> 
 	
-		<script type="text/javascript">
-			jQuery().ready(function() {
-			    jQuery(".simple").splitter();
-			});
-		</script>		
-	
-		<div id="simplediv2" class="menupop">
-		    <ul>
-		    	<li><a href="#" onclick="javascript:detalharAtividade();">Detalhar atividade</a></li>
-				<li><a href="#" onclick="javascript:alterarAtividade();">Alterar atividade</a></li>
-				<li><a href="#" onclick="javascript:excluirAtividade();">Excluir atividade</a></li>
-				<li><a href="#" onclick="javascript:aprovarAtividade();">Aprovar atividade</a></li>
-				<li><a href="#" onclick="javascript:reprovarAtividade();">Reprovar atividade</a></li>
-		    </ul>
-		</div>
-	
 		<!-- MIOLO -->
-		<div id="miolo" style="background-color:#fff; background-image:none;height:92%;">
+		<div id="miolo" style="background-color:#fff; background-image:none;height:80%;">
 			<div class="botoesJanela">			
 				<!-- DATA DO CALENDARIO -->
 				<form action="">
@@ -41,30 +25,35 @@
 							
 				</form>
 				
-			</div>					
+			</div>
 			<html:form action="/atividade/inicio.do">
+			<div style="padding-bottom: 32.5%;">					
 				<display:table name="${form.listaTimeSheet}" style="width:100%;" class="lista" id="tabela" 
 					length="100" pagesize="30" requestURI="/atividade/inicio.do" cellspacing="0"
 					 htmlId="resultado">
 					<display:column>
-						<html:img  src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>
-						<span class="h1"><a href="#" class="link" rel="simplediv2">
-							<img src="${contexto}/WebContent/img/setaPop.png"/></a></span>
-						<!--
-							<html:img src="${contexto}/WebContent/img/reprov_mao.gif" title="aprovado"/>
-							<html:img src="${contexto}/WebContent/img/aguardando_aprov.gif" title="aprovado"/>
-						-->
+						<html:img  src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>												
 					</display:column>						
-					<display:column property="data" title="Data"/>
-					<display:column property="inicioPrevisto" title="Início Previsto"/>
-					<display:column property="terminoPrevisto" title="Fim Previsto"/>
-					<display:column property="horasDiarias" title="Horas"/>
-					<display:column property="saldoDiario" title="Saldo"/>						
-					<display:column property="numeroProjeto" title="No. Projeto"/>
-					<display:column property="descricaoAtividade" title="Atividade" />	
-					<display:column property="ultimaAtividade" title="Ultima atividade"/>
+					<display:column property="dataHoraInicio" title="Data" format="{0,date,dd/MM/yyyy}" sortable="true"/>
+					<display:column property="dataHoraInicio" title="Início Previsto" format="{0,date,HH:MM}"/>
+					<display:column property="dataHoraInicio" title="Fim Previsto" format="{0,date,HH:MM}"/>
+					<display:column property="dataHoraInicio" title="Horas"/>
+					<display:column property="dataHoraInicio" title="Saldo"/>						
+					<display:column property="projeto.numeroProjeto" title="No. Projeto"/>
+					<display:column property="atividade.descricao" title="Atividade" />	
+					<display:column property="observacao" title="Ultima atividade"/>
+					<display:column title="Ações">
+						<a href="javascript:alterarAtividade(${tabela.id});">
+							<html:img  src="${contexto}/WebContent/img/abrir.png" title="aprovado"/>
+						</a>
+						<html:img  src="${contexto}/WebContent/img/alterar.png" title="aprovado"/>
+						<html:img  src="${contexto}/WebContent/img/excluir.png" title="aprovado"/>
+						<html:img  src="${contexto}/WebContent/img/aceitar.png" title="aprovado"/>
+						<html:img  src="${contexto}/WebContent/img/recu.png" title="aprovado"/>
+												
+					</display:column>
 				</display:table>
-				
+			</div>
 				<div style="float:left; padding-right: 15px;padding-top: 30px; ">
 					<table align="center">
 					 <tr>

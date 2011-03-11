@@ -1,117 +1,117 @@
 ﻿INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (65, 3,'Termo de Abertura');    
+    VALUES (67, 4,'Termo de Abertura');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (66, 3,'Declaração de Escopo preliminar');    
+    VALUES (68, 4,'Declaração de Escopo preliminar');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (67, 3,'CONTAGEM INDICATIVA');    
+    VALUES (69, 4,'CONTAGEM INDICATIVA');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (68, 3,'Documento de visão e requisitos');    
+    VALUES (70, 4,'Documento de visão e requisitos');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (69, 3,'Glossário');    
+    VALUES (71, 4,'Glossário');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (70, 3,'Plano de Gerenciamento de Projeto');    
+    VALUES (72, 4,'Plano de Gerenciamento de Projeto');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (71, 3,'Plano de Desenvolvimento');    
+    VALUES (73, 4,'Plano de Desenvolvimento');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (72, 3,'CONTAGEM ESTIMADA');    
+    VALUES (74, 4,'CONTAGEM ESTIMADA');    
 
 
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (73, 3,'Matriz de Relacionamento');    
+    VALUES (75, 4,'Matriz de Relacionamento');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (74, 3,'Modelo Dimensional');    
+    VALUES (76, 4,'Modelo Dimensional');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (75, 3,'Dicionário de Dados');    
+    VALUES (77, 4,'Dicionário de Dados');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (76, 3,'Mapa de Transformação');    
+    VALUES (78, 4,'Mapa de Transformação');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (77, 3,'Fluxo ETL');    
+    VALUES (79, 4,'Fluxo ETL');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (78, 3,'Mapa ETL');    
+    VALUES (80, 4,'Mapa ETL');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (79, 3,'Especificação da camada semântica');    
+    VALUES (81, 4,'Especificação da camada semântica');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (80, 3,'Análise de espaços (GAP)');    
+    VALUES (82, 4,'Análise de espaços (GAP)');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (81, 3,'Documento de Arquitetura');    
+    VALUES (83, 4,'Documento de Arquitetura');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (82, 3,'CONTAGEM DETALHADA');    
+    VALUES (84, 4,'CONTAGEM DETALHADA');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (83, 3,'Jobs ETL');    
+    VALUES (85, 4,'Jobs ETL');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (84, 3,'Camada Semântica e Relatórios');    
+    VALUES (86, 4,'Camada Semântica e Relatórios');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (85, 3,'Plano de Testes');    
+    VALUES (87, 4,'Plano de Testes');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (86, 3,'Roteiro de Testes');    
+    VALUES (88, 4,'Roteiro de Testes');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (87, 3,'Relatório de Execução de testes');    
+    VALUES (89, 4,'Relatório de Execução de testes');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (88, 3,'CONTAGEM DETALHADA');    
+    VALUES (90, 4,'CONTAGEM DETALHADA');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (89, 3,'Documento de Deploy');    
+    VALUES (91, 4,'Documento de Deploy');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (90, 3,'Termo de Homologação');    
+    VALUES (92, 4,'Termo de Homologação');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (91, 3,'Manual de produção');    
+    VALUES (93, 4,'Manual de produção');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (92, 3,'Doc de Lições aprendidas');    
+    VALUES (94, 4,'Doc de Lições aprendidas');    
     
 INSERT INTO ts.produtoservico(
             codigoprodutoservico, codigometodologia, descricao)
-    VALUES (93, 3,'Doc de Encerramento do Projeto');    
+    VALUES (95, 4,'Doc de Encerramento do Projeto');    
 

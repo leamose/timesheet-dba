@@ -15,7 +15,7 @@
 	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/javax.servlet.jsp.jar"/>
 	<classpathentry kind="lib" path="timeSheet.war/WEB-INF/lib/commons-chain-1.1.jar"/>
 	<classpathentry kind="lib" path="timeSheet.war/WEB-INF/lib/commons-digester-1.8.jar"/>
-	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/TimesheetCliente.jar" sourcepath="/CompTimesheet"/>
 	<classpathentry kind="lib" path="timeSheet.war/WEB-INF/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Projetos_Fabrica_DBA/Projeto_TimeSheet/lib/TimesheetCliente.jar"/>
 	<classpathentry kind="output" path="timeSheet.war/WEB-INF/classes"/>
 </classpath>

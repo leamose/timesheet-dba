@@ -1,26 +1,23 @@
 ﻿INSERT INTO ts.metodologia(
             codigometodologia, descricao)
-    VALUES (0, 'Novos Produtos');
+    VALUES (1, 'Novos Produtos');
 
 INSERT INTO ts.metodologia(
             codigometodologia, descricao)
-    VALUES (1, 'Manutenção Planejada');
+    VALUES (2, 'Manutenção Planejada');
 
 INSERT INTO ts.metodologia(
             codigometodologia, descricao)
-    VALUES (2, 'Manutenção Corretiva');
+    VALUES (3, 'Manutenção Corretiva');
 
 INSERT INTO ts.metodologia(
            codigometodologia, descricao)
-VALUES (3, 'BI');
+VALUES (4, 'BI');
 
 
 INSERT INTO ts.metodologia(
 	codigometodologia, descricao)
-VALUES (4, 'Portais');
+VALUES (5, 'Portais');
 
-INSERT INTO ts.metodologia(
-	codigometodologia, descricao)
-VALUES (5, 'Implantação');
 
 
