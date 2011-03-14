@@ -24,13 +24,13 @@ function operacaoCancelada() {
 
 //CADASTRAR ATIVIDADE
 function cadastrarAtividades() {
-	open_popPpAtividade(contexto + '/atividade/cadastrarAtividade.do', retornoCadastrarAtividades, "Cadastrar Atividade") ;
+	open_popPpAtividade(false,contexto + '/atividade/cadastrarAtividade.do?acao=salvar', null, "Cadastrar Atividade") ;
 }
 
 function retornoCadastrarAtividades() {
-	/*var form = document.forms[0];
+	var form = document.forms[0];
 	form.action = contexto + '/atividade/salvar.do';
-	form.submit();*/
+	form.submit();
 }
 
 function configurar() {
@@ -54,8 +54,8 @@ function consultarAtividade() {
 }
 
 //DETALHAR
-function detalharAtividade() {
-	open_popPpAtividade(contexto + '/atividade/detalhar.do', retornoDetalharAtividade, "Detalhar Atividade") ;
+function detalharAtividade(codigoTimeSheet, temOutrasAtividades) {
+	open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=detalhar', retornoDetalharAtividade, "Detalhar Atividade") ;
 }
 
 function retornoDetalharAtividade() {
@@ -65,20 +65,22 @@ function retornoDetalharAtividade() {
 }
 
 //ALTERAR
-function alterarAtividade(codigoTimeSheet) {
-	open_popPpAtividade(contexto + '/atividade/alterar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=alterar', retornoAlterarAtividade, "Alterar Atividade") ;
+function alterarAtividade(codigoTimeSheet, temOutrasAtividades) {
+	open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=alterar', null, "Alterar Atividade") ;
 }
 
 function retornoAlterarAtividade() {
+	alert('entrou aki')
 	var form = document.forms[0];
-	form.action = contexto + '/atividade/retornoAlterar.do'; 
+	form.action = contexto + '/atividade/retornoAlterar.do';
+	alert(form.action);
 	form.submit();
 }
 
 //EXCLUIR
-function excluirAtividade() {
+function excluirAtividade(codigoTimeSheet) {
 	var form = document.forms[0];
-	form.action = contexto + '/atividade/excluir.do'; 
+	form.action = contexto + '/atividade/excluir.do?codigoTimeSheet='+codigoTimeSheet+'&acao=excluir'; 
 	form.submit();
 }
 
@@ -97,15 +99,15 @@ function voltar() {
 }
 
 //APROVAR
-function aprovarAtividade() {
+function aprovarAtividade(codigoTimeSheet) {
 	var form = document.forms[0];
-	form.action = contexto + '/atividade/aprovar.do'; 
+	form.action = contexto + '/avaliacaoAtividade/aprovar.do?codigoTimeSheet='+codigoTimeSheet; 
 	form.submit();
 }
 
 //REPROVAR
-function reprovarAtividade() {
-	open_popPpAtividade(contexto + '/atividade/reprovar.do', returnoReprovarAtividade, "Reprovar Atividade") ;
+function reprovarAtividade(codigoTimeSheet) {
+	open_popPpAtividade(contexto + '/avaliacaoAtividade/reprovar.do?codigoTimeSheet='+codigoTimeSheet, returnoReprovarAtividade, "Reprovar Atividade") ;
 }
 
 function returnoReprovarAtividade() {
@@ -134,9 +136,15 @@ function cancelaOperacao() {
 }
 
 //ABRE POPUP ATIVIDADES
-function open_popPpAtividade(url, urlRetorno, titulo) {
+function open_popPpAtividade(temOutrasAtividades,url, urlRetorno, titulo) {
 	var largura = 720;
-	var altura = 365;
+	
+	var altura = 320;
+	
+	
+	if(temOutrasAtividades)
+		altura=382;
+			
 	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
 }
 
@@ -144,7 +152,9 @@ function open_popPpAtividade(url, urlRetorno, titulo) {
 function open_popPpPesquisaFunc(url, urlRetorno, titulo) {
 	var largura = 720;
 	var altura = 300;
-	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
+	var posicao = 100;
+	
+	parent.showPopWin(url, largura, altura, posicao, titulo, 10, urlRetorno);
 }
 
 //ABRE POPUP FUNCIONARIOS
@@ -175,11 +185,11 @@ function vazio(texto) {
 function SaltaCampo(campo,prox,tammax,teclapres)
 {
 	var tecla = teclapres;
-	vr = document.forms[0][campo].value;
+	vr = campo.value;
 	
 	if( tecla == 109 || tecla == 189 || tecla == 188 || tecla == 110 || tecla == 111 || tecla == 223 || tecla == 108 )
 	{
-		document.forms[0][campo].value = vr.substr( 0, vr.length - 1 );
+		campo.value = vr.substr( 0, vr.length - 1 );
 	}
 	else
 	{
@@ -202,7 +212,7 @@ function SaltaCampo(campo,prox,tammax,teclapres)
 function FormataData(Campo,teclapres)
 {
 	var tecla = teclapres;
-	vr = document.forms[0][Campo].value;
+	vr = Campo.value;
 	vr = vr.replace( ".", "" );
 	vr = vr.replace( "/", "" );
 	vr = vr.replace( "/", "" );
@@ -211,9 +221,9 @@ function FormataData(Campo,teclapres)
 	if ( tecla != 9 && tecla != 8 && tecla != 46 )
 	{
 		if ( tam > 2 && tam < 5 )
-			document.forms[0][Campo].value = vr.substr( 0, tam - 2  ) + '/' + vr.substr( tam - 2, tam );
+			Campo.value = vr.substr( 0, tam - 2  ) + '/' + vr.substr( tam - 2, tam );
 		if ( tam >= 5 && tam <= 10 )
-			document.forms[0][Campo].value = vr.substr( 0, 2 ) + '/' + vr.substr( 2, 2 ) + '/' + vr.substr( 4, 4 );
+			Campo.value = vr.substr( 0, 2 ) + '/' + vr.substr( 2, 2 ) + '/' + vr.substr( 4, 4 );
 	}
 }
 
@@ -411,7 +421,7 @@ function ValidaCampoTexto(){
 	}	
 }
 
-function salvar() {
+function validarCampos() {
 
 	if (document.forms[0].data.value == ""){
        alert("Esqueceu de especificar a data da atividade ");
@@ -468,11 +478,6 @@ function salvar() {
 		document.forms[0].codigoProdutoServico.focus();
 		return;
 	}
-	
-	document.forms[0].submit();
-	
-	confirmaOperacao();
-
 }     
 
 
