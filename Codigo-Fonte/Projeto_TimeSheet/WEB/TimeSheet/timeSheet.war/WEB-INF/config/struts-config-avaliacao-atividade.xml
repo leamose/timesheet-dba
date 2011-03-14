@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+    <form-beans>
+		<form-bean name="avaliacaoAtividadeForm" type="br.com.dba.timesheet.web.form.AvaliacaoAtividadesForm" />        
+    </form-beans>
+
+    <action-mappings>
+	    
+   	    <action path="/avaliacaoAtividade/aprovar" 
+				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
+				name="avaliacaoAtividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAvaliacaoAtividades.jsp"/>
+		</action>
+
+		 <action path="/avaliacaoAtividade/reprovar" 
+				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
+				name="avaliacaoAtividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAvaliacaoAtividades.jsp"/>
+		</action>
+		
+	</action-mappings>	
+	
+</struts-config>

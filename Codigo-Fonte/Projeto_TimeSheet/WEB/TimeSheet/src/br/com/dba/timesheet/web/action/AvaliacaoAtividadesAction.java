@@ -11,9 +11,19 @@ import br.com.dba.timesheet.struts.BaseDispatchAction;
 
 public class AvaliacaoAtividadesAction extends BaseDispatchAction {
 	
-	public ActionForward logar(ActionMapping mapping, ActionForm form,
+	public ActionForward aprovar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+	    
+	    
+	    
+	    
+	    
 		return mapping.findForward("cadastrarAtividade");		
+	}
+
+	public ActionForward reprovar(ActionMapping mapping, ActionForm form,
+	        HttpServletRequest request, HttpServletResponse response) {
+	    return mapping.findForward("cadastrarAtividade");		
 	}
 	
 }

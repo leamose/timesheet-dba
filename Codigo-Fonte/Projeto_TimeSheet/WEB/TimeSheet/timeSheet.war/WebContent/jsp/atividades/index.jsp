@@ -6,65 +6,83 @@
 	<tiles:put name="corpo" type="string"> 
 	
 		<!-- MIOLO -->
-		<div id="miolo" style="background-color:#fff; background-image:none;height:80%;">
-			<div class="botoesJanela">			
-				<!-- DATA DO CALENDARIO -->
-				<form action="">
-					<table cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="150px;">&nbsp;</td>
-							<th valign="middle">DATA DA ATIVIDADE:&nbsp; </th>
-							<td valign="middle">
-								<input onclick="ds_sh(this);" name="date" readonly="readonly" style="cursor: text" size="8"/>
-							</td>
-							<td>	
-								<html:img src="${contexto}/WebContent/img/consultar.jpg" title="aprovado" onclick="javascript:consultarAtividade();"/>
-							</td>
-						</tr>
-					</table>	
-							
-				</form>
-				
-			</div>
+		<div id="miolo" style="background-color:#fff; background-image:none;height:78%;">
 			<html:form action="/atividade/inicio.do">
-			<div style="padding-bottom: 32.5%;">					
-				<display:table name="${form.listaTimeSheet}" style="width:100%;" class="lista" id="tabela" 
-					length="100" pagesize="30" requestURI="/atividade/inicio.do" cellspacing="0"
-					 htmlId="resultado">
-					<display:column>
-						<html:img  src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>												
-					</display:column>						
-					<display:column property="dataHoraInicio" title="Data" format="{0,date,dd/MM/yyyy}" sortable="true"/>
-					<display:column property="dataHoraInicio" title="Início Previsto" format="{0,date,HH:MM}"/>
-					<display:column property="dataHoraInicio" title="Fim Previsto" format="{0,date,HH:MM}"/>
-					<display:column property="dataHoraInicio" title="Horas"/>
-					<display:column property="dataHoraInicio" title="Saldo"/>						
-					<display:column property="projeto.numeroProjeto" title="No. Projeto"/>
-					<display:column property="atividade.descricao" title="Atividade" />	
-					<display:column property="observacao" title="Ultima atividade"/>
-					<display:column title="Ações">
-						<a href="javascript:alterarAtividade(${tabela.id});">
-							<html:img  src="${contexto}/WebContent/img/abrir.png" title="aprovado"/>
-						</a>
-						<html:img  src="${contexto}/WebContent/img/alterar.png" title="aprovado"/>
-						<html:img  src="${contexto}/WebContent/img/excluir.png" title="aprovado"/>
-						<html:img  src="${contexto}/WebContent/img/aceitar.png" title="aprovado"/>
-						<html:img  src="${contexto}/WebContent/img/recu.png" title="aprovado"/>
-												
-					</display:column>
-				</display:table>
-			</div>
+				<div class="botoesJanela">			
+					<!-- DATA DO CALENDARIO -->
+						<table cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="150px;">&nbsp;</td>
+								<th valign="middle">DATA DA ATIVIDADE:&nbsp; </th>
+								<td valign="middle">
+									<html:text styleClass="campoLeitura" name="form" property="dataParaPesquisa" 
+								  		size="10" maxlength="10" styleId="dataParaPesquisa"
+								  		onkeydown="FormataData(this,event.keyCode);"
+								  		onblur="if(! ValidaData(this.value)) { alert('Data Inválida'); this.value = ''; this.focus(); };"/>
+								</td>
+								<td>	
+									<html:img src="${contexto}/WebContent/img/consultar.jpg" 
+										title="aprovado" onclick="javascript:consultarAtividade();"/>
+								</td>
+							</tr>
+						</table>
+				</div>
+				
+				<div style="height:420px">	
+					<display:table name="${form.listaTimeSheet}" style="width:100%;" class="lista" id="tabela" 
+						length="100" pagesize="30" requestURI="/atividade/inicio.do" cellspacing="0"
+						 htmlId="resultado">
+						<display:column style="width:1%;" >
+							<img src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>												
+						</display:column>						
+						<display:column property="dataHoraInicio" title="Data" 
+							format="{0,date,dd/MM/yyyy}" style="width:2%;"/>
+							
+						<display:column property="dataHoraInicio" title="Início Previsto" 
+							format="{0,date,HH:MM}" style="width:2%;"/>
+							
+						<display:column property="dataHoraInicio" title="Fim Previsto" 
+							format="{0,date,HH:MM}" style="width:2%;" />
+							
+						<display:column property="projeto.numeroProjeto" title="No. Projeto" style="width:2%;" />
+						<display:column property="atividade.descricao" title="Atividade" 
+							style="width:55%;"  maxLength="70"/>	
+						<display:column property="projeto.nome" title="Ultima atividade"/>
+						<display:column title="Ações">
+							<a href="javascript:detalharAtividade(${tabela.id}, ${tabela.outrasAtividades ne ''});">
+								<html:img  src="${contexto}/WebContent/img/abrir.png" title="detalhar atividade"/>
+							</a>
+							
+							<a href="javascript:alterarAtividade(${tabela.id}, ${tabela.outrasAtividades ne ''});">						
+								<html:img  src="${contexto}/WebContent/img/alterar.png" title="alterar atividade"/>
+							</a>
+							
+							<a href="javascript:excluirAtividade(${tabela.id});">
+								<html:img  src="${contexto}/WebContent/img/excluir.png" title="excluir atividade"/>
+							</a>
+							
+							<a href="javascript:aprovarAtividade(${tabela.id});">
+								<html:img  src="${contexto}/WebContent/img/aceitar.png" title="aprovar atividade"/>
+							</a>
+							
+							<a href="javascript:reprovarAtividade(${tabela.id});">
+								<html:img  src="${contexto}/WebContent/img/recu.png" title="reprovar atividade"/>
+							</a>
+													
+						</display:column>
+					</display:table>
+				</div>
 				<div style="float:left; padding-right: 15px;padding-top: 30px; ">
 					<table align="center">
 					 <tr>
 					   <td><font face="tahoma,arial,  helvetica" size="2">
-					   		<img src="${contexto}/WebContent/img/aprov_mao.gif">Aprovado</font></td>
+					   		<img src="${contexto}/WebContent/img/aprov_mao.gif"/>Aprovado</font></td>
 					   <td>&nbsp;</td>
 					   <td><font face="tahoma,arial,  helvetica" size="2">
-					   		<img src="${contexto}/WebContent/img/reprov_mao.gif">Reprovado</font></td> 
+					   		<img src="${contexto}/WebContent/img/reprov_mao.gif"/>Reprovado</font></td> 
 					   <td>&nbsp;</td>
 					   <td><font face=" tahoma,arial, helvetica" size="2">
-					   		<img src="${contexto}/WebContent/img/aguardando_aprov.gif">Aguardando Aprovação</font></td>
+					   		<img src="${contexto}/WebContent/img/aguardando_aprov.gif"/>Aguardando Aprovação</font></td>
 					
 					 </tr>
 					</table>
@@ -76,17 +94,6 @@
 		</div>   	
 		
 		<!-- FIM MIOLO -->
-		
-
-		<!-- INICIO CALENDARIO -->
-		<table class="ds_box" cellpadding="0" cellspacing="0" id="ds_conclass" style="display: none;">
-			<tr>
-				<td id="ds_calclass"></td>
-			</tr>
-		</table>
-		
-		<script type="text/javascript" src="${contexto}/WebContent/js/calendario.js"></script>
-		<!-- FIM CALENDARIO -->
-		
+				
 	</tiles:put>
 </tiles:insert>

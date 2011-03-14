@@ -22,6 +22,7 @@ public class AtividadesForm extends ValidatorForm {
 	
 	private Integer id;
 	private String acao; 
+	private Boolean desabilitarCampo;
 	private String codigoAtividade;
 	private String codigoCliente;
 	private String codigoOp;
@@ -35,6 +36,7 @@ public class AtividadesForm extends ValidatorForm {
 	private Boolean alteracao_data_avaliacao;	
 	
 	private String data;
+	private String dataParaPesquisa;
 	private String diaAtividade;
     private String inicioPrevisto;
     private String terminoPrevisto;
@@ -51,6 +53,7 @@ public class AtividadesForm extends ValidatorForm {
     //Listas
     private List<Dominio> listaDiasDaSemana;
     private List<TimeSheet> listaTimeSheet;
+    private List<HistoricoTimeSheet> listaHistoricoTimeSheet;
     private List<Atividade> listaAtividades;
     private List<Cliente> listaClientes;
     private List<Metodologia> listaMetodologias;
@@ -605,6 +608,76 @@ public class AtividadesForm extends ValidatorForm {
      */
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+    }
+
+    /**
+     * @return the campoEditavel
+     */
+    public Boolean getDesabilitarCampo() {
+        return desabilitarCampo;
+    }
+
+    /**
+     * @param campoEditavel the campoEditavel to set
+     */
+    public void setDesabilitarCampo(Boolean desabilitarCampo) {
+        this.desabilitarCampo = desabilitarCampo;
+    }
+    
+    public void limparFormulario(){
+      setAlteracao_data_avaliacao(false);
+      setAtividades(null);
+      setDesabilitarCampo(false);
+      setClientes(null);
+      setCodigoAtividade("");
+      setCodigoMetodologia("");
+      setCodigoOp("");
+      setCodigoProdutoServico("");      
+      setCodigoTimeSheet("");
+      setData("");
+      setDataHoraFim("");
+      setDataHoraInicio("");
+      setDescricaoAtividade("");
+      setDescricaoMetodologia("");
+      setDescricaoOp("");
+      setDescricaoMetodologia("");
+      setDiaAtividade("");
+      setFuncionario(null); 
+      setHistoricoTimeSheet(null);
+      setHorasDiarias("");      
+      setInicioPrevisto("");
+      setNomeProjeto("");
+      setNumeroProjeto("");
+      setCodigoCliente(null);
+    }
+
+    /**
+     * @return the dataParaPesquisa
+     */
+    public String getDataParaPesquisa() {
+        return dataParaPesquisa;
+    }
+
+    /**
+     * @param dataParaPesquisa the dataParaPesquisa to set
+     */
+    public void setDataParaPesquisa(String dataParaPesquisa) {
+        this.dataParaPesquisa = dataParaPesquisa;
+    }
+
+    /**
+     * @return the listaHistoricoTimeSheet
+     */
+    public List<HistoricoTimeSheet> getListaHistoricoTimeSheet() {
+        return listaHistoricoTimeSheet;
+    }
+
+    /**
+     * @param listaHistoricoTimeSheet the listaHistoricoTimeSheet to set
+     */
+    public void setListaHistoricoTimeSheet(
+            List<HistoricoTimeSheet> listaHistoricoTimeSheet) {
+        this.listaHistoricoTimeSheet = listaHistoricoTimeSheet;
     }
 	
 }
