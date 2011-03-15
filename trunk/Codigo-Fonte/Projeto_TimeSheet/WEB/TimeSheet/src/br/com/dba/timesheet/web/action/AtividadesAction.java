@@ -1,7 +1,6 @@
 package br.com.dba.timesheet.web.action;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +19,7 @@ import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.Projeto;
 import br.com.dba.timesheet.pojo.TimeSheet;
+import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.util.UtilDate;
 import br.com.dba.timesheet.web.form.AtividadesForm;
 
@@ -32,9 +32,11 @@ public class AtividadesAction extends TimeSheetComum {
 	    try {
     		AtividadesForm formulario = (AtividadesForm) form;
     		
-            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().consultarTimeSheetPorDataHoraInicio(UtilDate.getHoraZero(new Date()));    		
+            List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().getListaTimeSheetVO();    		
+//            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().listarTodosTimeSheet();    		
+//            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().consultarTimeSheetPorDataHoraInicio(UtilDate.getHoraZero(new Date()));    		
     		
-    		formulario.setListaTimeSheet(listaTimeSheet);
+    		formulario.setListaTimeSheetVO(listaTimeSheet);
     		
 		} catch (ErroInternoException e) {
 		    e.printStackTrace();
@@ -109,7 +111,7 @@ public class AtividadesAction extends TimeSheetComum {
 	    try {
             AtividadesForm formulario = (AtividadesForm) form;
             
-            TimeSheet timesheet = getTimeSheet(Integer.valueOf(formulario.getCodigoTimeSheet()));
+            TimeSheet timesheet = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));
 
             preencherFormularioInicial(formulario);
             
@@ -162,7 +164,7 @@ public class AtividadesAction extends TimeSheetComum {
 
 	        AtividadesForm formulario = (AtividadesForm) form;
             
-            TimeSheet timesheet = getTimeSheet(Integer.valueOf(formulario.getCodigoTimeSheet()));
+            TimeSheet timesheet = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));
             
             preencherFormulario(formulario, timesheet);
             
@@ -313,15 +315,17 @@ public class AtividadesAction extends TimeSheetComum {
             }
             
             //COMBOS
-            pojo.setAtividade(getTimeSheetDelegate().getAtividade(Integer.valueOf(formulario.getCodigoAtividade())));
-            pojo.setCliente(getTimeSheetDelegate().getCliente(Integer.valueOf(formulario.getCodigoCliente())));
-            Metodologia metodologia = getTimeSheetDelegate().getMetodologia(Integer.valueOf(formulario.getCodigoMetodologia()));
+            pojo.setAtividade(getAtividadePeloID(Integer.valueOf(formulario.getCodigoAtividade())));
+            pojo.setCliente(getClientePeloID(Integer.valueOf(formulario.getCodigoCliente())));
+            
+            Metodologia metodologia = getMetodologiaPeloID(Integer.valueOf(formulario.getCodigoMetodologia()));
             pojo.setMetodologia(metodologia);
-            pojo.setOp(getTimeSheetDelegate().getOP(Integer.valueOf(formulario.getCodigoOp())));
-            pojo.setProdutoServico(getTimeSheetDelegate().getProdutoServico(Integer.valueOf(formulario.getCodigoProdutoServico())));
+            
+            pojo.setOp(getOPPeloID(Integer.valueOf(formulario.getCodigoOp())));
+            pojo.setProdutoServico(getProdutoServicoPeloID(Integer.valueOf(formulario.getCodigoProdutoServico())));
     
             // TODO RECUPERANDO O USUARIO FABIO....ARRUMAR
-            pojo.setFuncionario(getTimeSheetDelegate().getFuncionario(3));
+            pojo.setFuncionario(getFuncionarioPeloID(3));
                         
             Projeto projetoSalvo = salvarProjeto(formulario, metodologia);            
             pojo.setProjeto(projetoSalvo);

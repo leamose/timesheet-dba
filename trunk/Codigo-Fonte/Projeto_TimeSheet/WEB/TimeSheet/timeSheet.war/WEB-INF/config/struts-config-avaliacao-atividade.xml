@@ -14,11 +14,18 @@
    	    <action path="/avaliacaoAtividade/aprovar" 
 				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
 				name="avaliacaoAtividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/WebContent/jsp/index.html">						 
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAvaliacaoAtividades.jsp"/>
 		</action>
 
-		 <action path="/avaliacaoAtividade/reprovar" 
+   	    <action path="/avaliacaoAtividade/salvar" 
+				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
+				name="avaliacaoAtividadeForm" 
+				input="/WebContent/jsp/index.html">						 
+			<forward name="retorno" path="/atividade/inicio.do"/>
+		</action>
+
+		<action path="/avaliacaoAtividade/reprovar" 
 				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
 				name="avaliacaoAtividadeForm" 
 				input="/WebContent/jsp/index.html">

@@ -171,7 +171,7 @@ img {border:none;}
 .label {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
 
 .labelDetalhar {
-	width:105px;	
+	width:130px;	
 	float:left;
 	padding-top:1px; 
 	padding-bottom:1px;
@@ -187,7 +187,7 @@ img {border:none;}
 
 .campoErro { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid red; background-color:#ece9d8;}
 
-.botoesMeio { float:right; padding-right:35px; padding-top:10px; padding-bottom:20px;}
+.botoesMeio { float:right; padding-right:35px; padding-top:20px; padding-bottom:20px;}
 
 .botoesMeioPopUp { float:right; padding-right:1px; padding-top:10px; padding-bottom:5px;}
 

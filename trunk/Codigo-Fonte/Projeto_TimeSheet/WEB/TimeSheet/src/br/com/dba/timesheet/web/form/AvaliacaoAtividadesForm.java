@@ -4,18 +4,11 @@ import java.util.List;
 
 import org.apache.struts.validator.ValidatorForm;
 
-import br.com.dba.timesheet.dominios.Dominio;
-import br.com.dba.timesheet.pojo.Atividade;
-import br.com.dba.timesheet.pojo.Cliente;
 import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
-import br.com.dba.timesheet.pojo.Metodologia;
-import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
-import br.com.dba.timesheet.pojo.Projeto;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
-import br.com.dba.timesheet.pojo.Usuario;
 
 public class AvaliacaoAtividadesForm extends ValidatorForm {
 	
@@ -25,30 +18,19 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
 	private String codigoAtividade;
 	private String codigoCliente;		
 	private String codigoTimeSheet;		
+	private String codigoSituacaoAtividade;		
 
+    private String data;	
     private String dataHoraInicio;	
 	private String dataHoraFim;		
 	private String observacao;	
-	
-	private String data;
-	private String dataParaPesquisa;
-	private String diaAtividade;
-    private String inicioPrevisto;
-    private String terminoPrevisto;
-    private String horasDiarias;
-    private String saldoDiario;
-    private String descricaoOp;
-    private String descricaoMetodologia;
-    private String numeroProjeto;
-    private String nomeProjeto;
-    private String descricaoAtividade;    
-    private String descricaoProjeto;
-    private String outros;    	
+	private String observacaoPrivada;
+    private String nomefuncionario;    	
 
     //Listas
     private List<TimeSheet> listaTimeSheet;
     private List<HistoricoTimeSheet> listaHistoricoTimeSheet;
-    private List<SituacaoAtividade> listaSituacao;
+    private List<SituacaoAtividade> listaSituacaoAtividade;
     private List<ProdutoServico> listaProdutosServicos;
     private List<Funcionario> listaFuncionarios;
 
@@ -58,28 +40,14 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
     private SituacaoAtividade situacaoAtividade;
     private Funcionario funcionario;
     
-    
-    
     public void limparFormulario(){
       setCodigoAtividade("");
-      setCodigoTimeSheet("");
-      setData("");
-      setDataHoraFim("");
-      setDataHoraInicio("");
-      setDescricaoAtividade("");
-      setDescricaoMetodologia("");
-      setDescricaoOp("");
-      setDescricaoMetodologia("");
-      setDiaAtividade("");
-      setFuncionario(null); 
-      setHorasDiarias("");      
-      setInicioPrevisto("");
-      setNomeProjeto("");
-      setNumeroProjeto("");
+//      setCodigoTimeSheet("");      
+      setDataHoraFim("");      
+      setDataHoraInicio("");      
+      setFuncionario(null);
       setCodigoCliente(null);
     }
-
-
 
     /**
      * @return the id
@@ -139,7 +107,7 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
      * @return the codigoTimeSheet
      */
     public String getCodigoTimeSheet() {
-        return codigoTimeSheet;
+        return this.codigoTimeSheet;
     }
 
 
@@ -205,260 +173,6 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
         this.observacao = observacao;
     }
 
-
-
-    /**
-     * @return the data
-     */
-    public String getData() {
-        return data;
-    }
-
-
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(String data) {
-        this.data = data;
-    }
-
-
-
-    /**
-     * @return the dataParaPesquisa
-     */
-    public String getDataParaPesquisa() {
-        return dataParaPesquisa;
-    }
-
-
-
-    /**
-     * @param dataParaPesquisa the dataParaPesquisa to set
-     */
-    public void setDataParaPesquisa(String dataParaPesquisa) {
-        this.dataParaPesquisa = dataParaPesquisa;
-    }
-
-
-
-    /**
-     * @return the diaAtividade
-     */
-    public String getDiaAtividade() {
-        return diaAtividade;
-    }
-
-
-
-    /**
-     * @param diaAtividade the diaAtividade to set
-     */
-    public void setDiaAtividade(String diaAtividade) {
-        this.diaAtividade = diaAtividade;
-    }
-
-
-
-    /**
-     * @return the inicioPrevisto
-     */
-    public String getInicioPrevisto() {
-        return inicioPrevisto;
-    }
-
-
-
-    /**
-     * @param inicioPrevisto the inicioPrevisto to set
-     */
-    public void setInicioPrevisto(String inicioPrevisto) {
-        this.inicioPrevisto = inicioPrevisto;
-    }
-
-
-
-    /**
-     * @return the terminoPrevisto
-     */
-    public String getTerminoPrevisto() {
-        return terminoPrevisto;
-    }
-
-
-
-    /**
-     * @param terminoPrevisto the terminoPrevisto to set
-     */
-    public void setTerminoPrevisto(String terminoPrevisto) {
-        this.terminoPrevisto = terminoPrevisto;
-    }
-
-
-
-    /**
-     * @return the horasDiarias
-     */
-    public String getHorasDiarias() {
-        return horasDiarias;
-    }
-
-
-
-    /**
-     * @param horasDiarias the horasDiarias to set
-     */
-    public void setHorasDiarias(String horasDiarias) {
-        this.horasDiarias = horasDiarias;
-    }
-
-
-
-    /**
-     * @return the saldoDiario
-     */
-    public String getSaldoDiario() {
-        return saldoDiario;
-    }
-
-
-
-    /**
-     * @param saldoDiario the saldoDiario to set
-     */
-    public void setSaldoDiario(String saldoDiario) {
-        this.saldoDiario = saldoDiario;
-    }
-
-
-
-    /**
-     * @return the descricaoOp
-     */
-    public String getDescricaoOp() {
-        return descricaoOp;
-    }
-
-
-
-    /**
-     * @param descricaoOp the descricaoOp to set
-     */
-    public void setDescricaoOp(String descricaoOp) {
-        this.descricaoOp = descricaoOp;
-    }
-
-
-
-    /**
-     * @return the descricaoMetodologia
-     */
-    public String getDescricaoMetodologia() {
-        return descricaoMetodologia;
-    }
-
-
-
-    /**
-     * @param descricaoMetodologia the descricaoMetodologia to set
-     */
-    public void setDescricaoMetodologia(String descricaoMetodologia) {
-        this.descricaoMetodologia = descricaoMetodologia;
-    }
-
-
-
-    /**
-     * @return the numeroProjeto
-     */
-    public String getNumeroProjeto() {
-        return numeroProjeto;
-    }
-
-
-
-    /**
-     * @param numeroProjeto the numeroProjeto to set
-     */
-    public void setNumeroProjeto(String numeroProjeto) {
-        this.numeroProjeto = numeroProjeto;
-    }
-
-
-
-    /**
-     * @return the nomeProjeto
-     */
-    public String getNomeProjeto() {
-        return nomeProjeto;
-    }
-
-
-
-    /**
-     * @param nomeProjeto the nomeProjeto to set
-     */
-    public void setNomeProjeto(String nomeProjeto) {
-        this.nomeProjeto = nomeProjeto;
-    }
-
-
-
-    /**
-     * @return the descricaoAtividade
-     */
-    public String getDescricaoAtividade() {
-        return descricaoAtividade;
-    }
-
-
-
-    /**
-     * @param descricaoAtividade the descricaoAtividade to set
-     */
-    public void setDescricaoAtividade(String descricaoAtividade) {
-        this.descricaoAtividade = descricaoAtividade;
-    }
-
-
-
-    /**
-     * @return the descricaoProjeto
-     */
-    public String getDescricaoProjeto() {
-        return descricaoProjeto;
-    }
-
-
-
-    /**
-     * @param descricaoProjeto the descricaoProjeto to set
-     */
-    public void setDescricaoProjeto(String descricaoProjeto) {
-        this.descricaoProjeto = descricaoProjeto;
-    }
-
-
-
-    /**
-     * @return the outros
-     */
-    public String getOutros() {
-        return outros;
-    }
-
-
-
-    /**
-     * @param outros the outros to set
-     */
-    public void setOutros(String outros) {
-        this.outros = outros;
-    }
-
-
-
     /**
      * @return the listaTimeSheet
      */
@@ -499,8 +213,8 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
     /**
      * @return the listaSituacao
      */
-    public List<SituacaoAtividade> getListaSituacao() {
-        return listaSituacao;
+    public List<SituacaoAtividade> getListaSituacaoAtividade() {
+        return listaSituacaoAtividade;
     }
 
 
@@ -508,8 +222,8 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
     /**
      * @param listaSituacao the listaSituacao to set
      */
-    public void setListaSituacao(List<SituacaoAtividade> listaSituacao) {
-        this.listaSituacao = listaSituacao;
+    public void setListaSituacaoAtividade(List<SituacaoAtividade> listaSituacao) {
+        this.listaSituacaoAtividade = listaSituacao;
     }
 
 
@@ -600,6 +314,70 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
      */
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+
+
+    /**
+     * @return the codigoSituacaoAtividade
+     */
+    public String getCodigoSituacaoAtividade() {
+        return codigoSituacaoAtividade;
+    }
+
+
+
+    /**
+     * @param codigoSituacaoAtividade the codigoSituacaoAtividade to set
+     */
+    public void setCodigoSituacaoAtividade(String codigoSituacaoAtividade) {
+        this.codigoSituacaoAtividade = codigoSituacaoAtividade;
+    }
+
+
+
+    /**
+     * @return the nomefuncionario
+     */
+    public String getNomefuncionario() {
+        return nomefuncionario;
+    }
+
+
+
+    /**
+     * @param nomefuncionario the nomefuncionario to set
+     */
+    public void setNomefuncionario(String nomefuncionario) {
+        this.nomefuncionario = nomefuncionario;
+    }
+
+    /**
+     * @return the observacaoPrivada
+     */
+    public String getObservacaoPrivada() {
+        return observacaoPrivada;
+    }
+
+    /**
+     * @param observacaoPrivada the observacaoPrivada to set
+     */
+    public void setObservacaoPrivada(String observacaoPrivada) {
+        this.observacaoPrivada = observacaoPrivada;
+    }
+
+    /**
+     * @return the data
+     */
+    public String getData() {
+        return data;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(String data) {
+        this.data = data;
     }
 
 	

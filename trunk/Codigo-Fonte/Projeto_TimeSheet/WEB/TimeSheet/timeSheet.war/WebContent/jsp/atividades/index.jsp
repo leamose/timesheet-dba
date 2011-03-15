@@ -29,8 +29,8 @@
 				</div>
 				
 				<div style="height:420px">	
-					<display:table name="${form.listaTimeSheet}" style="width:100%;" class="lista" id="tabela" 
-						length="100" pagesize="30" requestURI="/atividade/inicio.do" cellspacing="0"
+					<display:table name="${form.listaTimeSheetVO}" style="width:100%;" class="lista" id="tabela" 
+						length="100" pagesize="20" requestURI="/atividade/inicio.do" cellspacing="0"
 						 htmlId="resultado">
 						<display:column style="width:1%;" >
 							<img src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>												
@@ -47,25 +47,25 @@
 						<display:column property="projeto.numeroProjeto" title="No. Projeto" style="width:2%;" />
 						<display:column property="atividade.descricao" title="Atividade" 
 							style="width:55%;"  maxLength="70"/>	
-						<display:column property="projeto.nome" title="Ultima atividade"/>
+						<display:column property="usuario.login" title="Ultima atividade"/>
 						<display:column title="Ações">
-							<a href="javascript:detalharAtividade(${tabela.id}, ${tabela.outrasAtividades ne ''});">
+							<a href="javascript:detalharAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''});">
 								<html:img  src="${contexto}/WebContent/img/abrir.png" title="detalhar atividade"/>
 							</a>
 							
-							<a href="javascript:alterarAtividade(${tabela.id}, ${tabela.outrasAtividades ne ''});">						
+							<a href="javascript:alterarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''});">						
 								<html:img  src="${contexto}/WebContent/img/alterar.png" title="alterar atividade"/>
 							</a>
 							
-							<a href="javascript:excluirAtividade(${tabela.id});">
+							<a href="javascript:excluirAtividade(${tabela.codigoTimeSheet});">
 								<html:img  src="${contexto}/WebContent/img/excluir.png" title="excluir atividade"/>
 							</a>
 							
-							<a href="javascript:aprovarAtividade(${tabela.id});">
+							<a href="javascript:aprovarAtividade(${tabela.codigoTimeSheet});">
 								<html:img  src="${contexto}/WebContent/img/aceitar.png" title="aprovar atividade"/>
 							</a>
 							
-							<a href="javascript:reprovarAtividade(${tabela.id});">
+							<a href="javascript:reprovarAtividade(${tabela.codigoTimeSheet});">
 								<html:img  src="${contexto}/WebContent/img/recu.png" title="reprovar atividade"/>
 							</a>
 													

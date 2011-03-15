@@ -24,7 +24,7 @@ function operacaoCancelada() {
 
 //CADASTRAR ATIVIDADE
 function cadastrarAtividades() {
-	open_popPpAtividade(false,contexto + '/atividade/cadastrarAtividade.do?acao=salvar', null, "Cadastrar Atividade") ;
+	open_popPpAtividade(false, contexto + '/atividade/cadastrarAtividade.do?acao=salvar', null, "Cadastrar Atividade", 720, 402);
 }
 
 function retornoCadastrarAtividades() {
@@ -55,7 +55,7 @@ function consultarAtividade() {
 
 //DETALHAR
 function detalharAtividade(codigoTimeSheet, temOutrasAtividades) {
-	open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=detalhar', retornoDetalharAtividade, "Detalhar Atividade") ;
+	open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=detalhar', retornoDetalharAtividade, "Detalhar Atividade", 720, 402) ;
 }
 
 function retornoDetalharAtividade() {
@@ -66,7 +66,7 @@ function retornoDetalharAtividade() {
 
 //ALTERAR
 function alterarAtividade(codigoTimeSheet, temOutrasAtividades) {
-	open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=alterar', null, "Alterar Atividade") ;
+	open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?codigoTimeSheet='+codigoTimeSheet+'&acao=alterar', null, "Alterar Atividade", 720, 402) ;
 }
 
 function retornoAlterarAtividade() {
@@ -100,14 +100,18 @@ function voltar() {
 
 //APROVAR
 function aprovarAtividade(codigoTimeSheet) {
+	open_popPpAtividade(false, contexto + '/avaliacaoAtividade/aprovar.do?codigoTimeSheet='+codigoTimeSheet, null, "Aprovar Atividade", 720, 300);
+}
+//APROVAR
+function retornoAprovarAtividade(codigoTimeSheet) {
 	var form = document.forms[0];
-	form.action = contexto + '/avaliacaoAtividade/aprovar.do?codigoTimeSheet='+codigoTimeSheet; 
+	form.action = contexto + '/avaliacaoAtividade/salvar.do?codigoTimeSheet='+codigoTimeSheet; 
 	form.submit();
 }
 
 //REPROVAR
 function reprovarAtividade(codigoTimeSheet) {
-	open_popPpAtividade(contexto + '/avaliacaoAtividade/reprovar.do?codigoTimeSheet='+codigoTimeSheet, returnoReprovarAtividade, "Reprovar Atividade") ;
+	open_popPpAtividade(false,contexto + '/avaliacaoAtividade/reprovar.do?codigoTimeSheet='+codigoTimeSheet, null, "Reprovar Atividade", 720, 300) ;
 }
 
 function returnoReprovarAtividade() {
@@ -136,16 +140,12 @@ function cancelaOperacao() {
 }
 
 //ABRE POPUP ATIVIDADES
-function open_popPpAtividade(temOutrasAtividades,url, urlRetorno, titulo) {
-	var largura = 720;
-	
-	var altura = 320;
-	
-	
-	if(temOutrasAtividades)
-		altura=382;
+function open_popPpAtividade(temOutrasAtividades,url, urlRetorno, titulo, largura, altura) {	
+	if(temOutrasAtividades){
+		altura=465;
+	}
 			
-	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
+	parent.showPopWin(url, largura, altura, "50", titulo,0, urlRetorno);
 }
 
 //ABRE POPUP PESQUISA FUNCIONARIOS
@@ -160,8 +160,8 @@ function open_popPpPesquisaFunc(url, urlRetorno, titulo) {
 //ABRE POPUP FUNCIONARIOS
 function open_popPpFuncionario(url, urlRetorno, titulo) {
 	var largura = 700;
-	var altura = 252;
-	parent.showPopWin(url, largura, altura, "100", titulo,0, urlRetorno);
+	var altura = 452;
+	parent.showPopWin(url, largura, altura, "50", titulo,0, urlRetorno);
 }
 
 

@@ -15,6 +15,7 @@ import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
+import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 
 public class AtividadesForm extends ValidatorForm {
 	
@@ -53,6 +54,7 @@ public class AtividadesForm extends ValidatorForm {
     //Listas
     private List<Dominio> listaDiasDaSemana;
     private List<TimeSheet> listaTimeSheet;
+    private List<TimeSheetVO> listaTimeSheetVO;
     private List<HistoricoTimeSheet> listaHistoricoTimeSheet;
     private List<Atividade> listaAtividades;
     private List<Cliente> listaClientes;
@@ -678,6 +680,20 @@ public class AtividadesForm extends ValidatorForm {
     public void setListaHistoricoTimeSheet(
             List<HistoricoTimeSheet> listaHistoricoTimeSheet) {
         this.listaHistoricoTimeSheet = listaHistoricoTimeSheet;
+    }
+
+    /**
+     * @return the listaTimeSheetVO
+     */
+    public List<TimeSheetVO> getListaTimeSheetVO() {
+        return listaTimeSheetVO;
+    }
+
+    /**
+     * @param listaTimeSheetVO the listaTimeSheetVO to set
+     */
+    public void setListaTimeSheetVO(List<TimeSheetVO> listaTimeSheetVO) {
+        this.listaTimeSheetVO = listaTimeSheetVO;
     }
 	
 }
