@@ -6,10 +6,12 @@ import br.com.dba.timesheet.ejb.TimesheetDelegate;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.pojo.Atividade;
 import br.com.dba.timesheet.pojo.Cliente;
+import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
+import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 
@@ -20,16 +22,12 @@ public class TimeSheetComum extends BaseDispatchAction{
     private List<OP> listarTodasOPs = null;
     private List<Metodologia> listarTodasMetodologias = null;
     private List<ProdutoServico> listarTodosProdutosServicos = null;
+    private List<SituacaoAtividade> listarTodasSituacaoAtividade = null;
 
     
     //*********************************************
     //* GETTER's e SETTER's :
     //*********************************************
-    public TimeSheet getTimeSheet(Integer id)
-        throws ParametroInvalidoException {
-        return getTimeSheetDelegate().getTimeSheet(id);
-    }
-    
     /**
      * @return the listarTodasAtividades
      */
@@ -43,6 +41,28 @@ public class TimeSheetComum extends BaseDispatchAction{
             e.printStackTrace();
         }        
         return this.listarTodasAtividades;
+    }
+
+    /**
+     * @return the listarTodasAtividades
+     */
+    public List<SituacaoAtividade> getListarTodasSituacaoAtividade() {
+        try {
+            if (this.listarTodasSituacaoAtividade == null) {
+                this.listarTodasSituacaoAtividade = listarTodasSituacaoAtividade();
+            }
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }        
+        return this.listarTodasSituacaoAtividade;
+    }
+
+    /**
+     * @param listarTodasAtividades the listarTodasAtividades to set
+     */
+    public void setListarTodasSituacaoAtividade(List<SituacaoAtividade> listarTodasSituacaoAtividade) {
+        this.listarTodasSituacaoAtividade = listarTodasSituacaoAtividade;
     }
 
     /**
@@ -164,6 +184,11 @@ public class TimeSheetComum extends BaseDispatchAction{
         return getTimeSheetDelegate().listarTodosProdutoServico();
     }
 
+    public List<SituacaoAtividade> listarTodasSituacaoAtividade()
+        throws ParametroInvalidoException {
+        return getTimeSheetDelegate().listarTodasSituacaoAtividade();
+    }
+
     
     //*********************************************
     //* CRUD's :
@@ -178,7 +203,124 @@ public class TimeSheetComum extends BaseDispatchAction{
                 getTimeSheetDelegate().salvarHistoricoTimeSheet(pojo);
             }
 
-    //*********************************************
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public OP getOPPeloID(Integer id) {
+        OP pojo = null;
+        try{    
+            pojo = getTimeSheetDelegate().getOP(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public ProdutoServico getProdutoServicoPeloID(Integer id) {
+        ProdutoServico pojo = null;
+        try{    
+            pojo = getTimeSheetDelegate().getProdutoServico(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public Cliente getClientePeloID(Integer id) {
+        Cliente pojo = null;
+        try{    
+            pojo = getTimeSheetDelegate().getCliente(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public Atividade getAtividadePeloID(Integer id) {
+        Atividade pojo = null;
+        try{    
+            pojo = getTimeSheetDelegate().getAtividade(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public Metodologia getMetodologiaPeloID(Integer id) {
+        Metodologia pojo = null;
+        try {
+            pojo = getTimeSheetDelegate().getMetodologia(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }    
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public Funcionario getFuncionarioPeloID(Integer id) {
+        Funcionario pojo = null;
+        try {
+            pojo = getTimeSheetDelegate().getFuncionario(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public SituacaoAtividade getSituacaoAtividadePeloID(Integer id) {
+        SituacaoAtividade pojo = null;
+        try {
+            pojo = getTimeSheetDelegate().getSituacaoAtividade(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+    
+    public TimeSheet getTimeSheetPeloID(Integer id)
+        throws ParametroInvalidoException {
+        return getTimeSheetDelegate().getTimeSheet(id);
+    }
+    
+  //*********************************************
     //* DELEGATES :
     //*********************************************
     public TimesheetDelegate getTimeSheetDelegate() {
@@ -193,5 +335,6 @@ public class TimeSheetComum extends BaseDispatchAction{
             e.printStackTrace();
         }
     }
+    
 
 }
