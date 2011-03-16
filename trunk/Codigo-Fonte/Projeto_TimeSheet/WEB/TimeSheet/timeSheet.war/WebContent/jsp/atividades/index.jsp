@@ -5,6 +5,39 @@
 <tiles:insert definition=".mainLayout">	
 	<tiles:put name="corpo" type="string"> 
 	
+		<script>
+		
+			//CONSULTAR ATIVIDADE
+			function consultarAtividade() {
+				var form = document.forms[0];
+				form.action = contexto + '/atividade/consultar.do'; 
+				form.submit();
+			}
+	
+			//DETALHAR
+			function detalharAtividade(codigoTimeSheet, temOutrasAtividades) {
+				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?codigoTimeSheet='+codigoTimeSheet, null, "Detalhar Atividade", 720, 402) ;
+			}		
+	
+			//ALTERAR
+			function alterarAtividade(codigoTimeSheet, temOutrasAtividades) {
+				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?codigoTimeSheet='+codigoTimeSheet, null, "Alterar Atividade", 720, 402) ;
+			}		
+	
+			//EXCLUIR
+			function excluirAtividade(codigoTimeSheet) {
+				var form = document.forms[0];
+				form.action = contexto + '/atividade/excluir.do?codigoTimeSheet='+codigoTimeSheet; 
+				form.submit();
+			}
+		
+			//HOMOLOGAR ATIVIDADE
+			function avaliarAtividade(codigoTimeSheet) {
+				open_popPpAtividade(false, contexto + '/avaliacaoAtividade/inicio.do?codigoTimeSheet='+codigoTimeSheet, null, "Aprovar Atividade", 720, 300);
+			}
+			
+		</script>
+	
 		<!-- MIOLO -->
 		<div id="miolo" style="background-color:#fff; background-image:none;height:78%;">
 			<html:form action="/atividade/inicio.do">
@@ -29,7 +62,7 @@
 				</div>
 				
 				<div style="height:420px">	
-					<display:table name="${form.listaTimeSheetVO}" style="width:100%;" class="lista" id="tabela" 
+					<display:table name="${form.listaTimeSheetVO}" style="width:100%;padding-bottom:20px;" class="lista" id="tabela" 
 						length="100" pagesize="20" requestURI="/atividade/inicio.do" cellspacing="0"
 						 htmlId="resultado">
 						<display:column style="width:1%;" >
@@ -44,31 +77,30 @@
 						<display:column property="dataHoraInicio" title="Fim Previsto" 
 							format="{0,date,HH:MM}" style="width:2%;" />
 							
-						<display:column property="projeto.numeroProjeto" title="No. Projeto" style="width:2%;" />
-						<display:column property="atividade.descricao" title="Atividade" 
+						<display:column property="numeroProjeto" title="No. Projeto" style="width:2%;" />
+						<display:column property="descricaoAtividade" title="Atividade" 
 							style="width:55%;"  maxLength="70"/>	
-						<display:column property="usuario.login" title="Ultima atividade"/>
-						<display:column title="Ações">
-							<a href="javascript:detalharAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''});">
-								<html:img  src="${contexto}/WebContent/img/abrir.png" title="detalhar atividade"/>
-							</a>
-							
-							<a href="javascript:alterarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''});">						
-								<html:img  src="${contexto}/WebContent/img/alterar.png" title="alterar atividade"/>
-							</a>
-							
-							<a href="javascript:excluirAtividade(${tabela.codigoTimeSheet});">
-								<html:img  src="${contexto}/WebContent/img/excluir.png" title="excluir atividade"/>
-							</a>
-							
-							<a href="javascript:aprovarAtividade(${tabela.codigoTimeSheet});">
-								<html:img  src="${contexto}/WebContent/img/aceitar.png" title="aprovar atividade"/>
-							</a>
-							
-							<a href="javascript:reprovarAtividade(${tabela.codigoTimeSheet});">
-								<html:img  src="${contexto}/WebContent/img/recu.png" title="reprovar atividade"/>
-							</a>
-													
+						<display:column property="login" title="Ultima atividade"/>
+						<display:column title="Ações" style="width:auto;" >
+							<center>
+								<a href="javascript:detalharAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''});">
+									<html:img  src="${contexto}/WebContent/img/abrir.png" title="detalhar atividade"/>
+								</a>
+								
+								<a href="javascript:alterarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''});">						
+									<html:img  src="${contexto}/WebContent/img/alterar.png" title="alterar atividade"/>
+								</a>
+								
+								<a href="javascript:excluirAtividade(${tabela.codigoTimeSheet});">
+									<html:img  src="${contexto}/WebContent/img/excluir.png" title="excluir atividade"/>
+								</a>
+								
+								<a href="javascript:avaliarAtividade(${tabela.codigoTimeSheet});">
+									<html:img  src="${contexto}/WebContent/img/responderAutoP.png" 
+										title="avaliar atividade"/>
+								</a>
+							</center>
+												
 						</display:column>
 					</display:table>
 				</div>

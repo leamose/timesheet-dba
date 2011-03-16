@@ -4,7 +4,22 @@
 
 <tiles:insert definition=".secundarias">	
 	
-	<tiles:put name="corpo" type="string"> 
+	<tiles:put name="corpo" type="string">
+	
+	
+		<script>
+			//PESQUISAR FUNCIONARIO
+			function pesquisarFuncionario() {	
+				open_popPpPesquisaFunc(contexto + '/funcionario/consultar.do', retornoPesquisarFuncionario, "Pesquisa Funcionario") ;
+			}
+	
+			function retornoPesquisarFuncionario() {	
+				var form = document.forms[0];
+				form.action = contexto + '/funcionario/retornoConsultar.do';
+				form.submit();
+			}
+		</script>
+	 
 		<div id="main">
 			<div id="corpo">
 				<div class="cabecalho">

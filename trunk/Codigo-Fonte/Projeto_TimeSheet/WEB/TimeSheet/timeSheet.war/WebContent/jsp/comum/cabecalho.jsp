@@ -1,5 +1,46 @@
 <%@include file="/WebContent/jsp/comum/Global.jspf"%>
 
+<script>
+
+	//ABRE POPUP FUNCIONARIOS
+	function open_popPpFuncionario(url, urlRetorno, titulo) {
+		var largura = 700;
+		var altura = 452;
+		parent.showPopWin(url, largura, altura, "50", titulo,0, urlRetorno);
+	}
+
+	//CADASTRAR ATIVIDADE
+	function cadastrarAtividades() {
+		open_popPpAtividade(false, contexto + '/atividade/cadastrarAtividade.do?acao=salvar', null, "Cadastrar Atividade", 720, 402);
+	}
+	
+	function retornoCadastrarAtividades() {
+		var form = document.forms[0];
+		form.action = contexto + '/atividade/salvar.do';
+		form.submit();
+	}
+	
+	function configurar() {
+		var form = document.forms[0];
+		form.action = contexto + '/configurar/inicio.do'; 
+		form.submit();
+	}
+
+	//CADASTRAR FUNCIONARIO
+	function cadastrarFuncionario() {	
+		var form = document.forms[0];
+		form.action = contexto + '/funcionario/cadastrarFuncionario.do'; 
+		form.submit();
+	}
+
+	//SAIR
+	function sair() {
+		var form = document.forms[0];
+		form.action = contexto + '/login.do'; 
+		form.submit();
+	}
+</script>
+
 
 <!-- TOPO -->
 	<div id="header">	

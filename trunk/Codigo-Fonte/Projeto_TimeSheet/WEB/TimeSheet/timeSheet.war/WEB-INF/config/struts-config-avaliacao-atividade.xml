@@ -11,7 +11,7 @@
 
     <action-mappings>
 	    
-   	    <action path="/avaliacaoAtividade/aprovar" 
+   	    <action path="/avaliacaoAtividade/inicio" 
 				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
 				name="avaliacaoAtividadeForm" 
 				input="/WebContent/jsp/index.html">						 
@@ -25,7 +25,7 @@
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 
-		<action path="/avaliacaoAtividade/reprovar" 
+		<action path="/avaliacaoAtividade/naoHomologar" 
 				type="br.com.dba.timesheet.web.action.AvaliacaoAtividadesAction"
 				name="avaliacaoAtividadeForm" 
 				input="/WebContent/jsp/index.html">

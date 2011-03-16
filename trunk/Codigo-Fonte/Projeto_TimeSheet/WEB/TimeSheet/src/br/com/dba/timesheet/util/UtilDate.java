@@ -226,6 +226,14 @@ public class UtilDate {
 		return novaData(getAno(date), getMes(date) - 1, getDia(date), 23, 59,
 				59);
 	}
+	
+	public static Date getDataComHoraZero(String data){
+        try {
+            return getDataHora(data + " 00:00:00");
+        } catch (ParseException e) {        
+            return null;
+        }
+	}
 
 	public static java.sql.Date getDateComoSqlDate(Date date) {
 		if (date != null) {
