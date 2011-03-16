@@ -15,14 +15,13 @@ import br.com.dba.timesheet.web.form.AvaliacaoAtividadesForm;
 
 public class AvaliacaoAtividadesAction extends TimeSheetComum {
 	
-	public ActionForward aprovar(ActionMapping mapping, ActionForm form,
+	public ActionForward inicio(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 	    	    
 	    AvaliacaoAtividadesForm formulario = (AvaliacaoAtividadesForm) form;
 	    
 	    formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
-	    formulario.setId(Integer.valueOf(formulario.getCodigoTimeSheet()));
-	    
+	    formulario.setId(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
 	    
 	    try {
             TimeSheet timesheet = getTimeSheetPeloID(formulario.getId());
@@ -78,11 +77,6 @@ public class AvaliacaoAtividadesAction extends TimeSheetComum {
         }
 	    
 	    return mapping.findForward("retorno");		
-	}
-
-	public ActionForward reprovar(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) {
-	    return mapping.findForward("retorno");		
-	}
+	}	
 	
 }

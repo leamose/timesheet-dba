@@ -15,6 +15,7 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	private String acao;
 	private String codigoAtividade;
 	private String codigoCliente;		
 	private String codigoTimeSheet;		
@@ -378,6 +379,20 @@ public class AvaliacaoAtividadesForm extends ValidatorForm {
      */
     public void setData(String data) {
         this.data = data;
+    }
+
+    /**
+     * @return the acao
+     */
+    public String getAcao() {
+        return acao;
+    }
+
+    /**
+     * @param acao the acao to set
+     */
+    public void setAcao(String acao) {
+        this.acao = acao;
     }
 
 	

@@ -2,6 +2,7 @@ package br.com.dba.timesheet.web.action;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,21 +27,36 @@ import br.com.dba.timesheet.web.form.AtividadesForm;
 
 public class AtividadesAction extends TimeSheetComum {
 	
+    private static final String ACAO_ALTERAR = "alterar";
+    private static final String ACAO_DETALHAR = "detalhar";
+
     public ActionForward inicio(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 	    try {
     		AtividadesForm formulario = (AtividadesForm) form;
+    		 
+            String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
+                		
+            String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
     		
-            List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().getListaTimeSheetVO();    		
 //            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().listarTodosTimeSheet();    		
 //            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().consultarTimeSheetPorDataHoraInicio(UtilDate.getHoraZero(new Date()));    		
     		
-    		formulario.setListaTimeSheetVO(listaTimeSheet);
+    		
+    		try {
+    		    List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().getListaTimeSheetVO(UtilDate.getDataComHoraZero(data1),
+    		            UtilDate.getDataComHoraZero(data2));
+     		
+    		    formulario.setListaTimeSheetVO(listaTimeSheet);
+    		
+    		} catch (Exception e) {    		   
+    		    e.printStackTrace();
+    		}
+
+    		
     		
 		} catch (ErroInternoException e) {
-		    e.printStackTrace();
-		}catch (ParametroInvalidoException e) {
 		    e.printStackTrace();
 		}
 		
@@ -99,6 +115,14 @@ public class AtividadesAction extends TimeSheetComum {
         return getTimeSheetDelegate().salvarProjeto(projeto);
     }
 
+    /**
+     * Método responsavel em excluir uma atividade.
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     */
 	public ActionForward excluir(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 	    
@@ -118,6 +142,8 @@ public class AtividadesAction extends TimeSheetComum {
             if(timesheet != null){
                 preencherFormulario(formulario, timesheet);
             }
+            
+            formulario.setAcao(ACAO_ALTERAR);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -157,6 +183,14 @@ public class AtividadesAction extends TimeSheetComum {
 	    return mapping.findForward("retorno");        
 	}
 
+	/**
+	 * Metodo responsavel em detalhar uma atividade
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
     public ActionForward detalhar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 	    
@@ -166,8 +200,10 @@ public class AtividadesAction extends TimeSheetComum {
             
             TimeSheet timesheet = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));
             
+            preencherFormularioInicial(formulario);
             preencherFormulario(formulario, timesheet);
             
+            formulario.setAcao(ACAO_DETALHAR);
             formulario.setDesabilitarCampo(true);
             
         } catch (Exception e) {
@@ -195,7 +231,12 @@ public class AtividadesAction extends TimeSheetComum {
        
         try {
             
-            List<TimeSheet> lista = getTimeSheetDelegate().consultarTimeSheetPorDataHoraInicio(UtilDate.getData(formulario.getDataParaPesquisa()));
+            Date data2 = UtilDate.getData(formulario.getDataParaPesquisa());
+            
+            List<TimeSheet> lista = getTimeSheetDelegate()
+                    .consultarTimeSheetPorDataHoraInicio(
+                            UtilDate.getDataComHoraZero(formulario.getDataParaPesquisa()), 
+                            UtilDate.getDateComHoraFinal(data2));
             
             formulario.setListaTimeSheet(lista);
             
@@ -310,7 +351,7 @@ public class AtividadesAction extends TimeSheetComum {
 
         try {            
             
-            if(formulario.getAcao().equals("alterar")){
+            if(formulario.getAcao().equals(ACAO_ALTERAR)){
                 pojo.setId(formulario.getId());
             }
             
