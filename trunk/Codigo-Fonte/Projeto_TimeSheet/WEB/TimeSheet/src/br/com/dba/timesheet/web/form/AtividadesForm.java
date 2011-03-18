@@ -1,5 +1,6 @@
 package br.com.dba.timesheet.web.form;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.validator.ValidatorForm;
@@ -53,14 +54,14 @@ public class AtividadesForm extends ValidatorForm {
 
     //Listas
     private List<Dominio> listaDiasDaSemana;
-    private List<TimeSheet> listaTimeSheet;
-    private List<TimeSheetVO> listaTimeSheetVO;
-    private List<HistoricoTimeSheet> listaHistoricoTimeSheet;
-    private List<Atividade> listaAtividades;
-    private List<Cliente> listaClientes;
-    private List<Metodologia> listaMetodologias;
-    private List<OP> listaOPs;
-    private List<ProdutoServico> listaProdutosServicos;
+    private List<TimeSheet> listaTimeSheet = new ArrayList<TimeSheet>();
+    private List<TimeSheetVO> listaTimeSheetVO = new ArrayList<TimeSheetVO>();
+    private List<HistoricoTimeSheet> listaHistoricoTimeSheet = new ArrayList<HistoricoTimeSheet>();
+    private List<Atividade> listaAtividades = new ArrayList<Atividade>();
+    private List<Cliente> listaClientes = new ArrayList<Cliente>();
+    private List<Metodologia> listaMetodologias = new ArrayList<Metodologia>();
+    private List<OP> listaOPs = new ArrayList<OP>();
+    private List<ProdutoServico> listaProdutosServicos = new ArrayList<ProdutoServico>();
 
     
     //POJO's

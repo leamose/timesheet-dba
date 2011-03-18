@@ -1,47 +1,24 @@
 package br.com.dba.timesheet.web.form;
 
-import java.util.List;
-
 import org.apache.struts.validator.ValidatorForm;
 
-import br.com.dba.timesheet.pojo.TipoAtividade;
+import br.com.dba.timesheet.pojo.Usuario;
 
 public class LoginForm extends ValidatorForm {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String usuario;
-	
+	private String login;	
 	private String senha;
 	
-	private Integer tipoAtividade;
-	
-	private List<TipoAtividade> listaAtividades;
-	
-	public Integer getTipoAtividade() {
-		return tipoAtividade;
+	private Usuario usuario;
+
+	public String getLogin() {
+		return login;
 	}
 
-	public void setTipoAtividade(Integer tipo_atividade_id) {
-		this.tipoAtividade = tipo_atividade_id;
-	}
-
-	public List<TipoAtividade> getListaAtividades() {
-		return listaAtividades;
-	}
-
-	public void setListaAtividades(List<TipoAtividade> listaAtividades) {
-		this.listaAtividades = listaAtividades;
-	}
-
-	
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getSenha() {
@@ -51,6 +28,15 @@ public class LoginForm extends ValidatorForm {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 	
 	
 }

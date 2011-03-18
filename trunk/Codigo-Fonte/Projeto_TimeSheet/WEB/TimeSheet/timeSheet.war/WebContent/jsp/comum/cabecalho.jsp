@@ -11,13 +11,7 @@
 
 	//CADASTRAR ATIVIDADE
 	function cadastrarAtividades() {
-		open_popPpAtividade(false, contexto + '/atividade/cadastrarAtividade.do?acao=salvar', null, "Cadastrar Atividade", 720, 402);
-	}
-	
-	function retornoCadastrarAtividades() {
-		var form = document.forms[0];
-		form.action = contexto + '/atividade/salvar.do';
-		form.submit();
+		open_popPpAtividade(false, contexto + '/atividade/cadastrarAtividade.do?acao=salvar', retornoInicio, "Cadastrar Atividade", 720, 445);
 	}
 	
 	function configurar() {
@@ -36,7 +30,7 @@
 	//SAIR
 	function sair() {
 		var form = document.forms[0];
-		form.action = contexto + '/login.do'; 
+		form.action = contexto + '/logout.do'; 
 		form.submit();
 	}
 </script>
@@ -63,12 +57,12 @@
 								<td width="8%" align="left">8h00</td>
 								<td width="15%" align="left">18h00</td>
 								<th width="15%" align="right">MÊS:</th>
-								<td align="left">Dezembro</td>						
+								<td align="left">Março</td>						
 							</tr>
 							<tr>
 								<th align="right">Almoço:</th>
-								<td align="left"> 8h00</td>
-								<td align="left">18h00</td>
+								<td align="left"> 12h00</td>
+								<td align="left">14h00</td>
 								<th width="10%" align="right">Minino: </th>
 								<td align="left">1h</td>
 							</tr>
@@ -85,15 +79,15 @@
 						<table>
 							<tr>
 								<th width="32%" align="right">Saldo diario:</th>
-								<td width="8%" align="left">8h00</td>														
+								<td width="8%" align="left">8</td>														
 							</tr>
 							<tr>
 								<th align="right">Saldo Mensal:</th>
-								<td align="left"> 8h00</td>
+								<td align="left"> 130</td>
 							</tr>
 							<tr>
 								<th align="right">Banco de Horas:</th>
-								<td align="left">176</td>								
+								<td align="left">0</td>								
 							</tr>
 						</table>
 					</td>

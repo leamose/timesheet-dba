@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     13/07/2004 11:13:55                                                        
+
+     CompSicau   
+     Build para gerar o componentes de Atendimento Usuário
+                   
+                                                                  
+     ====================================================================== -->
+<project name="WEBSisRh" default="default">
+
+	<target name="default">
+	    <ant antfile="/java/lib/build/web/build.xml" target="build" >
+	    	<property file="${basedir}/build.properties" />
+	    </ant>
+		<ant antfile="/java/lib/build/web/packaging-build.xml" target="packaging" >
+			<property file="${basedir}/build.properties" />
+		</ant>
+	</target>
+    
+</project>
+

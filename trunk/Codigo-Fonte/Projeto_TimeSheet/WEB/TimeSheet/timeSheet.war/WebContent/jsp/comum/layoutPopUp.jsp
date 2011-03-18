@@ -13,8 +13,6 @@
 		<script type="text/javascript" src="${contexto}/WebContent/js/prototype.js"> </script> 
 		<script type="text/javascript" src="${contexto}/WebContent/js/submodal.js"></script>
 		<script type="text/javascript" src="${contexto}/WebContent/js/submodalsource.js"></script>
-		<script type="text/javascript" src="${contexto}/WebContent/js/popupmenu.js"></script>
-
 		<script type="text/javascript">
 			var contexto = '${contexto}';
 		</script>
