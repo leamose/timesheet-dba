@@ -141,7 +141,7 @@ public class UtilDate {
 	public static Date getData(String dataString, String formatoDaData)
 			throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(formatoDaData);
-		dateFormat.setLenient(false);
+//		dateFormat.setLenient(false);
 		return dateFormat.parse(dataString);
 	}
 

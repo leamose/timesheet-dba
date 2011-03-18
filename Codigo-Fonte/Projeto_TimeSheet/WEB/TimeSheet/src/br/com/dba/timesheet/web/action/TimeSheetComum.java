@@ -13,6 +13,7 @@ import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
+import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
 
 public class TimeSheetComum extends BaseDispatchAction{
@@ -212,6 +213,22 @@ public class TimeSheetComum extends BaseDispatchAction{
         OP pojo = null;
         try{    
             pojo = getTimeSheetDelegate().getOP(id);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return pojo;
+    }
+
+    /**
+     * Recupera um objeto pelo id.
+     * @param id
+     * @return 
+     */
+    public Usuario getUsuarioPeloID(Integer id) {
+        Usuario pojo = null;
+        try{    
+            pojo = getTimeSheetDelegate().getUsuario(id);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

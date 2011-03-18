@@ -18,6 +18,7 @@ import br.com.dba.timesheet.exceptions.ErroInternoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
+import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
@@ -39,10 +40,6 @@ public class AtividadesAction extends TimeSheetComum {
             String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
                 		
             String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
-    		
-//            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().listarTodosTimeSheet();    		
-//            List<TimeSheet> listaTimeSheet = getTimeSheetDelegate().consultarTimeSheetPorDataHoraInicio(UtilDate.getHoraZero(new Date()));    		
-    		
     		
     		try {
     		    List<TimeSheetVO> listaTimeSheet = getTimeSheetDelegate().getListaTimeSheetVO(UtilDate.getDataComHoraZero(data1),
@@ -77,9 +74,11 @@ public class AtividadesAction extends TimeSheetComum {
     	    TimeSheet timeSheet = preencherTimeSheet(formulario);    	    
     	    salvarTimeSheet(timeSheet);
     	    
-    	    HistoricoTimeSheet historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "S");            
+    	    HistoricoTimeSheet historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "I");            
             salvarHistoricoTimeSheet(historicoTimeSheet);
             
+            //Submeter a pagina pai. 
+            request.setAttribute("submiter", true);
             
         } catch (NumberFormatException e) {
             // TODO Auto-generated catch block
@@ -88,8 +87,6 @@ public class AtividadesAction extends TimeSheetComum {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-	    
-        
         
 	    return mapping.findForward("retorno");        
 	}
@@ -126,6 +123,19 @@ public class AtividadesAction extends TimeSheetComum {
 	public ActionForward excluir(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 	    
+	    AtividadesForm formulario = (AtividadesForm) form;
+	    
+	    TimeSheet pojo;
+        try {
+            
+            pojo = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
+            getTimeSheetDelegate().removerTimeSheet(pojo) ;
+            
+        } catch (ParametroInvalidoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    
 		return mapping.findForward("retorno");        
 	}
 
@@ -136,10 +146,13 @@ public class AtividadesAction extends TimeSheetComum {
             AtividadesForm formulario = (AtividadesForm) form;
             
             TimeSheet timesheet = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));
-
-            preencherFormularioInicial(formulario);
             
             if(timesheet != null){
+            	List<ProdutoServico> listaProdutoServico = recuperarListaProdutoServico(timesheet.getMetodologia().getId());
+            	
+            	formulario.setListaProdutosServicos(listaProdutoServico); 
+            	
+            	preencherFormularioInicial(formulario);
                 preencherFormulario(formulario, timesheet);
             }
             
@@ -153,6 +166,36 @@ public class AtividadesAction extends TimeSheetComum {
         }
         
 		return mapping.findForward("retorno");        
+	}
+	
+
+	public ActionForward popularComboProdutoServico(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			AtividadesForm formulario = (AtividadesForm) form;
+			
+			preencherFormularioInicial(formulario);
+			
+			List<ProdutoServico> listaProdutoServico = recuperarListaProdutoServico(Integer.valueOf(formulario.getCodigoMetodologia()));
+			
+			formulario.setListaProdutosServicos(listaProdutoServico);
+			
+		} catch (ParametroInvalidoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mapping.findForward("retorno");        
+	}
+
+	public List<ProdutoServico> recuperarListaProdutoServico(Integer codigoMetodologia) throws ParametroInvalidoException {
+		return getTimeSheetDelegate()
+				.getProdutoServicoPeloCodigoMetodologia(
+						Integer.valueOf(codigoMetodologia));
 	}
 	
 	/**
@@ -174,6 +217,9 @@ public class AtividadesAction extends TimeSheetComum {
         
             HistoricoTimeSheet historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "A");            
             salvarHistoricoTimeSheet(historicoTimeSheet);
+            
+            //Submeter a pagina pai. 
+            request.setAttribute("submiter", true);
 	    
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -314,7 +360,7 @@ public class AtividadesAction extends TimeSheetComum {
             formulario.setId(timesheet.getId());
             formulario.setData(UtilDate.getDataComoString(timesheet.getDataHoraInicio()));
             formulario.setDataHoraInicio(UtilDate.getHoraComoString(timesheet.getDataHoraInicio()));
-            formulario.setDataHoraFim(UtilDate.getHoraComoString(timesheet.getDataHoraInicio()));
+            formulario.setDataHoraFim(UtilDate.getHoraComoString(timesheet.getDataHoraFim()));
             formulario.setCodigoOp(Integer.toString(timesheet.getOp().getId()));
             formulario.setCodigoMetodologia(Integer.toString(timesheet.getMetodologia().getId()));
             formulario.setNomeProjeto(timesheet.getProjeto().getNome());
@@ -333,7 +379,7 @@ public class AtividadesAction extends TimeSheetComum {
         formulario.setListaClientes(getListarTodosClientes());
         formulario.setListaOPs(getListarTodasOPs());
         formulario.setListaMetodologias(getListarTodasMetodologias());
-        formulario.setListaProdutosServicos(getListarTodosProdutosServicos());
+//        formulario.setListaProdutosServicos(getListarTodosProdutosServicos());
     }
     
     /**
@@ -373,7 +419,7 @@ public class AtividadesAction extends TimeSheetComum {
             
             //TEXTOS
             pojo.setDataHoraInicio(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraInicio() + ":00"));
-            pojo.setDataHoraFim(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraInicio() + ":00"));
+            pojo.setDataHoraFim(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraFim() + ":00"));
             pojo.setObservacao(formulario.getObservacao());
             pojo.setOutrasAtividades(formulario.getOutros());
             
@@ -413,6 +459,8 @@ public class AtividadesAction extends TimeSheetComum {
         pojo.setDataOperacao(new Date());
         pojo.setObservacao(timeSheet.getObservacao());
         pojo.setTipoOperacao(tipoOperacao);
+        
+        pojo.setUsuario(getUsuarioPeloID(3));
         
         return pojo;
     }

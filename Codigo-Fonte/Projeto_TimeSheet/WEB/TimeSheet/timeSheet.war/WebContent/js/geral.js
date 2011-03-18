@@ -4,6 +4,13 @@ function operacaoCancelada() {
 	form.submit();
 }
 
+function retornoInicio() {
+	var form = document.forms[0];
+	form.action = contexto + '/atividade/inicio.do';
+	form.submit();
+}
+
+
 //VOLTAR
 function voltar() {
 	var form = document.forms[0];
@@ -21,10 +28,6 @@ function cancelaOperacao() {
 
 //ABRE POPUP ATIVIDADES
 function open_popPpAtividade(temOutrasAtividades,url, urlRetorno, titulo, largura, altura) {	
-	if(temOutrasAtividades){
-		altura=465;
-	}
-			
 	parent.showPopWin(url, largura, altura, "50", titulo,0, urlRetorno);
 }
 
@@ -168,7 +171,7 @@ function ValidaHora(hora) {
 function FormataHora(Campo,teclapres)
 {
 	var tecla = teclapres;
-	vr = document.forms[0][Campo].value;
+	vr = Campo.value;
 	vr = vr.replace( ".", "" );
 	vr = vr.replace( ":", "" );
 	vr = vr.replace( ":", "" );
@@ -176,7 +179,7 @@ function FormataHora(Campo,teclapres)
 
 	if ( tecla != 9 && tecla != 8 && tecla != 46 )
 		if ( tam > 2 && tam <= 5 )
-			document.forms[0][Campo].value = vr.substr( 0, tam - 2  ) + ':' + vr.substr( tam - 2, tam );
+			Campo.value = vr.substr( 0, tam - 2  ) + ':' + vr.substr( tam - 2, tam );
 }
 
 function LiberaBotao() {
