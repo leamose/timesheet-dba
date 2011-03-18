@@ -27,7 +27,7 @@
         <mapping class="br.com.dba.timesheet.pojo.ProdutoServico"/>                
         <mapping class="br.com.dba.timesheet.pojo.Projeto"/>        
         <mapping class="br.com.dba.timesheet.pojo.TipoAtividade"/>        
-        <mapping class="br.com.dba.timesheet.pojo.TimeSheet"/>        
+        <mapping class="br.com.dba.timesheet.pojo.TimeSheet"/>
         <mapping class="br.com.dba.timesheet.pojo.AvaliacaoAtividade"/>        
         <mapping class="br.com.dba.timesheet.pojo.Calendario"/>        
         <mapping class="br.com.dba.timesheet.pojo.FuncionalidadeCliente"/>        
