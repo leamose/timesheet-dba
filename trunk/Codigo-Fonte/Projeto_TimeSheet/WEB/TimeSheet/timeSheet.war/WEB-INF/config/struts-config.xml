@@ -7,7 +7,26 @@
 
     <form-beans>
 		<form-bean name="loginForm" type="br.com.dba.timesheet.web.form.LoginForm" />
+		<form-bean name="dadosUsuarioForm" type="br.com.dba.timesheet.web.form.DadosUsuarioForm" />
     </form-beans>
+    
+     <global-exceptions>
+        <exception type="br.gov.mj.exception.NegocioException"
+            handler="br.gov.mj.struts.exceptionhandler.MjExceptionHandler" 
+            key=""/>
+
+        <exception type="br.gov.mj.corporativo.servicos.exceptions.ParametroInvalidoException" 
+            handler="br.gov.mj.struts.exceptionhandler.MjExceptionHandler"
+            path="/WebContent/jsp/comum/erro.jsp"
+            key="controleacesso.msg.erro.sem.direitos"/>
+
+        <exception type="java.lang.Exception" 
+            handler="br.gov.mj.struts.exceptionhandler.MjExceptionHandler"
+            path="/WebContent/jsp/comum/erro.jsp"
+            key="errors.nao.trataveis"/>
+            
+    </global-exceptions>
+    
 
     <action-mappings>    
 		<!-- redireciona para o template da p�gina inicial -->
@@ -16,15 +35,37 @@
 			name="loginForm"
 			scope="request">
 			<forward name="retorno" path="/atividade/inicio.do"/>
+			<forward name="usuarioBloqueado" path="/login.jsp"/>
+			<forward name="alterarSenha" path="/WebContent/jsp/usuario/popUpCadastroSenha.jsp"/>
+			<forward name="erroLogin" path="/login.jsp"/>
 		</action>		
 		
 		<action path="/logout" 
 			type="br.com.dba.timesheet.web.action.LoginAction"
 			name="loginForm"
 			scope="request">
-			<forward name="retorno" path="/login.jsp"/>
+			<forward name="retorno" path="/login.jsp"/>			
 		</action>
+
+		<action path="/senha/alterarSenha" 
+			type="br.com.dba.timesheet.web.action.DadosUsuarioAction"
+			name="dadosUsuarioForm"
+			scope="request">
+			<forward name="retorno" path="/login.do"/>
+		</action>		
+
+		<action path="/senha/desbloquearUsuario" 
+			type="br.com.dba.timesheet.web.action.DadosUsuarioAction"
+			name="dadosUsuarioForm"
+			scope="request">
+			<forward name="retorno" path="/login.do"/>
+		</action>		
 	</action-mappings>
+	
+	<!--
+		======================================== Message Resources Definitions
+	-->
+    <message-resources parameter="MessageResources"/>
 	
 	<!--
 		=================================================== Validator plugin

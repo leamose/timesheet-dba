@@ -22,7 +22,7 @@ import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleException;
 
-import br.com.dba.timesheet.exceptions.NegocioException;
+import br.com.dba.timesheet.exceptions.NegocioException;;
 
 /**
  * Objeto que trata as exceções lançadas pela camada de controller.
@@ -30,7 +30,7 @@ import br.com.dba.timesheet.exceptions.NegocioException;
  * @author Fabio Oliveria de Pinho
  * @version 1.0
  */
-public class MjExceptionHandler extends ExceptionHandler {
+public class DBAExceptionHandler extends ExceptionHandler {
 
     /**
      * Trata um exceção.

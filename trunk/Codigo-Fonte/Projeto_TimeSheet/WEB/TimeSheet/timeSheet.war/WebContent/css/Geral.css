@@ -43,13 +43,13 @@ text-align:center;
 
 
 
-#header { width:100%; height:100px; margin:auto; background-repeat:no-repeat; background-position:top left; }
+#header { width:100%; height:50px; margin:auto; background-repeat:no-repeat; background-position:top left; }
 
 #headerModulo { width:770px; height:130px; margin:auto; background-repeat:no-repeat; background-position:top left; *margin-bottom:0;/*hack para IE7*/ }
 
 .barraTextoTopo {width:700px; margin-right:10px; height:20px; text-align:right; display:block;  margin-top:5px;  float:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#FFF; }
 
-.barraIcones {width:970px; margin-right:10px; height:30px; text-align:right; display:block;  margin-top:30px; letter-spacing:10px; float:right; }
+.barraIcones {margin-right:10px; text-align:right; display:block;  margin-top:10px; letter-spacing:10px; float:right; }
 .barraIcones img {cursor:pointer; }
 
 img {border:none;}
@@ -109,8 +109,7 @@ img {border:none;}
 
 .cabecalho { height:30px; width:100%; border-bottom:1px solid #00779e; display:block; background-image:url(../img/cabecalho.png); background-repeat:no-repeat; text-align:left; }
 
-
-.infoUsuario {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; float:right; margin-right:20px; margin-top:10px;}
+.infoUsuario {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#fff; float:right;padding-right: 100px;}
 
 .formulario { background-color:#FFF; display: table-cell; padding-top:5px; padding-bottom:5px; }
 

@@ -16,6 +16,7 @@
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html">
 			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>
+			<forward name="erroLogin" path="/login.do"/>
 		</action>
 	    <action path="/atividade/cadastrarAtividade" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"

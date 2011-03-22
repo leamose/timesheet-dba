@@ -16,7 +16,7 @@ import br.com.dba.timesheet.web.form.AvaliacaoAtividadesForm;
 public class AvaliacaoAtividadesAction extends TimeSheetComum {
 	
 	public ActionForward inicio(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    	    
 	    AvaliacaoAtividadesForm formulario = (AvaliacaoAtividadesForm) form;
 	    
@@ -28,8 +28,7 @@ public class AvaliacaoAtividadesAction extends TimeSheetComum {
 	    
             formulario.setData(UtilDate.getDataComoString(timesheet.getDataHoraInicio()));
 	    } catch (Exception e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
+	    	throw new Exception(e.getMessage(), e);
 	    }
 	    
 	    
@@ -38,7 +37,7 @@ public class AvaliacaoAtividadesAction extends TimeSheetComum {
 	}
 
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) {
+	        HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    
 	    try {
     	    AvaliacaoAtividadesForm formulario = (AvaliacaoAtividadesForm) form;
@@ -58,8 +57,7 @@ public class AvaliacaoAtividadesAction extends TimeSheetComum {
     	    try {
                 getTimeSheetDelegate().salvarAvaliacaoAtividade(avaliacaoAtividade);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            	throw new Exception(e.getMessage(), e);
             }
             
             
@@ -69,11 +67,9 @@ public class AvaliacaoAtividadesAction extends TimeSheetComum {
 //	        e.printStackTrace();
 	    } 
 	    catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+	    	throw new Exception(e.getMessage(), e);
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
 	    
 	    return mapping.findForward("retorno");		

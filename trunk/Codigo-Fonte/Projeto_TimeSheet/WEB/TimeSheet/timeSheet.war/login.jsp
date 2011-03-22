@@ -22,6 +22,9 @@
 				<div id="corpologin">
 					<div class="topologin"></div>
 					<div class="formulario">
+						<span style="color:red;">
+							<span style="color:red;"><html:errors/></span>
+						</span>
 						<div style="width: 770px; float: left; background-image: url('${contexto}/WebContent/img/bg_login.jpg'); background-repeat: repeat-x; margin-bottom: 5px; vertical-align: middle; height: 121px;">
 							<img src="${contexto}/WebContent/img/cadeado.jpg" width="261" height="121" style="float: left;"/>
 								
@@ -33,7 +36,7 @@
 
 								<div class="foco" style="margin-top: 32px;">
 									<div class="labelLogin">Senha:</div>
-									<html:text property="senha" style="width: 120px;" styleClass="campoLogin"/>
+									<html:password property="senha" style="width: 120px;" styleClass="campoLogin"/>
 								</div>
 								<div>
 									<a href="#" class="button" onclick="javascript:document.forms[0].submit();">	

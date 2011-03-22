@@ -21,6 +21,7 @@ import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
 import br.com.dba.timesheet.pojo.TimeSheet;
+import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.util.UtilDate;
 import br.com.dba.timesheet.web.form.AtividadesForm;
@@ -32,13 +33,27 @@ public class AtividadesAction extends TimeSheetComum {
     private static final String ACAO_DETALHAR = "detalhar";
 
     public ActionForward inicio(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 	    try {
     		AtividadesForm formulario = (AtividadesForm) form;
-    		 
+    		
+    		Integer codigoUsuario = (Integer) request.getAttribute("codigoUsuarioLogado");
+    		
+    		Usuario usuarioLogado = getUsuarioPeloID(codigoUsuario);
+    		
+    		if(usuarioLogado!=null){
+    			formulario.setUsuario(usuarioLogado);
+    		
+	    		if(usuarioLogado.getFuncionario()!=null && usuarioLogado.getFuncionario().getIndicaChefe()){
+	    			formulario.setIndicaChefe(usuarioLogado.getFuncionario().getIndicaChefe());
+	    		}
+	    	}else{
+    			salvarMsgErro("MSG017", request);
+    			return mapping.findForward("erroLogin");
+    		}
+    		
             String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
-                		
             String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
     		
     		try {
@@ -66,7 +81,7 @@ public class AtividadesAction extends TimeSheetComum {
 	}
 	
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) {
+	        HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    
 	    try {
     	    AtividadesForm formulario = (AtividadesForm) form;
@@ -140,7 +155,7 @@ public class AtividadesAction extends TimeSheetComum {
 	}
 
 	public ActionForward alterar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    
 	    try {
             AtividadesForm formulario = (AtividadesForm) form;
@@ -170,7 +185,7 @@ public class AtividadesAction extends TimeSheetComum {
 	
 
 	public ActionForward popularComboProdutoServico(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		try {
 			AtividadesForm formulario = (AtividadesForm) form;
@@ -302,7 +317,7 @@ public class AtividadesAction extends TimeSheetComum {
     }
     
     public ActionForward reprovar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         try {
 
@@ -326,7 +341,7 @@ public class AtividadesAction extends TimeSheetComum {
     }
     
     public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         try {
 
@@ -374,7 +389,7 @@ public class AtividadesAction extends TimeSheetComum {
         formulario.setDesabilitarCampo(false);
     }
 
-    public void preencherFormularioInicial(AtividadesForm formulario)  throws IOException {
+    public void preencherFormularioInicial(AtividadesForm formulario)  throws Exception {
         formulario.setListaAtividades(getListarTodasAtividades()) ;        
         formulario.setListaClientes(getListarTodosClientes());
         formulario.setListaOPs(getListarTodasOPs());
@@ -388,10 +403,11 @@ public class AtividadesAction extends TimeSheetComum {
      * @param formulario
      * @param metodologia
      * @return
-     * @throws ParametroInvalidoException
+     * @throws Exception 
+     * @throws NumberFormatException 
      */
     public TimeSheet preencherTimeSheet(AtividadesForm formulario)
-            throws ParametroInvalidoException {
+            throws NumberFormatException, Exception {
         
         TimeSheet pojo = new TimeSheet();
 
@@ -437,9 +453,9 @@ public class AtividadesAction extends TimeSheetComum {
      * @param timeSheet
      * @param metodologia
      * @return
-     * @throws ParametroInvalidoException
+     * @throws Exception 
      */
-    public HistoricoTimeSheet preencherHistoricoTimeSheet(TimeSheet timeSheet, String tipoOperacao)throws ParametroInvalidoException {
+    public HistoricoTimeSheet preencherHistoricoTimeSheet(TimeSheet timeSheet, String tipoOperacao)throws Exception {
         
         HistoricoTimeSheet pojo = new HistoricoTimeSheet();
         
