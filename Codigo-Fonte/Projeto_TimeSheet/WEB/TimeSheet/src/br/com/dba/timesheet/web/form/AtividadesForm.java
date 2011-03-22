@@ -31,6 +31,8 @@ public class AtividadesForm extends ValidatorForm {
 	private String codigoMetodologia;
 	private String codigoProdutoServico;		
 	private String codigoTimeSheet;		
+	private String codigoFuncionario;		
+	private String codigoUsuarioLogado;		
 
     private String dataHoraInicio;	
 	private String dataHoraFim;		
@@ -51,6 +53,8 @@ public class AtividadesForm extends ValidatorForm {
     private String descricaoAtividade;    
     private String descricaoProjeto;
     private String outros;    	
+    
+    private Boolean indicaChefe;
 
     //Listas
     private List<Dominio> listaDiasDaSemana;
@@ -62,7 +66,7 @@ public class AtividadesForm extends ValidatorForm {
     private List<Metodologia> listaMetodologias = new ArrayList<Metodologia>();
     private List<OP> listaOPs = new ArrayList<OP>();
     private List<ProdutoServico> listaProdutosServicos = new ArrayList<ProdutoServico>();
-
+    private List<Funcionario> listaFuncionariosSubordinados = new ArrayList<Funcionario>();
     
     //POJO's
     private TimeSheet timeSheet;
@@ -696,5 +700,38 @@ public class AtividadesForm extends ValidatorForm {
     public void setListaTimeSheetVO(List<TimeSheetVO> listaTimeSheetVO) {
         this.listaTimeSheetVO = listaTimeSheetVO;
     }
+
+	public List<Funcionario> getListaFuncionariosSubordinados() {
+		return listaFuncionariosSubordinados;
+	}
+
+	public void setListaFuncionariosSubordinados(
+			List<Funcionario> listaFuncionariosSubordinados) {
+		this.listaFuncionariosSubordinados = listaFuncionariosSubordinados;
+	}
+
+	public String getCodigoFuncionario() {
+		return codigoFuncionario;
+	}
+
+	public void setCodigoFuncionario(String codigoFuncionario) {
+		this.codigoFuncionario = codigoFuncionario;
+	}
+
+	public Boolean getIndicaChefe() {
+		return indicaChefe;
+	}
+
+	public void setIndicaChefe(Boolean indicaChefe) {
+		this.indicaChefe = indicaChefe;
+	}
+
+	public String getCodigoUsuarioLogado() {
+		return codigoUsuarioLogado;
+	}
+
+	public void setCodigoUsuarioLogado(String codigoUsuarioLogado) {
+		this.codigoUsuarioLogado = codigoUsuarioLogado;
+	}
 	
 }

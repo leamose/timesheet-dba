@@ -4,7 +4,7 @@ import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.pojo.Usuario;
 
-public class LoginForm extends ValidatorForm {
+public class DadosUsuarioForm extends ValidatorForm {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -12,22 +12,7 @@ public class LoginForm extends ValidatorForm {
 	private String senha;
 	private Boolean indicaAlterarSenha;
 	private Boolean indicaBloqueado;
-	private Boolean indicaAcessoRestrito;
 	private Integer codigoUsuario;
-
-
-	public Boolean getIndicaAcessoRestrito() {
-		return indicaAcessoRestrito;
-	}
-	
-	public void setIndicaAcessoRestrito(Boolean indicaAcessoRestrito) {
-		this.indicaAcessoRestrito = indicaAcessoRestrito;
-	}
-	
-	public void limparFormulario(){
-		setLogin(null);
-		setSenha(null);
-	}
 	
 	public Integer getCodigoUsuario() {
 		return codigoUsuario;

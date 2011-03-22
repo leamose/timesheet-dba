@@ -31,30 +31,30 @@ public class TimeSheetComum extends BaseDispatchAction{
     //*********************************************
     /**
      * @return the listarTodasAtividades
+     * @throws Exception 
      */
-    public List<Atividade> getListarTodasAtividades() {
+    public List<Atividade> getListarTodasAtividades() throws Exception {
         try {
            if (this.listarTodasAtividades == null) {
                this.listarTodasAtividades = listarTodosAtividades();
            }
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }        
         return this.listarTodasAtividades;
     }
 
     /**
      * @return the listarTodasAtividades
+     * @throws Exception 
      */
-    public List<SituacaoAtividade> getListarTodasSituacaoAtividade() {
+    public List<SituacaoAtividade> getListarTodasSituacaoAtividade() throws Exception {
         try {
             if (this.listarTodasSituacaoAtividade == null) {
                 this.listarTodasSituacaoAtividade = listarTodasSituacaoAtividade();
             }
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }        
         return this.listarTodasSituacaoAtividade;
     }
@@ -75,15 +75,15 @@ public class TimeSheetComum extends BaseDispatchAction{
 
     /**
      * @return the listarTodosClientes
+     * @throws Exception 
      */
-    public List<Cliente> getListarTodosClientes() {
+    public List<Cliente> getListarTodosClientes() throws Exception {
         try {
             if (listarTodosClientes == null) {
                     listarTodosClientes = listarTodosClientes();
             }
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return listarTodosClientes;
     }
@@ -97,15 +97,15 @@ public class TimeSheetComum extends BaseDispatchAction{
 
     /**
      * @return the listarTodasOPs
+     * @throws Exception 
      */
-    public List<OP> getListarTodasOPs() {
+    public List<OP> getListarTodasOPs() throws Exception {
         try {
             if (listarTodasOPs == null) {
                     listarTodasOPs = listarTodasOPs();
             }
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }            
     
         return listarTodasOPs;
@@ -121,15 +121,15 @@ public class TimeSheetComum extends BaseDispatchAction{
 
     /**
      * @return the listarTodasMetodologias
+     * @throws Exception 
      */
-    public List<Metodologia> getListarTodasMetodologias() {
+    public List<Metodologia> getListarTodasMetodologias() throws Exception {
         try {
             if (listarTodasMetodologias == null) {
                     listarTodasMetodologias = listarTodasMetodologias();
             }
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }            
     
         return listarTodasMetodologias;
@@ -144,15 +144,15 @@ public class TimeSheetComum extends BaseDispatchAction{
 
     /**
      * @return the listarTodosProdutosServicos
+     * @throws Exception 
      */
-    public List<ProdutoServico> getListarTodosProdutosServicos() {
+    public List<ProdutoServico> getListarTodosProdutosServicos() throws Exception {
         try {
             if (listarTodosProdutosServicos == null) {
                 listarTodosProdutosServicos = listarTodosProdutoServico();            
             }
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return listarTodosProdutosServicos;
     }
@@ -196,8 +196,8 @@ public class TimeSheetComum extends BaseDispatchAction{
     //*********************************************
     public void salvarTimeSheet(TimeSheet pojo)
             throws ParametroInvalidoException {
-            getTimeSheetDelegate().salvarTimeSheet(pojo);
-            }
+    	getTimeSheetDelegate().salvarTimeSheet(pojo);
+    }
 
     public void salvarHistoricoTimeSheet(HistoricoTimeSheet pojo)
             throws ParametroInvalidoException {
@@ -208,14 +208,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public OP getOPPeloID(Integer id) {
+    public OP getOPPeloID(Integer id) throws Exception {
         OP pojo = null;
         try{    
             pojo = getTimeSheetDelegate().getOP(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -224,14 +224,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public Usuario getUsuarioPeloID(Integer id) {
+    public Usuario getUsuarioPeloID(Integer id) throws Exception {
         Usuario pojo = null;
         try{    
             pojo = getTimeSheetDelegate().getUsuario(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -240,14 +240,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public ProdutoServico getProdutoServicoPeloID(Integer id) {
+    public ProdutoServico getProdutoServicoPeloID(Integer id) throws Exception {
         ProdutoServico pojo = null;
         try{    
             pojo = getTimeSheetDelegate().getProdutoServico(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -256,14 +256,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public Cliente getClientePeloID(Integer id) {
+    public Cliente getClientePeloID(Integer id) throws Exception {
         Cliente pojo = null;
         try{    
             pojo = getTimeSheetDelegate().getCliente(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -272,14 +272,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public Atividade getAtividadePeloID(Integer id) {
+    public Atividade getAtividadePeloID(Integer id) throws Exception {
         Atividade pojo = null;
         try{    
             pojo = getTimeSheetDelegate().getAtividade(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -288,14 +288,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public Metodologia getMetodologiaPeloID(Integer id) {
+    public Metodologia getMetodologiaPeloID(Integer id) throws Exception {
         Metodologia pojo = null;
         try {
             pojo = getTimeSheetDelegate().getMetodologia(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }    
@@ -304,14 +304,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public Funcionario getFuncionarioPeloID(Integer id) {
+    public Funcionario getFuncionarioPeloID(Integer id) throws Exception {
         Funcionario pojo = null;
         try {
             pojo = getTimeSheetDelegate().getFuncionario(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -320,14 +320,14 @@ public class TimeSheetComum extends BaseDispatchAction{
      * Recupera um objeto pelo id.
      * @param id
      * @return 
+     * @throws Exception 
      */
-    public SituacaoAtividade getSituacaoAtividadePeloID(Integer id) {
+    public SituacaoAtividade getSituacaoAtividadePeloID(Integer id) throws Exception {
         SituacaoAtividade pojo = null;
         try {
             pojo = getTimeSheetDelegate().getSituacaoAtividade(id);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
         return pojo;
     }
@@ -344,14 +344,22 @@ public class TimeSheetComum extends BaseDispatchAction{
         return TimesheetDelegate.getInstancia();
     }
 
-    public void alterarTimeSheet(TimeSheet pojo) {
+    public void alterarTimeSheet(TimeSheet pojo) throws Exception {
         try {
             getTimeSheetDelegate().alterarTimeSheet(pojo);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new Exception(e.getMessage(), e);
         }
     }
+
+	public List<Usuario> constultarUsuario(Usuario usuario)
+			throws ParametroInvalidoException {
+				return getTimeSheetDelegate().consultarUsuario(usuario);
+			}
+
+	public Usuario getUsuario(Usuario usuario) throws ParametroInvalidoException {
+		return getTimeSheetDelegate().getUsuario(usuario);
+	}
     
 
 }

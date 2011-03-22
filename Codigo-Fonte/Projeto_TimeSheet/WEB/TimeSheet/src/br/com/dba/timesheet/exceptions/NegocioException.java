@@ -11,7 +11,12 @@ package br.com.dba.timesheet.exceptions;
  */
 public class NegocioException extends AbstractBaseException {
 
-    private String [] _parametros;
+    /**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String [] _parametros;
 
     /**
      * Construtor padrão.
