@@ -2,6 +2,8 @@ package br.com.dba.timesheet.web.form;
 
 import org.apache.struts.validator.ValidatorForm;
 
+import br.com.dba.timesheet.pojo.Usuario;
+
 public class ConfigurarForm extends ValidatorForm {
 	
 	private static final long serialVersionUID = 1L;
@@ -12,6 +14,9 @@ public class ConfigurarForm extends ValidatorForm {
     private Integer hora_almoco_fim;
     private Integer mininoAlmoco;
     private Integer totalHorasMes;
+    
+    private Usuario usuario;
+    
     /**
      * @return the hora_trabalho_inicio
      */
@@ -84,5 +89,11 @@ public class ConfigurarForm extends ValidatorForm {
     public void setTotalHorasMes(Integer totalHorasMes) {
         this.totalHorasMes = totalHorasMes;
     }
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
     
 }

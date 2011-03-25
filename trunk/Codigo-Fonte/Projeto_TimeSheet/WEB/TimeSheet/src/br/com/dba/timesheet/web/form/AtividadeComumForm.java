@@ -20,11 +20,8 @@ import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 
-
-public class AtividadesForm extends ValidatorForm{
+public class AtividadeComumForm extends ValidatorForm {
 	
-	private static final long serialVersionUID = 1L;
-		
 	
 	private Integer id;
 	private String acao; 
@@ -40,11 +37,11 @@ public class AtividadesForm extends ValidatorForm{
 	private Integer codigoUsuarioLogado;
 	private Integer codigoFuncionarioSubordinado;
 	private Integer codigoSituacaoAtividade;	
-	private Integer tamanhoListaHoras;	
 
     private String dataHoraInicio;	
 	private String dataHoraFim;		
 	private String observacao;	
+	private Boolean alteracao_data_avaliacao;	
 	
 	private String data;
 	private String dataParaPesquisa;
@@ -59,22 +56,15 @@ public class AtividadesForm extends ValidatorForm{
     private String nomeProjeto;
     private String descricaoAtividade;    
     private String descricaoProjeto;
-    private String anoConsulta;
-    private String mesConsulta;
-    
-    //Descricao do Mes : Exemplo (Março, Abril....)
     private String mesLiteral;
     private String outros;    	
     private String observacaoChefia;	
 	private String observacaoPrivada;
     
-	private Boolean alteracao_data_avaliacao;	
     private Boolean indicaChefe;
-    private Boolean indicaSaldoDevedor;
     
-    //indica se o funcionario sera avaliado, no caso de ser a mesma pessoa, ela nao pode se auto-avaliar
-    private Boolean indicaAvaliacao;
-    
+    private String nomefuncionario;    	
+
     //Listas
     private List<Dominio> listaDiasDaSemana = new ArrayList<Dominio>();
     private List<TimeSheet> listaTimeSheet = new ArrayList<TimeSheet>();
@@ -102,33 +92,6 @@ public class AtividadesForm extends ValidatorForm{
     private Funcionario subordinado;
     private Funcionario funcionario;
     private Projeto projeto;
-    
-    public void limparFormulario(){
-        setAlteracao_data_avaliacao(false);
-        setAtividades(null);
-        setDesabilitarCampo(false);
-        setClientes(null);
-        setCodigoAtividade(null);
-        setCodigoMetodologia(null);
-        setCodigoOp(null);
-        setCodigoProdutoServico(null);      
-        setCodigoTimeSheet(null);
-        setData("");
-        setDataHoraFim("");
-        setDataHoraInicio("");
-        setDescricaoAtividade("");
-        setDescricaoMetodologia("");
-        setDescricaoOp("");
-        setDescricaoMetodologia("");
-        setDiaAtividade("");
-        setFuncionario(null); 
-        setHistoricoTimeSheet(null);
-        setHorasDiarias("");      
-        setInicioPrevisto("");
-        setNomeProjeto("");
-        setNumeroProjeto("");
-        setCodigoCliente(null);
-    }
     
 	public Integer getId() {
 		return id;
@@ -428,12 +391,6 @@ public class AtividadesForm extends ValidatorForm{
 	public void setTimeSheet(TimeSheet timeSheet) {
 		this.timeSheet = timeSheet;
 	}
-	public SituacaoAtividade getSituacaoAtividade() {
-		return situacaoAtividade;
-	}
-	public void setSituacaoAtividade(SituacaoAtividade situacaoAtividade) {
-		this.situacaoAtividade = situacaoAtividade;
-	}
 	public Atividade getAtividades() {
 		return atividades;
 	}
@@ -494,44 +451,43 @@ public class AtividadesForm extends ValidatorForm{
 	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
 	}
-
-	public Boolean getIndicaAvaliacao() {
-		return indicaAvaliacao;
+	
+	public void limparFormulario(){
+        setAlteracao_data_avaliacao(false);
+        setAtividades(null);
+        setDesabilitarCampo(false);
+        setClientes(null);
+        setCodigoAtividade(null);
+        setCodigoMetodologia(null);
+        setCodigoOp(null);
+        setCodigoProdutoServico(null);      
+        setCodigoTimeSheet(null);
+        setData("");
+        setDataHoraFim("");
+        setDataHoraInicio("");
+        setDescricaoAtividade("");
+        setDescricaoMetodologia("");
+        setDescricaoOp("");
+        setDescricaoMetodologia("");
+        setDiaAtividade("");
+        setFuncionario(null); 
+        setHistoricoTimeSheet(null);
+        setHorasDiarias("");      
+        setInicioPrevisto("");
+        setNomeProjeto("");
+        setNumeroProjeto("");
+        setCodigoCliente(null);
+    }
+	public String getNomefuncionario() {
+		return nomefuncionario;
 	}
-
-	public void setIndicaAvaliacao(Boolean indicaAvaliacao) {
-		this.indicaAvaliacao = indicaAvaliacao;
+	public void setNomefuncionario(String nomefuncionario) {
+		this.nomefuncionario = nomefuncionario;
 	}
-
-	public String getAnoConsulta() {
-		return anoConsulta;
+	public SituacaoAtividade getSituacaoAtividade() {
+		return situacaoAtividade;
 	}
-
-	public void setAnoConsulta(String anoConsulta) {
-		this.anoConsulta = anoConsulta;
-	}
-
-	public String getMesConsulta() {
-		return mesConsulta;
-	}
-
-	public void setMesConsulta(String mesConsulta) {
-		this.mesConsulta = mesConsulta;
-	}
-
-	public Integer getTamanhoListaHoras() {
-		return tamanhoListaHoras;
-	}
-
-	public void setTamanhoListaHoras(Integer tamanhoListaHoras) {
-		this.tamanhoListaHoras = tamanhoListaHoras;
-	}
-
-	public Boolean getIndicaSaldoDevedor() {
-		return indicaSaldoDevedor;
-	}
-
-	public void setIndicaSaldoDevedor(Boolean indicaSaldoDevedor) {
-		this.indicaSaldoDevedor = indicaSaldoDevedor;
+	public void setSituacaoAtividade(SituacaoAtividade situacaoAtividade) {
+		this.situacaoAtividade = situacaoAtividade;
 	}
 }

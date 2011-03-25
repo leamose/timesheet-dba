@@ -14,7 +14,10 @@ import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
+import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
+import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.struts.BaseDispatchAction;
+import br.com.dba.timesheet.util.UtilDate;
 
 public class TimeSheetComum extends BaseDispatchAction{
 
@@ -360,6 +363,57 @@ public class TimeSheetComum extends BaseDispatchAction{
 	public Usuario getUsuario(Usuario usuario) throws ParametroInvalidoException {
 		return getTimeSheetDelegate().getUsuario(usuario);
 	}
+
+	/**
+	 * Recupera a lista com as horas das atividades(TIMESHEETs) pelo funcionario.
+	 * @param subordinado
+	 * @return
+	 * @throws ParametroInvalidoException
+	 */
+	protected List<HorasAtividadeVO> getListaHorasAtividadeVO(Funcionario subordinado)
+			throws ParametroInvalidoException {
+				return getTimeSheetDelegate().getListaHorasAtividadeVO(UtilDate.getDataAtual(),
+						subordinado.getId());
+			}
+	/**
+	 * Recupera a lista de atividades por funcionario.
+	 * @param funcionario
+	 * @return
+	 * @throws ParametroInvalidoException
+	 */
+	protected List<TimeSheetVO> getListaTimeSheetVO(Funcionario funcionario)
+			throws ParametroInvalidoException {
+				
+				//Data do primeiro dia do mes atual.
+				String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
+				
+				//Data do ultimo dia do mes atual.
+				String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
+				
+				return getTimeSheetDelegate().getListaTimeSheetVO(UtilDate.getDataComHoraZero(data1),
+						UtilDate.getDataComHoraZero(data2), funcionario.getId());
+			}
+
+	/**
+	 * Recupera a lista de Funcionario Subordinado pelo codigo do chefe.
+	 * @param usuarioLogado
+	 * @return
+	 * @throws ParametroInvalidoException
+	 */
+	protected List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Usuario usuarioLogado)
+			throws ParametroInvalidoException {
+				return getTimeSheetDelegate().consultaFuncionariosPeloCodigoFuncionarioChefe(usuarioLogado.getFuncionario().getId());
+			}
+
+	protected void removerTimeSheet(TimeSheet pojo)
+			throws ParametroInvalidoException {
+				getTimeSheetDelegate().removerTimeSheet(pojo);
+			}
+
+	public List<ProdutoServico> recuperarListaProdutoServico(Integer codigoMetodologia)
+			throws ParametroInvalidoException {
+				return getTimeSheetDelegate().getProdutoServicoPeloCodigoMetodologia(Integer.valueOf(codigoMetodologia));
+			}
     
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.pojo.Funcionario;
+import br.com.dba.timesheet.pojo.Usuario;
 
 public class FuncionarioForm extends ValidatorForm {
 	
@@ -21,6 +22,9 @@ public class FuncionarioForm extends ValidatorForm {
 	private Integer hora_almoco_inicio;
 	private Integer hora_almoco_fim;
 	private Boolean ferias;
+	
+	private Usuario usuario;
+	
 	private List<Funcionario> listaFuncionarios;
 	
 	
@@ -102,5 +106,11 @@ public class FuncionarioForm extends ValidatorForm {
     public void setListaFuncionarios(List<Funcionario> listaFuncionarios) {
         this.listaFuncionarios = listaFuncionarios;
     }
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 		
 }

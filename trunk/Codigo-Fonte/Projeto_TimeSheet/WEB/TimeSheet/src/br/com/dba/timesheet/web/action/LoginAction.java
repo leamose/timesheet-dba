@@ -57,8 +57,6 @@ public class LoginAction extends TimeSheetComum {
 			throw new Exception(e.getMessage(), e);
 		}
 		
-		request.getSession();
-		
 	    return mapping.findForward(retorno);		
 	}
 

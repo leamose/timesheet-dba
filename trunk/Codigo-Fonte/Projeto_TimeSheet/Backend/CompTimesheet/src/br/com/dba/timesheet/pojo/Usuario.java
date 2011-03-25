@@ -1,5 +1,7 @@
 package br.com.dba.timesheet.pojo;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +46,7 @@ public class Usuario implements POJO<Integer> {
     private Boolean indicaAlterarSenha;
 	
     @Column(name="dataUltimoLogin")
-	private Boolean dataUltimoLogin;
+	private Date dataUltimoLogin;
 
     /**
      * @return the id
@@ -133,14 +135,14 @@ public class Usuario implements POJO<Integer> {
     /**
      * @return the dataUltimoLogin
      */
-    public Boolean getDataUltimoLogin() {
+    public Date getDataUltimoLogin() {
         return dataUltimoLogin;
     }
 
     /**
      * @param dataUltimoLogin the dataUltimoLogin to set
      */
-    public void setDataUltimoLogin(Boolean dataUltimoLogin) {
+    public void setDataUltimoLogin(Date dataUltimoLogin) {
         this.dataUltimoLogin = dataUltimoLogin;
     }
 	

@@ -65,6 +65,9 @@ public interface TimesheetFacade
    public void alterarTimeSheet( br.com.dba.timesheet.pojo.TimeSheet pojo )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
+   public void alterarUsuario( br.com.dba.timesheet.pojo.Usuario pojo )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
+
    public void removerTimeSheet( br.com.dba.timesheet.pojo.TimeSheet pojo )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
@@ -75,6 +78,9 @@ public interface TimesheetFacade
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
    public br.com.dba.timesheet.pojo.Funcionario getFuncionario( java.lang.Integer id )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
+
+   public java.util.List consultaFuncionariosPeloCodigoFuncionarioChefe( java.lang.Integer codigoFuncionarioChefe )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
    public br.com.dba.timesheet.pojo.Cliente getCliente( java.lang.Integer id )
@@ -110,6 +116,9 @@ public interface TimesheetFacade
    public java.util.List consultarUsuario( br.com.dba.timesheet.pojo.Usuario pojo )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
+   public br.com.dba.timesheet.pojo.Usuario getUsuario( br.com.dba.timesheet.pojo.Usuario pojo )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
+
    public br.com.dba.timesheet.pojo.Projeto salvarProjeto( br.com.dba.timesheet.pojo.Projeto pojo )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
@@ -119,7 +128,13 @@ public interface TimesheetFacade
    public void removerProjeto( br.com.dba.timesheet.pojo.Projeto pojo )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
-   public java.util.List getListaTimeSheetVO( java.util.Date dataInicio,java.util.Date dataFim )
+   public java.util.List getListaTimeSheetVO( java.util.Date dataInicio,java.util.Date dataFim,java.lang.Integer codigoFuncionario )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
+
+   public java.util.List getListaTimeSheetVOPeloMesAno( java.lang.String mes,java.lang.String ano,java.lang.Integer codigoFuncionario )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
+
+   public java.util.List getListaHorasAtividadeVO( java.util.Date data,java.lang.Integer codigoFuncionario )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, java.rmi.RemoteException;
 
    public java.util.List getProdutoServicoPeloCodigoMetodologia( java.lang.Integer codigo )

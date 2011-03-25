@@ -17,6 +17,7 @@ import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.TipoAtividade;
 import br.com.dba.timesheet.pojo.Usuario;
+import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 
 /**
@@ -90,11 +91,18 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	 List<Atividade> listarTodosAtividades() throws ParametroInvalidoException;
 
 	 /**
+	  * Lista todos os TimeSheetVO pelo mes e ano. 
+	  * @return
+	  * @throws ParametroInvalidoException
+	  */
+	 List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario) throws ParametroInvalidoException;
+
+	 /**
 	  * Lista todos os TimeSheetVO. 
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim) throws ParametroInvalidoException;
+	 List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Salva um TimeSheet(Atividade).
@@ -135,6 +143,14 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @throws ParametroInvalidoException
       */
 	 void alterarTimeSheet(TimeSheet pojo) throws ParametroInvalidoException;
+
+	 /**
+	  * Altera um Usuario.
+	  * @param pojo
+	  * @return
+	  * @throws ParametroInvalidoException
+	  */
+	 void alterarUsuario(Usuario pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Altera um AvaliacaoAtividade.
@@ -247,6 +263,14 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  */
 	 List<ProdutoServico> consultarProdutoServicoPeloCodigoMetodologia(Integer codigo) throws ParametroInvalidoException;	 
+
+	 /**
+	  * Efetua uma consulta pelo codigo de funcionario pelo codigofuncionariochefe.
+	  * @param id
+	  * @return
+	  * @throws ParametroInvalidoException
+	  */
+	 List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Integer id) throws ParametroInvalidoException;	 
 	 
 	 /**
       * Efetua uma consulta pelo codigo de TimeSheet.
@@ -271,6 +295,14 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @throws ParametroInvalidoException
       */
 	 Usuario getUsuario(Integer id) throws ParametroInvalidoException;
+
+	 /**
+	  * Efetua uma consulta pelo objeto Usuario.
+	  * @param id
+	  * @return
+	  * @throws ParametroInvalidoException
+	  */
+	 Usuario getUsuario(Usuario pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Efetua uma consulta de Usuario.

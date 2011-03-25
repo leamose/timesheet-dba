@@ -24,7 +24,12 @@
 				input="/WebContent/jsp/index.html">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
-
+	    <action path="/atividade/recuperarAtividades" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
+			<forward name="retorno" path="/WebContent/jsp/atividades/index.jsp"/>
+		</action>
 	    <action path="/atividade/retornoCadastrarAtividade" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
@@ -130,6 +135,29 @@
 				name="atividadeForm" 
 				input="/WebContent/jsp/index.html"
 				scope="request">
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
+		</action>
+		
+		
+		<!-- AVALIACAO -->
+		<action path="/avaliacaoAtividade/inicioAvaliacao" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">						 
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
+		</action>
+
+   	    <action path="/avaliacaoAtividade/salvarAvaliacao" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">						 
+			<forward name="retorno" path="/atividade/inicio.do"/>
+		</action>
+
+		<action path="/avaliacaoAtividade/naoHomologar" 
+				type="br.com.dba.timesheet.web.action.AtividadesAction"
+				name="atividadeForm" 
+				input="/WebContent/jsp/index.html">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 		

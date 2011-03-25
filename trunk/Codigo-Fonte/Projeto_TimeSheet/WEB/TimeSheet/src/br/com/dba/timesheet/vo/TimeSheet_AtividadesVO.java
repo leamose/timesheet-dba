@@ -13,7 +13,7 @@ public class TimeSheet_AtividadesVO {
     public String data;
     public String inicioPrevisto;
     public String terminoPrevisto;
-    public String horasDiarias;
+    public long horasDiarias;
     public String saldoDiario;
     public String descricaoOp;
     public String descricaoMetodologia;
@@ -63,13 +63,13 @@ public class TimeSheet_AtividadesVO {
     /**
      * @return the horasDiarias
      */
-    public String getHorasDiarias() {
+    public long getHorasDiarias() {
         return horasDiarias;
     }
     /**
      * @param horasDiarias the horasDiarias to set
      */
-    public void setHorasDiarias(String horasDiarias) {
+    public void setHorasDiarias(long horasDiarias) {
         this.horasDiarias = horasDiarias;
     }
     /**
