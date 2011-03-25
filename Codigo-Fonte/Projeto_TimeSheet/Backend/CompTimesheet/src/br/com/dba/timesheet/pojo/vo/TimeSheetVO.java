@@ -3,22 +3,8 @@ package br.com.dba.timesheet.pojo.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import br.com.dba.timesheet.pojo.Atividade;
-import br.com.dba.timesheet.pojo.Cliente;
-import br.com.dba.timesheet.pojo.Funcionario;
-import br.com.dba.timesheet.pojo.Metodologia;
-import br.com.dba.timesheet.pojo.OP;
-import br.com.dba.timesheet.pojo.ProdutoServico;
-import br.com.dba.timesheet.pojo.Projeto;
-import br.com.dba.timesheet.pojo.SituacaoAtividade;
-import br.com.dba.timesheet.pojo.TimeSheet;
-import br.com.dba.timesheet.pojo.Usuario;
-
 public class TimeSheetVO implements Serializable {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
     //TIMESHEET
@@ -36,10 +22,20 @@ public class TimeSheetVO implements Serializable {
     private Integer codigoFuncionario;    
     private Integer codigoCliente;
     
+    //PRODUTO
+    private String descricaoProduto;
     
     //FORMULARIO
     private String nomeProjeto;
-    private String login;
+    public String getDescricaoProduto() {
+		return descricaoProduto;
+	}
+
+	public void setDescricaoProduto(String descricaoProduto) {
+		this.descricaoProduto = descricaoProduto;
+	}
+
+	private String login;
     private Integer numeroProjeto;
     private String descricaoAtividade;
     private String ultimaAtividade;

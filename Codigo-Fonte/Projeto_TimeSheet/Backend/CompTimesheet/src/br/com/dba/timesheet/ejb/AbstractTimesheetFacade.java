@@ -1,5 +1,6 @@
 package br.com.dba.timesheet.ejb;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,8 +37,10 @@ import br.com.dba.timesheet.pojo.dao.TimeSheetDao;
 import br.com.dba.timesheet.pojo.dao.TimesheetDaoFactory;
 import br.com.dba.timesheet.pojo.dao.TipoAtividadeDao;
 import br.com.dba.timesheet.pojo.dao.UsuarioDao;
+import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.servicos.Timesheet;
+import br.com.dba.timesheet.util.UtilDate;
 
 
 /**
@@ -327,6 +330,19 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
+    public void alterarUsuario(Usuario pojo) throws ParametroInvalidoException{
+    	try {
+    		usuarioDao.alterar(pojo);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
     public void removerTimeSheet(TimeSheet pojo) throws ParametroInvalidoException{
         try {
             timeSheetDao.remover(pojo);
@@ -372,6 +388,19 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
         }
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Integer codigoFuncionarioChefe) throws ParametroInvalidoException{
+    	try {
+    		return funcionarioDao.consultaFuncionariosPeloCodigoFuncionarioChefe(codigoFuncionarioChefe);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
     }
 
     /**
@@ -516,6 +545,23 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
     		throw new ErroInternoException(e.getMessage(),e.getCause());
     	}
     }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public Usuario getUsuario(Usuario pojo) throws ParametroInvalidoException{
+    	try {
+    		List<Usuario> lista = new ArrayList<Usuario>();
+    		
+    		lista = usuarioDao.consultar(pojo);
+    		
+    		return  !lista.isEmpty() ? lista.get(0):null;
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
     
     /**
      * @ejb.interface-method view-type = "remote"
@@ -561,12 +607,38 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim) throws ParametroInvalidoException{
+    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario) throws ParametroInvalidoException{
         try {
-            return timeSheetDao.getListaTimeSheetVO(dataInicio, dataFim);
+            return timeSheetDao.getListaTimeSheetVO(dataInicio, dataFim, codigoFuncionario);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
         }
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario) throws ParametroInvalidoException{
+    	try {
+    		return timeSheetDao.getListaTimeSheetVOPeloMesAno(mes, ano, codigoFuncionario);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario) throws ParametroInvalidoException{
+    	try {
+    		return timeSheetDao.getListaHorasAtividadeVO(UtilDate.getAno(data), UtilDate.getMes(data), codigoFuncionario);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
     }
 
     

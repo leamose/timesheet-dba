@@ -1,9 +1,15 @@
 package br.com.dba.timesheet.pojo.dao;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.dba.dao.hibernate.AbstractHibernateDAO;
 import br.com.dba.timesheet.pojo.Funcionario;
+import br.com.dba.timesheet.pojo.TimeSheet;
 
 /**
  * 
@@ -27,6 +33,19 @@ public class FuncionarioDao extends AbstractHibernateDAO<Funcionario, Integer> {
 	 */
 	public Class<Funcionario> doGetClass() {
 		return Funcionario.class;
+	}
+
+
+	public List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(
+			Integer codigoFuncionarioChefe) {
+
+		Criteria query = getSession().createCriteria(Funcionario.class);
+        query.add(Restrictions.eq("codigoFuncionarioChefe", codigoFuncionarioChefe));
+        query.addOrder(Order.asc("nome"));
+        
+        List resultado = query.list();
+        
+        return resultado != null && !resultado.isEmpty() ? resultado:null;
 	}
     
 }

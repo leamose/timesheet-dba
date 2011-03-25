@@ -27,13 +27,11 @@ public class Funcionario implements POJO<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
     
-    @ManyToOne
-    @JoinColumn(name="codigoFuncionarioSubstituto", nullable=false)
-	private Funcionario funcionarioSubstituto;
+    @Column(name="codigoFuncionarioSubstituto", nullable=false)
+	private Integer funcionarioSubstituto;
 	
-    @ManyToOne
-    @JoinColumn(name="codigoFuncionarioChefe", nullable=false)
-	private Funcionario codigoFuncionarioChefe;
+    @Column(name="codigoFuncionarioChefe", nullable=false)
+	private Integer codigoFuncionarioChefe;
 	
     @Column(name="nome")
 	private String nome;
@@ -65,16 +63,16 @@ public class Funcionario implements POJO<Integer> {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Funcionario getFuncionarioSubstituto() {
+	public Integer getFuncionarioSubstituto() {
 		return funcionarioSubstituto;
 	}
-	public void setFuncionarioSubstituto(Funcionario substituto) {
+	public void setFuncionarioSubstituto(Integer substituto) {
 		this.funcionarioSubstituto = substituto;
 	}
-	public Funcionario getCodigoFuncionarioChefe() {
+	public Integer getCodigoFuncionarioChefe() {
 		return codigoFuncionarioChefe;
 	}
-	public void setCodigoFuncionarioChefe(Funcionario chefe_id) {
+	public void setCodigoFuncionarioChefe(Integer chefe_id) {
 		this.codigoFuncionarioChefe = chefe_id;
 	}
 	public String getNome() {

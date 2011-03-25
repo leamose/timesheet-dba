@@ -359,18 +359,16 @@ public class UtilDate {
 		return Integer.parseInt(mes);
 	}
 
-	public static String getMesLiteral() {
+	public static String getMesLiteral(int mes) {
 		Date data = null;
 		try {
 			data = getData("01/01/1970");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		data = setMesDaData(data, getMes(getDataAtual()));
+		data = setMesDaData(data, mes);
 		return getDataComoString(data, "MMMMM");
 	}
-
 
 	public static int getMinutos(Date data) {
 		String dia = getDataComoString(data, "mm");

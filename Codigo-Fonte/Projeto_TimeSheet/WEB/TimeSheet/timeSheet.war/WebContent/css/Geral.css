@@ -170,7 +170,7 @@ img {border:none;}
 .label {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
 
 .labelDetalhar {
-	width:130px;	
+	width:110px;	
 	float:left;
 	padding-top:1px; 
 	padding-bottom:1px;
@@ -186,7 +186,7 @@ img {border:none;}
 
 .campoErro { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid red; background-color:#ece9d8;}
 
-.botoesMeio { float:right; padding-right:35px; padding-top:20px; padding-bottom:20px;}
+.botoesMeio { float:right; padding-right:18px; padding-top:20px; padding-bottom:20px;}
 
 .botoesMeioPopUp { float:right; padding-right:1px; padding-top:10px; padding-bottom:5px;}
 
@@ -304,9 +304,9 @@ img {border:none;}
 .arvUORG { width:600px; margin-bottom:3px; background-image: url(../img/arvoreUORG.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:60px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666;}
 
 
-/*-----------------------------Tabela Estatísitca-------------------------------------------------*/
+/*-----------------------------Tabela Atividades-------------------------------------------------*/
 
-.paneEstatistica { background-color:#ece9d8; margin:10px; width:750px; }
+.paneEstatistica { background-color:#ece9d8; width:99%; }
 
 .paneEstatistica th { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal; background-color:#ece9d8; border-left:1px solid #FFF; text-align:left;}
 .paneEstatistica th.h1 { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:bold; background-color:#c9d3d8; border-left:1px solid #FFF; text-align:left; padding-left:2px; padding-right:2px;}

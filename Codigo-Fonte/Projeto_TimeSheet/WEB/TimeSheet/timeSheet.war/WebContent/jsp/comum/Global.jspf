@@ -7,4 +7,11 @@
 <%@ taglib uri="/WEB-INF/tlds/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tlds/struts-tiles.tld" prefix="tiles" %>
 
+<%@page import="br.com.dba.timesheet.util.Constantes"%>
+
 <c:set var="contexto">${pageContext.request.contextPath}</c:set>
+<c:set var="ACAO_DETALHAR"><%=Constantes.ACAO_DETALHAR%></c:set>
+<c:set var="ACAO_SALVAR"><%=Constantes.ACAO_SALVAR%></c:set>
+<c:set var="ACAO_REMOVER"><%=Constantes.ACAO_REMOVER%></c:set>
+<c:set var="ACAO_ALTERAR"><%=Constantes.ACAO_ALTERAR%></c:set>
+<c:set var="ACAO_AVALIAR"><%=Constantes.ACAO_AVALIAR%></c:set>

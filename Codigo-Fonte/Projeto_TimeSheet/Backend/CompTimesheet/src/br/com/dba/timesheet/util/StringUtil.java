@@ -273,18 +273,6 @@ public final class StringUtil {
 		}
 	}
 	
-	/**
-	 * Método para formatar o anoMesReferencia para ser exibido para o usuario
-	 * @param anoMesReferencia
-	 * @return
-	 */
-	public static String formataAnoMesReferencia(String anoMesReferencia) {
-		String mes = anoMesReferencia.substring(4, 6);
-		String ano = anoMesReferencia.substring(0, 4);		
-		String valorFormatado = DataUtil.converterMesParaExtensoAbreviado(new Integer(mes) - 1) + "/" + ano;
-		return valorFormatado;
-	}
-	
 	public static String formataCep(String cep) {
 		String novoCEP = cep.substring(0, 2) + "." + cep.substring(2, 5) + "-"
 		+ cep.substring(5, 8);

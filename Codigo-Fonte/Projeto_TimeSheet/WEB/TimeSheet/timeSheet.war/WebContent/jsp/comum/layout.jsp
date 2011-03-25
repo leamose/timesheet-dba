@@ -20,8 +20,7 @@
 
 	</head>
 
-    <body >					
-    	<tiles:insert name="cabecalho" />
+    <body >
 		<tiles:insert name="corpo" />
     </body>
 </html>

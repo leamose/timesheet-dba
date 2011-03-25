@@ -255,6 +255,17 @@
       <method >
          <ejb-name>TimesheetFacade</ejb-name>
          <method-intf>Remote</method-intf>
+         <method-name>alterarUsuario</method-name>
+         <method-params>
+            <method-param>br.com.dba.timesheet.pojo.Usuario</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
          <method-name>removerTimeSheet</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.TimeSheet</method-param>
@@ -289,6 +300,17 @@
          <ejb-name>TimesheetFacade</ejb-name>
          <method-intf>Remote</method-intf>
          <method-name>getFuncionario</method-name>
+         <method-params>
+            <method-param>java.lang.Integer</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>consultaFuncionariosPeloCodigoFuncionarioChefe</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
          </method-params>
@@ -420,6 +442,17 @@
       <method >
          <ejb-name>TimesheetFacade</ejb-name>
          <method-intf>Remote</method-intf>
+         <method-name>getUsuario</method-name>
+         <method-params>
+            <method-param>br.com.dba.timesheet.pojo.Usuario</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
          <method-name>salvarProjeto</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.Projeto</method-param>
@@ -457,6 +490,32 @@
          <method-params>
             <method-param>java.util.Date</method-param>
             <method-param>java.util.Date</method-param>
+            <method-param>java.lang.Integer</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getListaTimeSheetVOPeloMesAno</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.Integer</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getListaHorasAtividadeVO</method-name>
+         <method-params>
+            <method-param>java.util.Date</method-param>
+            <method-param>java.lang.Integer</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
