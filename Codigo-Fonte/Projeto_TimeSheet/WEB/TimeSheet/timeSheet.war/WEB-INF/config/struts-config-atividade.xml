@@ -14,110 +14,110 @@
 	    <action path="/atividade/inicio" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>
 			<forward name="erroLogin" path="/login.do"/>
 		</action>
 	    <action path="/atividade/cadastrarAtividade" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 	    <action path="/atividade/recuperarAtividades" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/atividades/index.jsp"/>
 		</action>
 	    <action path="/atividade/retornoCadastrarAtividade" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 		
 		 <action path="/atividade/consultar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/atividades/index.jsp"/>
 		</action>
 
    	    <action path="/atividade/aprovar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 
 		 <action path="/atividade/reprovar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>   	   
 
 		 <action path="/atividade/retornoReprovar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>   	   
 	    
 	    <action path="/atividade/detalhar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 
 	    <action path="/atividade/retornoDetalhar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 	    
 	    <action path="/atividade/alterar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 		
 		<action path="/atividade/retornoAlterar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 	    
 	    <action path="/atividade/excluir" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 		
 	    <action path="/atividade/salvar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 		
 		<action path="/atividade/retornoSalvar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 
 	    <action path="/atividade/operacaoCancelada" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html"
+				input="/atividade/inicio.do"
 				scope="request">
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
@@ -125,7 +125,7 @@
 	    <action path="/atividade/voltar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html"
+				input="/atividade/inicio.do"
 				scope="request">
 			<forward name="voltar" path="/atividade/inicio.do"/>
 		</action>
@@ -133,7 +133,7 @@
 	    <action path="/atividade/popularComboProdutoServico" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html"
+				input="/atividade/inicio.do"
 				scope="request">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
@@ -143,21 +143,21 @@
 		<action path="/avaliacaoAtividade/inicioAvaliacao" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">						 
+				input="/atividade/inicio.do">						 
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 
    	    <action path="/avaliacaoAtividade/salvarAvaliacao" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">						 
+				input="/atividade/inicio.do">						 
 			<forward name="retorno" path="/atividade/inicio.do"/>
 		</action>
 
 		<action path="/avaliacaoAtividade/naoHomologar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/WebContent/jsp/index.html">
+				input="/atividade/inicio.do">
 			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 		

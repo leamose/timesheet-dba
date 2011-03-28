@@ -1,5 +1,10 @@
 package br.com.dba.timesheet.web.form;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.pojo.Usuario;
@@ -78,7 +83,5 @@ public class LoginForm extends ValidatorForm {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
 	
 }

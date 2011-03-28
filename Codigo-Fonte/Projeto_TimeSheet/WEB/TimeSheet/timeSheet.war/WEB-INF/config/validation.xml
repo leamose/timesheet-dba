@@ -11,10 +11,23 @@
         </constant>
     </global>    
     <formset>
-    	<form name="pesquisarServidorForm" >
-	    	<field property="nomeServidor" depends="required">
-	            	<arg key="MSG012"/>
-			</field>
-	    </form>
+    	 <!-- LOGIN -->
+	     <form name="loginForm">
+	     	<field property="login" depends="required">
+	    		<arg0 key="MSG008"/>
+	    	</field>
+	    	<field property="senha" depends="required">
+	    		<arg0 key="MSG009"/>
+	    	</field>
+	     </form>
+    	 <!-- ATIVIDADE 
+	     <form name="atividadeForm">
+	     	<field property="mesConsulta" depends="required">
+	    		<arg0 key="MSG019"/>
+	    	</field>
+	    	<field property="anoConsulta" depends="required">
+	    		<arg0 key="MSG020"/>
+	    	</field>
+	     </form>-->
 	</formset>
 </form-validation>

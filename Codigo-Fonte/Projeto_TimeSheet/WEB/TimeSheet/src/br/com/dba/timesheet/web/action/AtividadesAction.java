@@ -442,6 +442,9 @@ public class AtividadesAction extends TimeSheetComum {
 	    try {
             TimeSheet timesheet = getTimeSheetPeloID(formulario.getId());
 	    
+            preencherFormularioInicial(formulario);
+            preencherFormulario(formulario, timesheet);
+            
             formulario.setData(UtilDate.getDataComoString(timesheet.getDataHoraInicio()));
 	    } catch (Exception e) {
 	    	throw new Exception(e.getMessage(), e);
