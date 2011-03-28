@@ -305,5 +305,13 @@ public final class StringUtil {
 		
 		return num.doubleValue();
 	}
+	
+	public static String formataSaldoPositivo(String saldoNegativo, String saldo){
+		String saldoPositivo = "";
+		if(saldoNegativo.equals("-")){
+			saldoPositivo = saldo.replace("-","").substring(0,5);
+		}
+		return saldoPositivo;
+	}
 
 }
