@@ -58,6 +58,16 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- FORM based authentication --> 
+	<login-config> 
+	    <auth-method>FORM</auth-method> 
+	    <form-login-config> 
+	        <form-login-page>/login.jsp</form-login-page> 
+	        <form-error-page>/WebContent/erro/erroLogin.jsp?mensagem=Login/Senha inválidos ou Usuário Bloqueado.</form-error-page> 
+	    </form-login-config> 
+	</login-config>
+	    
 
     <error-page>
         <error-code>403</error-code>

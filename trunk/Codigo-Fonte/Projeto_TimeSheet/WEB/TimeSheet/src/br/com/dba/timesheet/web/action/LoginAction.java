@@ -31,11 +31,6 @@ public class LoginAction extends TimeSheetComum {
 			
 			Usuario usuario = new Usuario();	
 			
-			if("".equals(formulario.getLogin())){
-				salvarMsgErro("MSG016", request);
-				return mapping.findForward("erroLogin");
-			}
-			
 			usuario.setLogin(formulario.getLogin());
 			
 			//Recupera o Usuario Logado.
@@ -49,7 +44,6 @@ public class LoginAction extends TimeSheetComum {
 		    
 			if("".equals(retorno)){
 				formulario.limparFormulario();				
-				salvarMsgErro("MSG016", request);
 				retorno = "erroLogin";
 			}
 			
@@ -74,8 +68,7 @@ public class LoginAction extends TimeSheetComum {
 			retorno = "alterarSenha"; 
 		}
 		if(usuarioLogado.getIndicaBloqueado()){
-			 formulario.setIndicaBloqueado(usuarioLogado.getIndicaBloqueado());
-			 salvarMsgErro("MSG016", request);
+			 formulario.setIndicaBloqueado(usuarioLogado.getIndicaBloqueado());			 
 			 retorno = "usuarioBloqueado";
 		}
 			
