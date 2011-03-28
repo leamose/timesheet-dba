@@ -19,6 +19,7 @@ import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
+import br.com.dba.timesheet.util.StringUtil;
 
 /**
  * 
@@ -246,13 +247,16 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     	StringBuilder hql = new StringBuilder(); 
     	List<HorasAtividadeVO> lista = new ArrayList<HorasAtividadeVO>();
     	try { 
-    		hql.append("select date_part('year', datahorainicio) as ano,date_part('month', datahorainicio)as mes," +
-    				" date_part('day', datahorainicio)as dia, sum(datahorafim - datahorainicio) as horasTrabalhadas, " +
-    				" sum('08:00:00' - (datahorafim - datahorainicio)) as cargaHoraria" +
+    		hql.append("select  date_part('year', datahorainicio) as ano, " +
+    				" date_part('month', datahorainicio)as mes," +
+    				" date_part('day', datahorainicio)as dia," +
+    				" sum(datahorafim - datahorainicio) as horasTrabalhadas," +
+    				" interval '8 hours' - sum(datahorafim - datahorainicio) as cargaHoraria" +
     				" from ts.timesheet where date_part('year', datahorainicio)  = " + ano +
-    				" and date_part('month', datahorainicio)=" + mes + " and codigofuncionario=" + codigofuncionario +
+    				" and date_part('month', datahorainicio)=3 and codigofuncionario=" + mes +
+    				" and codigofuncionario=" + codigofuncionario +
     				" group by date_part('year', datahorainicio), date_part('month', datahorainicio), date_part('day', datahorainicio)" +
-    				" order by date_part('year', datahorainicio), date_part('month', datahorainicio), date_part('day', datahorainicio) ");
+    				" order by date_part('year', datahorainicio), date_part('month', datahorainicio), date_part('day', datahorainicio)");
     		
     		PreparedStatement query  = null;      
     		Connection conexao = getSession().connection();
@@ -274,13 +278,19 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     			}
     			
     			if(resultado.getString("cargaHoraria")!=null){
-    				vo.setCargaHoraria(resultado.getString("cargaHoraria").substring(0, 5)); 
-    				
+    				String cargaHoraria = resultado.getString("cargaHoraria").substring(0, 5);
     				Integer saldo = Integer.valueOf(resultado.getString("cargaHoraria").substring(0, 2));
     				
-    				if(saldo < 8){
+    				if(saldo != 0 && saldo < 8){
     					vo.setIndicaSaldoDevedor(true);
+    				}else{
+    					String saldoPositivo = resultado.getString("cargaHoraria").substring(0, 1);
+    					if(saldoPositivo.equals("-")){    						
+    						cargaHoraria = StringUtil.formataSaldoPositivo(saldoPositivo,resultado.getString("cargaHoraria"));;
+    					}
     				}
+    				
+    				vo.setCargaHoraria(cargaHoraria);
     				
     			}else{
     				vo.setCargaHoraria(resultado.getString("cargaHoraria"));
