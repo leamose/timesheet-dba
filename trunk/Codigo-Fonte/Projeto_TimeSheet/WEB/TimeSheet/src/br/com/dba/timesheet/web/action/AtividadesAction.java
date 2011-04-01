@@ -2,7 +2,6 @@ package br.com.dba.timesheet.web.action;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,11 +15,13 @@ import org.apache.struts.action.ActionMapping;
 import br.com.dba.timesheet.dominios.ListaDominios;
 import br.com.dba.timesheet.exceptions.ErroInternoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.Projeto;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
@@ -44,7 +45,7 @@ public class AtividadesAction extends TimeSheetComum {
 	 * @throws Exception
 	 */
     public ActionForward inicio(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response) {
 		
 	    try {
     		AtividadesForm formulario = (AtividadesForm) form;
@@ -54,11 +55,14 @@ public class AtividadesAction extends TimeSheetComum {
     		boolean indicaChefe = false;
     		Integer codigoUsuario = null;
     		
+    		//Seta a sessao.
+    		setSessao((Sessao) request.getSession().getAttribute("sessao"));    		
+    		
     		//Recupera da requisicao ou do formulario o codigo do usuario logado.
     		if(request.getAttribute("codigoUsuarioLogado")!=null){
     			codigoUsuario = (Integer)request.getAttribute("codigoUsuarioLogado");
     		}else {
-    			codigoUsuario = Integer.valueOf(formulario.getCodigoUsuarioLogado());
+    			codigoUsuario = Integer.valueOf(formulario.getCodigoUsuario());
     		}
 
     		Usuario usuarioLogado = getUsuarioPeloID(codigoUsuario);
@@ -78,7 +82,7 @@ public class AtividadesAction extends TimeSheetComum {
 
     			//Preenche formulario
     			formulario.setTamanhoListaHoras(listaHorasAtividadeVOs != null ? listaHorasAtividadeVOs.size():0);
-	    		formulario.setCodigoUsuarioLogado(usuarioLogado.getId());
+	    		formulario.setCodigoUsuario(usuarioLogado.getId());
     			formulario.setUsuario(usuarioLogado);
     			formulario.setCodigoFuncionarioLogado(usuarioLogado.getFuncionario()!=null ? usuarioLogado.getFuncionario().getId():null);
 	    		formulario.setIndicaChefe(indicaChefe);
@@ -94,13 +98,21 @@ public class AtividadesAction extends TimeSheetComum {
     		}
     		
 		} catch (ErroInternoException e) {
-		    e.printStackTrace();
+			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+		} catch (ParametroInvalidoException e) {
+			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+		} catch (SessaoInvalidaException e) {
+			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+		} catch (Exception e) {
+			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
 		}
+		
+		atualizaSessao(request);
 		
 		return mapping.findForward("cadastro");		
 	}
 
-	public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
+    public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		return mapping.findForward("retorno");        
 	}
@@ -196,13 +208,21 @@ public class AtividadesAction extends TimeSheetComum {
      */
     public Projeto salvarProjeto(AtividadesForm formulario,
             Metodologia metodologia) throws ParametroInvalidoException {
-       
-        Projeto projeto = new Projeto();       
-        projeto.setMetodologia(metodologia);
-        projeto.setNome(formulario.getNomeProjeto());
-        projeto.setNumeroProjeto(Integer.valueOf(formulario.getNumeroProjeto()));
+    	
+    	Projeto projetoSalvo = null;
+    	
+    	try {
+	        Projeto projeto = new Projeto();       
+	        projeto.setMetodologia(metodologia);
+	        projeto.setNome(formulario.getNomeProjeto());
+	        projeto.setNumeroProjeto(Integer.valueOf(formulario.getNumeroProjeto()));
         
-        return getTimeSheetDelegate().salvarProjeto(projeto);
+			projetoSalvo = getTimeSheetDelegate().salvarProjeto(projeto, getSessao());
+		} catch (SessaoInvalidaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return projetoSalvo;
     }
 
     /**
@@ -219,15 +239,23 @@ public class AtividadesAction extends TimeSheetComum {
 	    AtividadesForm formulario = (AtividadesForm) form;
 	    
 	    TimeSheet pojo;
+	    HistoricoTimeSheet historicoTimeSheet;
 	    
         try {
+        	
+//        	historicoTimeSheet = getTimeSheetDelegate().getHistoricoTimeSheet(formulario.getCodigoHistoricoTimeSheet());
+//        	getTimeSheetDelegate().removerHistoricoTimeSheet(historicoTimeSheet);
+        	
             pojo = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
             removerTimeSheet(pojo);
             
         } catch (ParametroInvalidoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        } catch (SessaoInvalidaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    
 		return mapping.findForward("retorno");        
 	}
@@ -336,6 +364,8 @@ public class AtividadesAction extends TimeSheetComum {
             formulario.setAcao(Constantes.ACAO_DETALHAR);
             formulario.setDesabilitarCampo(true);
             
+            request.setAttribute("sessao", getSessao());
+            
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -362,7 +392,7 @@ public class AtividadesAction extends TimeSheetComum {
         try {
             
             List<TimeSheetVO> lista = getTimeSheetDelegate()
-                    .getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(), formulario.getCodigoFuncionarioLogado());
+                    .getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(), formulario.getCodigoFuncionarioLogado(), getSessao());
             
             formulario.setListaTimeSheetVO(lista);
             
@@ -376,40 +406,10 @@ public class AtividadesAction extends TimeSheetComum {
         return mapping.findForward("retorno");       
     }
     
-    public ActionForward aprovar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retorno");       
-    }
-    
-    public ActionForward reprovar(ActionMapping mapping, ActionForm form,
+    public ActionForward abrirPopUpAtividade(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         try {
-
-            AtividadesForm formulario = (AtividadesForm) form;
-            
-            ListaDominios listaDominios = new ListaDominios();
-            
-            formulario.setListaAtividades(getListarTodasAtividades()) ;
-            formulario.setListaDiasDaSemana(listaDominios.getListaDiasDaSemana());
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }       
-        
-        return mapping.findForward("retorno");       
-    }
-
-    public ActionForward retornoReprovar(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("retorno");       
-    }
-    
-    public ActionForward cadastrarAtividade(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        try {
-
             AtividadesForm formulario = (AtividadesForm) form;
             
             formulario.limparFormulario();
@@ -436,16 +436,16 @@ public class AtividadesAction extends TimeSheetComum {
 	    	    
     	AtividadesForm formulario = (AtividadesForm) form;
 	    
-	    formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
-	    formulario.setId(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
+    	try {
+
+    		formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
+		    formulario.setId(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
 	    
-	    try {
             TimeSheet timesheet = getTimeSheetPeloID(formulario.getId());
 	    
             preencherFormularioInicial(formulario);
             preencherFormulario(formulario, timesheet);
             
-            formulario.setData(UtilDate.getDataComoString(timesheet.getDataHoraInicio()));
 	    } catch (Exception e) {
 	    	throw new Exception(e.getMessage(), e);
 	    }
@@ -466,7 +466,7 @@ public class AtividadesAction extends TimeSheetComum {
     	    AvaliacaoAtividade avaliacaoAtividade = new AvaliacaoAtividade();
 	    
     	    // TODO RECUPERANDO O USUARIO FABIO....ARRUMAR
-    	    avaliacaoAtividade.setFuncionarioAvaliador(getFuncionarioPeloID(2));
+    	    avaliacaoAtividade.setFuncionarioAvaliador(getFuncionarioPeloID(formulario.getCodigoFuncionarioLogado()));
     	    
     	    avaliacaoAtividade.setObservacao(formulario.getObservacao());
     	    avaliacaoAtividade.setObservacaoPrivada(formulario.getObservacaoPrivada());
@@ -474,16 +474,14 @@ public class AtividadesAction extends TimeSheetComum {
     	    avaliacaoAtividade.setTimeSheet(getTimeSheetPeloID(formulario.getId()));
     	    
     	    try {
-                getTimeSheetDelegate().salvarAvaliacaoAtividade(avaliacaoAtividade);
+                getTimeSheetDelegate().salvarAvaliacaoAtividade(avaliacaoAtividade, getSessao());
             } catch (Exception e) {
             	throw new Exception(e.getMessage(), e);
             }
             
+          //Submeter a pagina pai. 
+            request.setAttribute("submiter", true);
             
-            
-//	    } catch (ParseException e) {
-//	        // TODO Auto-generated catch block
-//	        e.printStackTrace();
 	    } 
 	    catch (NumberFormatException e) {
 	    	throw new Exception(e.getMessage(), e);
@@ -498,7 +496,7 @@ public class AtividadesAction extends TimeSheetComum {
     //*********************************************
     //* METODOS AUXILIARES :
     //*********************************************
-    public void preencherFormulario(AtividadesForm formulario, TimeSheet timesheet){
+    public void preencherFormulario(AtividadesForm formulario, TimeSheet timesheet) throws ParametroInvalidoException, SessaoInvalidaException{
          
         if(timesheet !=null){
             formulario.setId(timesheet.getId());
@@ -514,6 +512,9 @@ public class AtividadesAction extends TimeSheetComum {
             formulario.setCodigoProdutoServico(timesheet.getProdutoServico().getId());
             formulario.setObservacao(timesheet.getObservacao());
             formulario.setOutros(timesheet.getOutrasAtividades());
+            
+            formulario.setListaProdutosServicos(recuperarListaProdutoServico(timesheet.getMetodologia().getId()));
+            
         }
         formulario.setDesabilitarCampo(false);
     }
@@ -524,6 +525,7 @@ public class AtividadesAction extends TimeSheetComum {
         formulario.setListaOPs(getListarTodasOPs());
         formulario.setListaMetodologias(getListarTodasMetodologias());
         formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
+        formulario.setData(UtilDate.getDataComoString(UtilDate.getDataAtual()));
     }
     
     /**
@@ -606,11 +608,8 @@ public class AtividadesAction extends TimeSheetComum {
         pojo.setObservacao(timeSheet.getObservacao());
         pojo.setTipoOperacao(tipoOperacao);
         
-        pojo.setUsuario(getUsuarioPeloID(formulario.getCodigoUsuarioLogado()));
+        pojo.setUsuario(getUsuarioPeloID(formulario.getCodigoUsuario()));
         
         return pojo;
-    }
-
-    
-    
+    }    
 }

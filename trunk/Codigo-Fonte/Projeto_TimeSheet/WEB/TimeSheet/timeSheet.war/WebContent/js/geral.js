@@ -10,7 +10,6 @@ function retornoInicio() {
 	form.submit();
 }
 
-
 //VOLTAR
 function voltar() {
 	var form = document.forms[0];

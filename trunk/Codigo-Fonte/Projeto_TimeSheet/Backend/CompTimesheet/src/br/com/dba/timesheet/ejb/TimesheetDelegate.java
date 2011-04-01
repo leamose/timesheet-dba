@@ -10,19 +10,25 @@ import javax.ejb.CreateException;
 import javax.naming.NamingException;
 
 import br.com.dba.timesheet.exceptions.ErroInternoException;
+import br.com.dba.timesheet.exceptions.IdentificadorSenhaIncorretosException;
+import br.com.dba.timesheet.exceptions.LogonBloqueadoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
 import br.com.dba.timesheet.pojo.Atividade;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.Cliente;
+import br.com.dba.timesheet.pojo.Configuracao;
 import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.TipoAtividade;
+import br.com.dba.timesheet.pojo.TotalHorasMes;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
@@ -58,29 +64,27 @@ public class TimesheetDelegate implements Timesheet {
     }
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<TipoAtividade> listarTodosTipoAtividades()throws ParametroInvalidoException {		
+	public List<TipoAtividade> listarTodosTipoAtividades(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{		
 		try {
-			return facade.listarTodosTipoAtividades();
+			return facade.listarTodosTipoAtividades(sessao);
 		} catch (RemoteException e) {			
 			throw new ErroInternoException(e.getMessage(), e);
 		}
 	}
 
     @SuppressWarnings("deprecation")
-    public TimeSheet salvarTimeSheet(TimeSheet pojo)
-            throws ParametroInvalidoException {
+    public TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.salvarTimeSheet(pojo);
+            return facade.salvarTimeSheet(pojo,sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public void alterarTimeSheet(TimeSheet pojo)
-            throws ParametroInvalidoException {
+    public void alterarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            facade.alterarTimeSheet(pojo);
+            facade.alterarTimeSheet(pojo,sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
@@ -88,10 +92,9 @@ public class TimesheetDelegate implements Timesheet {
     }
 
     @SuppressWarnings("deprecation")
-    public void removerTimeSheet(TimeSheet pojo)
-            throws ParametroInvalidoException {
+    public void removerTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            facade.removerTimeSheet(pojo);
+            facade.removerTimeSheet(pojo, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
@@ -99,97 +102,90 @@ public class TimesheetDelegate implements Timesheet {
     }
     
     @SuppressWarnings({ "unchecked", "deprecation" })
-    public List<TimeSheet> listarTodosTimeSheet()
-            throws ParametroInvalidoException {
+    public List<TimeSheet> listarTodosTimeSheet(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodosTimeSheet();
+            return facade.listarTodosTimeSheet(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings({ "unchecked", "deprecation" })
-    public List<Cliente> listarTodosCliente()
-            throws ParametroInvalidoException {
+    public List<Cliente> listarTodosCliente(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException {
         try {
-            return facade.listarTodosCliente();
+            return facade.listarTodosCliente(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public Cliente getCliente(Integer id) throws ParametroInvalidoException {
+    public Cliente getCliente(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getCliente(id);
+            return facade.getCliente(id, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }       
     }
 
     @SuppressWarnings({ "unchecked", "deprecation" })
-    public List<Atividade> listarTodosAtividades()
-            throws ParametroInvalidoException {
+    public List<Atividade> listarTodosAtividades(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodosAtividades();
+            return facade.listarTodosAtividades(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }      
     }
 
     @SuppressWarnings("deprecation")
-    public Atividade getAtividade(Integer id)
-            throws ParametroInvalidoException {
+    public Atividade getAtividade(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException {
         try {
-            return facade.getAtividade(id);
+            return facade.getAtividade(id, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }      
     }
 
     @SuppressWarnings({ "deprecation", "unchecked" })
-    public List<OP> listarTodasOPs() throws ParametroInvalidoException {
+    public List<OP> listarTodasOPs(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodasOPs();
+            return facade.listarTodasOPs(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings({ "deprecation", "unchecked" })
-    public List<Metodologia> listarTodasMetodologias()
-            throws ParametroInvalidoException {
+    public List<Metodologia> listarTodasMetodologias(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodasMetodologias();
+            return facade.listarTodasMetodologias(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public OP getOP(Integer id) throws ParametroInvalidoException {
+    public OP getOP(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getOP(id);
+            return facade.getOP(id, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }    
     }
 
     @SuppressWarnings("deprecation")
-    public Metodologia getMetodologia(Integer id)
-            throws ParametroInvalidoException {
+    public Metodologia getMetodologia(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getMetodologia(id);
+            return facade.getMetodologia(id, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }    
     }
 
     @SuppressWarnings({ "deprecation", "unchecked" })
-    public List<ProdutoServico> listarTodosProdutoServico()
-            throws ParametroInvalidoException {
+    public List<ProdutoServico> listarTodosProdutoServico(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodosProdutoServico();
+            return facade.listarTodosProdutoServico(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
@@ -197,38 +193,36 @@ public class TimesheetDelegate implements Timesheet {
 
     @SuppressWarnings({ "deprecation", "unchecked" })
     public List<ProdutoServico> consultarProdutoServicoPeloCodigoMetodologia(
-            Integer codigo) throws ParametroInvalidoException {
+            Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.consultarProdutoServicoPeloCodigoMetodologia(codigo);
+            return facade.consultarProdutoServicoPeloCodigoMetodologia(codigo, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public ProdutoServico getProdutoServico(Integer id)
-            throws ParametroInvalidoException {
+    public ProdutoServico getProdutoServico(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getProdutoServico(id);
+            return facade.getProdutoServico(id, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public Projeto salvarProjeto(Projeto pojo)
-            throws ParametroInvalidoException {
+    public Projeto salvarProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.salvarProjeto(pojo);
+            return facade.salvarProjeto(pojo, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings("deprecation")
-    public void alterarProjeto(Projeto pojo) throws ParametroInvalidoException {
+    public void alterarProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            facade.alterarProjeto(pojo);
+            facade.alterarProjeto(pojo, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
@@ -236,28 +230,27 @@ public class TimesheetDelegate implements Timesheet {
     }
 
     @SuppressWarnings("deprecation")
-    public void removerProjeto(Projeto pojo) throws ParametroInvalidoException {
+    public void removerProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-             facade.removerProjeto(pojo);
+             facade.removerProjeto(pojo, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }        
     }
 
     @SuppressWarnings({ "deprecation" })
-    public Funcionario getFuncionario(Integer id)
-            throws ParametroInvalidoException {
+    public Funcionario getFuncionario(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getFuncionario(id);
+            return facade.getFuncionario(id, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
     @SuppressWarnings({ "deprecation" })
-    public TimeSheet getTimeSheet(Integer id) throws ParametroInvalidoException {
+    public TimeSheet getTimeSheet(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
        try {
-            return facade.getTimeSheet(id);
+            return facade.getTimeSheet(id, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
@@ -265,58 +258,45 @@ public class TimesheetDelegate implements Timesheet {
 
     @SuppressWarnings({ "deprecation", "unchecked" })
     public List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(
-            Integer codigo) throws ParametroInvalidoException {
+            Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getHistoricoPeloCodigoTimeSheet(codigo);
+            return facade.getHistoricoPeloCodigoTimeSheet(codigo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
     @SuppressWarnings({ "deprecation" })
-    public HistoricoTimeSheet getHistoricoTimeSheet(Integer id)
-            throws ParametroInvalidoException {
+    public HistoricoTimeSheet getHistoricoTimeSheet(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getHistoricoTimeSheet(id);
+            return facade.getHistoricoTimeSheet(id, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
     @SuppressWarnings({ "deprecation" })
-    public Usuario getUsuario(Integer id) throws ParametroInvalidoException {
-        try {
-            return facade.getUsuario(id);
-       } catch (RemoteException e) {           
-           throw new ErroInternoException(e.getMessage(), e);
-       }
-    }
-
-    @SuppressWarnings({ "deprecation" })
-    public HistoricoTimeSheet salvarHistoricoTimeSheet(HistoricoTimeSheet pojo)
-            throws ParametroInvalidoException {
+    public HistoricoTimeSheet salvarHistoricoTimeSheet(HistoricoTimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
        try {
-            return facade.salvarHistoricoTimeSheet(pojo);
+            return facade.salvarHistoricoTimeSheet(pojo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
     public List<HistoricoTimeSheet> getHistoricoPelaDataOperacao(
-            Date data) throws ParametroInvalidoException {
-//        try {
-//            return facade.getHistoricoPelaDataOperacao(data );
-//       } catch (RemoteException e) {           
-//           throw new ErroInternoException(e.getMessage(), e);
-//       }
-        return null;
+            Date data,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+            return facade.getHistoricoPelaDataOperacao(data, sessao);
+       } catch (RemoteException e) {           
+           throw new ErroInternoException(e.getMessage(), e);
+       }
     }
 
     @SuppressWarnings({ "deprecation", "unchecked" })
-    public List<TimeSheet> listarTodosTimeSheetOrdenadoPorDataHoraInicio()
-            throws ParametroInvalidoException {
+    public List<TimeSheet> listarTodosTimeSheetOrdenadoPorDataHoraInicio(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodosTimeSheetOrdenadoPorDataHoraInicio();
+            return facade.listarTodosTimeSheetOrdenadoPorDataHoraInicio(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
@@ -324,59 +304,54 @@ public class TimesheetDelegate implements Timesheet {
 
     @SuppressWarnings({ "deprecation", "unchecked" })
     public List<TimeSheet> consultarTimeSheetPorDataHoraInicio(
-            Date dataInicio, Date dataFim) throws ParametroInvalidoException {
+            Date dataInicio, Date dataFim,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.consultarTimeSheetPorDataHoraInicio(dataInicio, dataFim);
+            return facade.consultarTimeSheetPorDataHoraInicio(dataInicio, dataFim, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings({ "deprecation", "unchecked" })
-    public List<SituacaoAtividade> listarTodasSituacaoAtividade()
-            throws ParametroInvalidoException {
+    public List<SituacaoAtividade> listarTodasSituacaoAtividade(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.listarTodasSituacaoAtividade();
+            return facade.listarTodasSituacaoAtividade(sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }   
     }
 
     @SuppressWarnings({ "deprecation" })
-    public SituacaoAtividade getSituacaoAtividade(Integer id)
-            throws ParametroInvalidoException {
+    public SituacaoAtividade getSituacaoAtividade(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getSituacaoAtividade(id);
+            return facade.getSituacaoAtividade(id, sessao);
         } catch (RemoteException e) {           
             throw new ErroInternoException(e.getMessage(), e);
         }
     }
 
     @SuppressWarnings({ "deprecation" })
-    public SituacaoAtividade salvarSituacaoAtividade(SituacaoAtividade pojo)
-            throws ParametroInvalidoException {
+    public SituacaoAtividade salvarSituacaoAtividade(SituacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
        try {
-            return facade.salvarSituacaoAtividade(pojo);
+            return facade.salvarSituacaoAtividade(pojo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
     @SuppressWarnings("deprecation")
-    public AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade pojo)
-            throws ParametroInvalidoException {
+    public AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
        try {
-            return facade.salvarAvaliacaoAtividade(pojo);
+            return facade.salvarAvaliacaoAtividade(pojo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
     @SuppressWarnings("deprecation")
-    public void alterarAvaliacaoAtividade(AvaliacaoAtividade pojo)
-            throws ParametroInvalidoException {
+    public void alterarAvaliacaoAtividade(AvaliacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            facade.alterarAvaliacaoAtividade(pojo);
+            facade.alterarAvaliacaoAtividade(pojo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
@@ -384,10 +359,9 @@ public class TimesheetDelegate implements Timesheet {
     }
 
     @SuppressWarnings("deprecation")
-    public void removerAvaliacaoAtividade(AvaliacaoAtividade pojo)
-            throws ParametroInvalidoException {
+    public void removerAvaliacaoAtividade(AvaliacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            facade.removerAvaliacaoAtividade(pojo);
+            facade.removerAvaliacaoAtividade(pojo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
@@ -395,60 +369,27 @@ public class TimesheetDelegate implements Timesheet {
     }
 
     @SuppressWarnings({ "unchecked", "deprecation" })
-    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario)
-            throws ParametroInvalidoException {
+    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return facade.getListaTimeSheetVO(dataInicio, dataFim, codigoFuncionario);
+            return facade.getListaTimeSheetVO(dataInicio, dataFim, codigoFuncionario, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
     }
 
-	/* (non-Javadoc)
-	 * @see br.com.dba.timesheet.servicos.Timesheet#getProdutoServicoPeloCodigoMetodologia(java.lang.Integer)
-	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo) throws ParametroInvalidoException {
+	public List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
 		try {
-            return facade.getProdutoServicoPeloCodigoMetodologia(codigo);
+            return facade.getProdutoServicoPeloCodigoMetodologia(codigo, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
-	}
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	public List<Usuario> consultarUsuario(Usuario pojo)
-			throws ParametroInvalidoException {		
-	   try {
-            return facade.consultarUsuario(pojo);
-       } catch (RemoteException e) {           
-           throw new ErroInternoException(e.getMessage(), e);
-       }
-	}
-
-	@SuppressWarnings("deprecation")
-	public Usuario getUsuario(Usuario pojo) throws ParametroInvalidoException {
-		try {
-            return facade.getUsuario(pojo);
-       } catch (RemoteException e) {           
-           throw new ErroInternoException(e.getMessage(), e);
-       }
-	}
-
-	@SuppressWarnings("deprecation")
-	public void alterarUsuario(Usuario pojo) throws ParametroInvalidoException {
-		try {
-            facade.alterarUsuario(pojo);
-	   } catch (RemoteException e) {           
-	       throw new ErroInternoException(e.getMessage(), e);
-	   }
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario)
-			throws ParametroInvalidoException {
+	public List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
 	   try {
-            return facade.getListaHorasAtividadeVO(data, codigoFuncionario);
+            return facade.getListaHorasAtividadeVO(data, codigoFuncionario, sessao);
        } catch (RemoteException e) {           
            throw new ErroInternoException(e.getMessage(), e);
        }
@@ -456,22 +397,58 @@ public class TimesheetDelegate implements Timesheet {
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(
-			Integer id) throws ParametroInvalidoException {
+			Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
 		 try {
-	           return facade.consultaFuncionariosPeloCodigoFuncionarioChefe(id);
+	           return facade.consultaFuncionariosPeloCodigoFuncionarioChefe(id, sessao);
 	     } catch (RemoteException e) {           
 	           throw new ErroInternoException(e.getMessage(), e);
 	     }
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes,
-			String ano, Integer codigoFuncionario)
-			throws ParametroInvalidoException {
+			String ano, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
 		 try {
-	           return facade.getListaTimeSheetVOPeloMesAno(mes, ano, codigoFuncionario);
+	           return facade.getListaTimeSheetVOPeloMesAno(mes, ano, codigoFuncionario, sessao);
 	     } catch (RemoteException e) {           
 	           throw new ErroInternoException(e.getMessage(), e);
 	     }
 	}
-	
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<Configuracao> listarTodosConfiguracao(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+		try {
+	           return facade.listarTodosConfiguracao(sessao);
+	     } catch (RemoteException e) {           
+	           throw new ErroInternoException(e.getMessage(), e);
+	     }
+	}
+
+	@SuppressWarnings("deprecation")
+	public void alterarConfiguracao(Configuracao pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+		try {
+	           facade.alterarConfiguracao(pojo, sessao);
+	     } catch (RemoteException e) {           
+	           throw new ErroInternoException(e.getMessage(), e);
+	     }
+	}
+
+	@SuppressWarnings("deprecation")
+	public void alterarTotalHorasMes(TotalHorasMes pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+		try {
+	           facade.alterarTotalHorasMes(pojo, sessao);
+	     } catch (RemoteException e) {           
+	           throw new ErroInternoException(e.getMessage(), e);
+	     }
+	}
+
+	public void removerHistoricoTimeSheet(HistoricoTimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+		try {
+	           facade.removerHistoricoTimeSheet(pojo, sessao);
+	     } catch (RemoteException e) {           
+	           throw new ErroInternoException(e.getMessage(), e);
+	     }
+		
+	}
+
 }

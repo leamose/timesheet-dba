@@ -2,8 +2,12 @@ package br.com.dba.timesheet.web.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import br.com.dba.timesheet.ejb.SegurancaDelegate;
 import br.com.dba.timesheet.ejb.TimesheetDelegate;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
 import br.com.dba.timesheet.pojo.Atividade;
 import br.com.dba.timesheet.pojo.Cliente;
 import br.com.dba.timesheet.pojo.Funcionario;
@@ -11,6 +15,7 @@ import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
@@ -27,8 +32,18 @@ public class TimeSheetComum extends BaseDispatchAction{
     private List<Metodologia> listarTodasMetodologias = null;
     private List<ProdutoServico> listarTodosProdutosServicos = null;
     private List<SituacaoAtividade> listarTodasSituacaoAtividade = null;
+	private Sessao sessao;
 
     
+	//SESSAO
+	public Sessao getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
+	}
+	
     //*********************************************
     //* GETTER's e SETTER's :
     //*********************************************
@@ -167,30 +182,30 @@ public class TimeSheetComum extends BaseDispatchAction{
         this.listarTodosProdutosServicos = listarTodosProdutosServicos;
     }
 
-    public List<Atividade> listarTodosAtividades() throws ParametroInvalidoException {
-        return getTimeSheetDelegate().listarTodosAtividades();
+    public List<Atividade> listarTodosAtividades() throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().listarTodosAtividades(getSessao());
     }
 
-    public List<Cliente> listarTodosClientes() throws ParametroInvalidoException {
-        return getTimeSheetDelegate().listarTodosCliente();
+    public List<Cliente> listarTodosClientes() throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().listarTodosCliente(getSessao());
     }
 
-    public List<OP> listarTodasOPs() throws ParametroInvalidoException {
-        return getTimeSheetDelegate().listarTodasOPs();
+    public List<OP> listarTodasOPs() throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().listarTodasOPs(getSessao());
     }
 
-    public List<Metodologia> listarTodasMetodologias() throws ParametroInvalidoException {
-        return getTimeSheetDelegate().listarTodasMetodologias();
+    public List<Metodologia> listarTodasMetodologias() throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().listarTodasMetodologias(getSessao());
     }
 
     public List<ProdutoServico> listarTodosProdutoServico()
-        throws ParametroInvalidoException {
-        return getTimeSheetDelegate().listarTodosProdutoServico();
+        throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().listarTodosProdutoServico(getSessao());
     }
 
     public List<SituacaoAtividade> listarTodasSituacaoAtividade()
-        throws ParametroInvalidoException {
-        return getTimeSheetDelegate().listarTodasSituacaoAtividade();
+        throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().listarTodasSituacaoAtividade(getSessao());
     }
 
     
@@ -198,13 +213,13 @@ public class TimeSheetComum extends BaseDispatchAction{
     //* CRUD's :
     //*********************************************
     public void salvarTimeSheet(TimeSheet pojo)
-            throws ParametroInvalidoException {
-    	getTimeSheetDelegate().salvarTimeSheet(pojo);
+            throws ParametroInvalidoException, SessaoInvalidaException {
+    	getTimeSheetDelegate().salvarTimeSheet(pojo,getSessao());
     }
 
     public void salvarHistoricoTimeSheet(HistoricoTimeSheet pojo)
-            throws ParametroInvalidoException {
-                getTimeSheetDelegate().salvarHistoricoTimeSheet(pojo);
+            throws ParametroInvalidoException, SessaoInvalidaException {
+                getTimeSheetDelegate().salvarHistoricoTimeSheet(pojo,getSessao());
             }
 
     /**
@@ -213,10 +228,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public OP getOPPeloID(Integer id) throws Exception {
+    public OP getOPPeloID(Integer id) throws Exception , SessaoInvalidaException {
         OP pojo = null;
         try{    
-            pojo = getTimeSheetDelegate().getOP(id);
+            pojo = getTimeSheetDelegate().getOP(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -232,7 +247,7 @@ public class TimeSheetComum extends BaseDispatchAction{
     public Usuario getUsuarioPeloID(Integer id) throws Exception {
         Usuario pojo = null;
         try{    
-            pojo = getTimeSheetDelegate().getUsuario(id);
+            pojo = getSegurancaDelegate().getUsuario(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -245,10 +260,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public ProdutoServico getProdutoServicoPeloID(Integer id) throws Exception {
+    public ProdutoServico getProdutoServicoPeloID(Integer id) throws Exception, SessaoInvalidaException {
         ProdutoServico pojo = null;
         try{    
-            pojo = getTimeSheetDelegate().getProdutoServico(id);
+            pojo = getTimeSheetDelegate().getProdutoServico(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -261,10 +276,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public Cliente getClientePeloID(Integer id) throws Exception {
+    public Cliente getClientePeloID(Integer id) throws Exception, SessaoInvalidaException {
         Cliente pojo = null;
         try{    
-            pojo = getTimeSheetDelegate().getCliente(id);
+            pojo = getTimeSheetDelegate().getCliente(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -277,10 +292,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public Atividade getAtividadePeloID(Integer id) throws Exception {
+    public Atividade getAtividadePeloID(Integer id) throws Exception, SessaoInvalidaException {
         Atividade pojo = null;
         try{    
-            pojo = getTimeSheetDelegate().getAtividade(id);
+            pojo = getTimeSheetDelegate().getAtividade(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -293,10 +308,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public Metodologia getMetodologiaPeloID(Integer id) throws Exception {
+    public Metodologia getMetodologiaPeloID(Integer id) throws Exception, SessaoInvalidaException {
         Metodologia pojo = null;
         try {
-            pojo = getTimeSheetDelegate().getMetodologia(id);
+            pojo = getTimeSheetDelegate().getMetodologia(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -309,10 +324,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public Funcionario getFuncionarioPeloID(Integer id) throws Exception {
+    public Funcionario getFuncionarioPeloID(Integer id) throws Exception, SessaoInvalidaException {
         Funcionario pojo = null;
         try {
-            pojo = getTimeSheetDelegate().getFuncionario(id);
+            pojo = getTimeSheetDelegate().getFuncionario(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -325,10 +340,10 @@ public class TimeSheetComum extends BaseDispatchAction{
      * @return 
      * @throws Exception 
      */
-    public SituacaoAtividade getSituacaoAtividadePeloID(Integer id) throws Exception {
+    public SituacaoAtividade getSituacaoAtividadePeloID(Integer id) throws Exception, SessaoInvalidaException {
         SituacaoAtividade pojo = null;
         try {
-            pojo = getTimeSheetDelegate().getSituacaoAtividade(id);
+            pojo = getTimeSheetDelegate().getSituacaoAtividade(id,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
@@ -336,8 +351,8 @@ public class TimeSheetComum extends BaseDispatchAction{
     }
     
     public TimeSheet getTimeSheetPeloID(Integer id)
-        throws ParametroInvalidoException {
-        return getTimeSheetDelegate().getTimeSheet(id);
+        throws ParametroInvalidoException, SessaoInvalidaException {
+        return getTimeSheetDelegate().getTimeSheet(id,getSessao());
     }
     
   //*********************************************
@@ -347,21 +362,25 @@ public class TimeSheetComum extends BaseDispatchAction{
         return TimesheetDelegate.getInstancia();
     }
 
-    public void alterarTimeSheet(TimeSheet pojo) throws Exception {
+    public SegurancaDelegate getSegurancaDelegate() {
+    	return SegurancaDelegate.getInstancia();
+    }
+
+    public void alterarTimeSheet(TimeSheet pojo) throws Exception, SessaoInvalidaException {
         try {
-            getTimeSheetDelegate().alterarTimeSheet(pojo);
+            getTimeSheetDelegate().alterarTimeSheet(pojo,getSessao());
         } catch (Exception e) {
         	throw new Exception(e.getMessage(), e);
         }
     }
 
 	public List<Usuario> constultarUsuario(Usuario usuario)
-			throws ParametroInvalidoException {
-				return getTimeSheetDelegate().consultarUsuario(usuario);
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				return getSegurancaDelegate().consultarUsuario(usuario,getSessao());
 			}
 
-	public Usuario getUsuario(Usuario usuario) throws ParametroInvalidoException {
-		return getTimeSheetDelegate().getUsuario(usuario);
+	public Usuario getUsuario(Usuario usuario) throws ParametroInvalidoException, SessaoInvalidaException {
+		return getSegurancaDelegate().getUsuario(usuario,getSessao());
 	}
 
 	/**
@@ -371,9 +390,9 @@ public class TimeSheetComum extends BaseDispatchAction{
 	 * @throws ParametroInvalidoException
 	 */
 	protected List<HorasAtividadeVO> getListaHorasAtividadeVO(Funcionario subordinado)
-			throws ParametroInvalidoException {
+			throws ParametroInvalidoException, SessaoInvalidaException {
 				return getTimeSheetDelegate().getListaHorasAtividadeVO(UtilDate.getDataAtual(),
-						subordinado.getId());
+						subordinado.getId(),getSessao());
 			}
 	/**
 	 * Recupera a lista de atividades por funcionario.
@@ -382,8 +401,7 @@ public class TimeSheetComum extends BaseDispatchAction{
 	 * @throws ParametroInvalidoException
 	 */
 	protected List<TimeSheetVO> getListaTimeSheetVO(Funcionario funcionario)
-			throws ParametroInvalidoException {
-				
+			throws ParametroInvalidoException, SessaoInvalidaException {
 				//Data do primeiro dia do mes atual.
 				String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
 				
@@ -391,7 +409,7 @@ public class TimeSheetComum extends BaseDispatchAction{
 				String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
 				
 				return getTimeSheetDelegate().getListaTimeSheetVO(UtilDate.getDataComHoraZero(data1),
-						UtilDate.getDataComHoraZero(data2), funcionario.getId());
+						UtilDate.getDataComHoraZero(data2), funcionario.getId(),getSessao());
 			}
 
 	/**
@@ -401,19 +419,25 @@ public class TimeSheetComum extends BaseDispatchAction{
 	 * @throws ParametroInvalidoException
 	 */
 	protected List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Usuario usuarioLogado)
-			throws ParametroInvalidoException {
-				return getTimeSheetDelegate().consultaFuncionariosPeloCodigoFuncionarioChefe(usuarioLogado.getFuncionario().getId());
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				return getTimeSheetDelegate().consultaFuncionariosPeloCodigoFuncionarioChefe(usuarioLogado.getFuncionario().getId(),getSessao());
 			}
 
 	protected void removerTimeSheet(TimeSheet pojo)
-			throws ParametroInvalidoException {
-				getTimeSheetDelegate().removerTimeSheet(pojo);
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				getTimeSheetDelegate().removerTimeSheet(pojo,getSessao());
 			}
 
 	public List<ProdutoServico> recuperarListaProdutoServico(Integer codigoMetodologia)
-			throws ParametroInvalidoException {
-				return getTimeSheetDelegate().getProdutoServicoPeloCodigoMetodologia(Integer.valueOf(codigoMetodologia));
-			}
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				return getTimeSheetDelegate().getProdutoServicoPeloCodigoMetodologia(Integer.valueOf(codigoMetodologia),getSessao());
+	}
+
+	protected void atualizaSessao(HttpServletRequest request) {
+		request.getSession().setAttribute("sessao", getSessao());
+	}
+
+	
     
 
 }

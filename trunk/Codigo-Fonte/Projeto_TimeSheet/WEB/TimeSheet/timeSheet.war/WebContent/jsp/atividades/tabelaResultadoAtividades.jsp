@@ -1,7 +1,7 @@
-<div style="height:390px;">	
+<div style="height:390px; padding-bottom: 15px;overflow: auto">	
 	<display:table name="form.listaTimeSheetVO" style="width:99.5%;padding-bottom:20px;margin-left: 2px;" 
-		class="lista" id="tabela" length="100" pagesize="15" 
-		requestURI="/atividade/inicio.do" cellspacing="0" htmlId="resultado">
+		class="lista" id="tabela" length="100" pagesize="15" cellpadding="0" 
+		requestURI="/atividade/inicio.do" cellspacing="0" htmlId="resultado" rules="cols">
 		<display:column style="width:1%;" >
 			<!--<img src="${contexto}/WebContent/img/aprov_mao.gif" title="aprovado"/>-->												
 		</display:column>						
@@ -22,16 +22,16 @@
 			style="width:30%;"  maxLength="30"/>	
 			
 		<display:column property="observacao" title="Observação" 
-			style="width:15%;"  maxLength="40"/>	
+			style="width:15%;"  maxLength="18"/>	
 			
 		<display:column property="observacaoPrivada" title="Observação Superior" style="width:15%;" 
 			maxLength="25"/>
 			
-		<display:column title="Ações" style="width:10%;">
+		<display:column title="Ações" style="width:8%;">
 			<center>
 				<!-- DETALHAR -->
 				<c:if test="${form.indicaChefe}">
-					<a href="javascript:detalharAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''}, 500);">
+					<a href="javascript:detalharAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''}, 510);">
 				</c:if>
 				<c:if test="${!form.indicaChefe}">
 					<a href="javascript:detalharAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''}, 330);">
@@ -41,7 +41,7 @@
 				
 				<!-- ALTERAR -->
 				<c:if test="${form.indicaChefe}">
-					<a href="javascript:alterarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''},500);">
+					<a href="javascript:alterarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''},510);">
 				</c:if>
 				<c:if test="${!form.indicaChefe}">
 					<a href="javascript:alterarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''},330);">
@@ -50,14 +50,13 @@
 				</a>
 				
 				<!-- REMOVER -->
-				<a href="javascript:excluirAtividade(${tabela.codigoTimeSheet});">
+				<a href="javascript:excluirAtividade(${tabela.codigoTimeSheet}, ${tabela.codigoHistoricoTimeSheet});">
 					<html:img  src="${contexto}/WebContent/img/excluir.png" title="excluir atividade"/>
 				</a>
 				
 				<c:if test="${form.indicaChefe && form.indicaAvaliacao}">
-					<a href="javascript:avaliarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''},500);">				
-						<html:img  src="${contexto}/WebContent/img/responderAutoP.png" 
-								title="avaliar atividade"/>
+					<a href="javascript:avaliarAtividade(${tabela.codigoTimeSheet}, ${tabela.outrasAtividades ne ''},510);">				
+						<html:img  src="${contexto}/WebContent/img/responderAutoP.png" title="avaliar atividade"/>
 						</a>
 				</c:if>
 			</center>

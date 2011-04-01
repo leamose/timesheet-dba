@@ -35,8 +35,8 @@ public class HistoricoTimeSheetDao extends AbstractHibernateDAO<HistoricoTimeShe
 		return HistoricoTimeSheet.class;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-    public List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(Integer codigo)throws ParametroInvalidoException, DAOException{
+    @SuppressWarnings("unchecked")
+	public List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(Integer codigo)throws ParametroInvalidoException, DAOException{
         Criteria query = getSession().createCriteria(HistoricoTimeSheet.class);
         query.add(Restrictions.eq("codigoTimeSheet", codigo));
         
@@ -45,7 +45,7 @@ public class HistoricoTimeSheetDao extends AbstractHibernateDAO<HistoricoTimeShe
         return resultado != null && !resultado.isEmpty() ? resultado:null;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	public List<HistoricoTimeSheet> getHistoricoPelaDataOperacao(Date data)throws ParametroInvalidoException, DAOException{
 	    Criteria query = getSession().createCriteria(HistoricoTimeSheet.class);
 	    query.add(Restrictions.eq("dataOperacao", data));

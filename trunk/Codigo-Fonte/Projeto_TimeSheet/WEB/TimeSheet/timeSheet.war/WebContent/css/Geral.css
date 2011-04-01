@@ -186,7 +186,7 @@ img {border:none;}
 
 .campoErro { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid red; background-color:#ece9d8;}
 
-.botoesMeio { float:right; padding-right:18px; padding-top:20px; padding-bottom:20px;}
+.botoesMeio { float:right; padding-right:40px; padding-top:20px; padding-bottom:20px;}
 
 .botoesMeioPopUp { float:right; padding-right:1px; padding-top:10px; padding-bottom:5px;}
 

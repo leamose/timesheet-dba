@@ -14,6 +14,7 @@ import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
@@ -37,10 +38,13 @@ public class AtividadesForm extends ValidatorForm{
 	private Integer codigoTimeSheet;		
 	private Integer codigoFuncionario;		
 	private Integer codigoFuncionarioLogado;		
-	private Integer codigoUsuarioLogado;
+	private Integer codigoUsuario;
 	private Integer codigoFuncionarioSubordinado;
 	private Integer codigoSituacaoAtividade;	
 	private Integer tamanhoListaHoras;	
+	private Integer codigoHistoricoTimeSheet;
+	
+	private Sessao sessao;
 
     private String dataHoraInicio;	
 	private String dataHoraFim;		
@@ -196,11 +200,11 @@ public class AtividadesForm extends ValidatorForm{
 	public void setCodigoFuncionarioLogado(Integer codigoFuncionarioLogado) {
 		this.codigoFuncionarioLogado = codigoFuncionarioLogado;
 	}
-	public Integer getCodigoUsuarioLogado() {
-		return codigoUsuarioLogado;
+	public Integer getCodigoUsuario() {
+		return codigoUsuario;
 	}
-	public void setCodigoUsuarioLogado(Integer codigoUsuarioLogado) {
-		this.codigoUsuarioLogado = codigoUsuarioLogado;
+	public void setCodigoUsuario(Integer codigoUsuarioLogado) {
+		this.codigoUsuario = codigoUsuarioLogado;
 	}
 	public Integer getCodigoFuncionarioSubordinado() {
 		return codigoFuncionarioSubordinado;
@@ -533,5 +537,21 @@ public class AtividadesForm extends ValidatorForm{
 
 	public void setIndicaSaldoDevedor(Boolean indicaSaldoDevedor) {
 		this.indicaSaldoDevedor = indicaSaldoDevedor;
+	}
+
+	public Integer getCodigoHistoricoTimeSheet() {
+		return codigoHistoricoTimeSheet;
+	}
+
+	public void setCodigoHistoricoTimeSheet(Integer codigoHistoricoTimeSheet) {
+		this.codigoHistoricoTimeSheet = codigoHistoricoTimeSheet;
+	}
+
+	public Sessao getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
 	}
 }

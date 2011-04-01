@@ -17,9 +17,7 @@ public class FuncionarioAction extends BaseDispatchAction {
 	    
 	    FuncionarioForm formulario = (FuncionarioForm) form;
 	    
-//	    List<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>();
-        
-//        formulario.setListaFuncionarios(listaFuncionarios);
+
 	    
 		return mapping.findForward("retorno");		
 	}	
@@ -39,36 +37,6 @@ public class FuncionarioAction extends BaseDispatchAction {
 	    
 	    
 	    FuncionarioForm formulario = (FuncionarioForm) form;
-	    
-	    
-//	    FuncionarioVO vo = new FuncionarioVO();	    
-//	    vo.setNome("Fabio Oliveira de Pinho");
-//	    vo.setCargo("Fabio Oliveira de Pinho");
-//	    vo.setIndicaChefe(false);
-//	    vo.setFerias(false);
-//	    vo.setHoraAlmocoInicio(8);
-//	    vo.setHoraAlmocoFim(18);
-//	    vo.setHoraTrabalhoFim(12);
-//	    vo.setHoraTrabalhoInicio(14);
-//	    
-//	    
-//	    List<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>();
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-//	    listaFuncionarios.add(vo);
-	    
-//	    request.setAttribute("listaFuncionarios", listaFuncionarios);
-	    
 	    return mapping.findForward("retorno");		
 	}
 	

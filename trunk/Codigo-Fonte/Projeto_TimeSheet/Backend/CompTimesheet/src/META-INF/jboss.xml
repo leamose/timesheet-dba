@@ -13,6 +13,11 @@
      -->
 
       <session>
+         <ejb-name>SegurancaFacade</ejb-name>
+         <jndi-name>br/com/dba/timesheet/ejb/SegurancaFacade</jndi-name>
+
+      </session>
+      <session>
          <ejb-name>TimesheetFacade</ejb-name>
          <jndi-name>br/com/dba/timesheet/ejb/TimesheetFacade</jndi-name>
 

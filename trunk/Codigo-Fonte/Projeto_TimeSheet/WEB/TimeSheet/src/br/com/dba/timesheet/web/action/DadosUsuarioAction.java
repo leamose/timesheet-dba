@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.util.UtilDate;
 import br.com.dba.timesheet.web.form.DadosUsuarioForm;
@@ -41,7 +42,7 @@ public class DadosUsuarioAction extends TimeSheetComum {
 				usuario.setIndicaBloqueado(false);
 			}
 			
-			getTimeSheetDelegate().alterarUsuario(usuario);
+			getSegurancaDelegate().alterarUsuario(usuario, new Sessao());
 			
 		} catch (ParametroInvalidoException e) {
 			// TODO Auto-generated catch block

@@ -1,19 +1,12 @@
 <table class="paneEstatistica" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-		<th colspan="2" class="h1">${form.mesLiteral}</th>
-	</tr>
+	<!-- MES ATUAL -->
+	<tr><th colspan="2" class="h1">${form.mesLiteral}</th></tr>
 	<tr>
 		<td width="12%">
 			<table class="paneEstatistica">
-				<tr>
-					<th>carga horaria:</th>
-				</tr>
-				<tr>
-					<th>horas trabalhadas:</th>
-				</tr>
-				<tr>
-					<th>saldo diário:</th>
-				</tr>
+				<tr><th>carga horaria:</th></tr>
+				<tr><th>horas trabalhadas:</th></tr>
+				<tr><th>saldo diário:</th></tr>
 			</table>
 		</td>
 		<td style="width: 100%">

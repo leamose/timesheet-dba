@@ -47,13 +47,13 @@
 						<td>
 							<table width="580px;">
 								<tr>
-									<th width="35%" align="left">Calendário padrão:</th>
-									<td width="8%" align="left">8h00</td>
-									<td width="15%" align="left">18h00</td>
+									<th align="right">Calendário padrão:</th>
+									<td align="left">8h00</td>
+									<td align="left">18h00</td>
 									<th align="right">Almoço:</th>
 									<td align="left"> 12h00</td>
 									<td align="left">14h00</td>
-									<th width="55%" align="right">MÊS/ANO:</th>
+									<th align="right">MÊS/ANO:</th>
 									<td align="left">${form.mesLiteral}</td>
 									<td align="left">2011</td>
 								</tr>
@@ -69,13 +69,13 @@
 				<a href="#" onclick="javascript:inicioAtividade();">
 					<html:img src="${contexto}/WebContent/img/pesquisarAtividade.png" title="atividade"/></a>
 				
-				<c:if test="${form.indicaChefe}">						
+				<!--<c:if test="${form.indicaChefe}">						
 					<a href="#" onclick="javascript:cadastrarFuncionario();">
 						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/></a>
 					<a href="#" onclick="javascript:configurar();">
 						<html:img src="${contexto}/WebContent/img/configurarQuestionarios.png" title="configurar"/></a>
 				</c:if>	
-				<a href="#" onclick="javascript:sair();">
+				--><a href="#" onclick="javascript:sair();">
 			    	<html:img src="${contexto}/WebContent/img/sair.png" alt="sair"/>
 			    </a>			
 		</div>

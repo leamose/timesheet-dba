@@ -22,7 +22,7 @@
 				type="br.com.dba.timesheet.web.action.ConfigurarAction"
 				name="configurarForm" 
 				input="/WebContent/jsp/index.html">
-			<forward name="retorno" path="/atividade/inicio.do"/>
+			<forward name="retorno" path="/configurar/inicio.do"/>
 		</action>
 		
 	    <action path="/configurar/operacaoCancelada" 

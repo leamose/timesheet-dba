@@ -36,6 +36,8 @@
         <mapping class="br.com.dba.timesheet.pojo.SituacaoAtividade"/>        
         <mapping class="br.com.dba.timesheet.pojo.HistoricoTimeSheet"/>        
         <mapping class="br.com.dba.timesheet.pojo.Usuario"/>        
+        <mapping class="br.com.dba.timesheet.pojo.TotalHorasMes"/>        
+        <mapping class="br.com.dba.timesheet.pojo.Configuracao"/>        
 		             
     </session-factory>
 </hibernate-configuration>

@@ -84,4 +84,12 @@ public final class TimesheetDaoFactory {
         return new AvaliacaoAtividadeDao(sf);
     }
 
+	public TotalHorasMesDao getTotalHorasMesDao() {
+		return new TotalHorasMesDao(sf);
+	}
+
+	public ConfiguracaoDao getConfiguracaoDao() {
+		return new ConfiguracaoDao(sf);
+	}
+
 }

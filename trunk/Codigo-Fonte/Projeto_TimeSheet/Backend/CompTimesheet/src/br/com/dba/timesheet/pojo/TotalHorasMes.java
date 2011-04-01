@@ -18,42 +18,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="totalHorasMes", schema="TS")
-public class TotalHorasMes implements POJO<Integer> {
+public class TotalHorasMes implements POJO<String> {
 
 	@Id
-	@Column(name="anoMes")	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String anoMes;
+	@Column(name="anoMes")
+	private String id;
 	
-	@Column(name="totalHorasMes", length = 250)
-	private Integer id;
+	@Column(name="totalHorasMes", length = 6)
+	private Integer totalHorasMes;
 
-    /**
-     * @return the anoMes
-     */
-    public String getAnoMes() {
-        return anoMes;
-    }
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * @param anoMes the anoMes to set
-     */
-    public void setAnoMes(String anoMes) {
-        this.anoMes = anoMes;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
+	public Integer getTotalHorasMes() {
+		return totalHorasMes;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }    
+	public void setTotalHorasMes(Integer totalHorasMes) {
+		this.totalHorasMes = totalHorasMes;
+	}
+
+   
 	
 }

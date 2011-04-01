@@ -9,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.dba.dao.hibernate.AbstractHibernateDAO;
 import br.com.dba.timesheet.pojo.Funcionario;
-import br.com.dba.timesheet.pojo.TimeSheet;
 
 /**
  * 
@@ -36,6 +35,7 @@ public class FuncionarioDao extends AbstractHibernateDAO<Funcionario, Integer> {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(
 			Integer codigoFuncionarioChefe) {
 
