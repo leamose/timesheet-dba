@@ -18,7 +18,7 @@
 			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>
 			<forward name="erroLogin" path="/login.do"/>
 		</action>
-	    <action path="/atividade/cadastrarAtividade" 
+	    <action path="/atividade/abrirPopUpAtividade" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/atividade/inicio.do">
@@ -151,7 +151,7 @@
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/atividade/inicio.do">						 
-			<forward name="retorno" path="/atividade/inicio.do"/>
+			<forward name="retorno" path="/WebContent/jsp/cadastroAtividades/popUpCadastroAtividades.jsp"/>
 		</action>
 
 		<action path="/avaliacaoAtividade/naoHomologar" 

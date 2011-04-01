@@ -34,7 +34,7 @@ public class ProdutoServicoDao extends AbstractHibernateDAO<ProdutoServico, Inte
 		return ProdutoServico.class;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked"})
     public List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo)throws ParametroInvalidoException, DAOException{
 	    Criteria query = getSession().createCriteria(ProdutoServico.class);
 	    query.add(Restrictions.eq("metodologia.id", codigo));

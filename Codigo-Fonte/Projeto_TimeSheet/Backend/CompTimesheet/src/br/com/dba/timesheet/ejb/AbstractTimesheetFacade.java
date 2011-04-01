@@ -9,23 +9,31 @@ import javax.ejb.SessionBean;
 
 import br.com.dba.timesheet.exceptions.DAOException;
 import br.com.dba.timesheet.exceptions.ErroInternoException;
+import br.com.dba.timesheet.exceptions.IdentificadorSenhaIncorretosException;
+import br.com.dba.timesheet.exceptions.LogonBloqueadoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
+import br.com.dba.timesheet.exceptions.UsuarioNaoEncontradoException;
 import br.com.dba.timesheet.pojo.Atividade;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.Cliente;
+import br.com.dba.timesheet.pojo.Configuracao;
 import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.TipoAtividade;
+import br.com.dba.timesheet.pojo.TotalHorasMes;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.dao.AtividadeDao;
 import br.com.dba.timesheet.pojo.dao.AvaliacaoAtividadeDao;
 import br.com.dba.timesheet.pojo.dao.ClienteDao;
+import br.com.dba.timesheet.pojo.dao.ConfiguracaoDao;
 import br.com.dba.timesheet.pojo.dao.FuncionarioDao;
 import br.com.dba.timesheet.pojo.dao.HistoricoTimeSheetDao;
 import br.com.dba.timesheet.pojo.dao.MetodologiaDao;
@@ -36,6 +44,7 @@ import br.com.dba.timesheet.pojo.dao.SituacaoAtividadeDao;
 import br.com.dba.timesheet.pojo.dao.TimeSheetDao;
 import br.com.dba.timesheet.pojo.dao.TimesheetDaoFactory;
 import br.com.dba.timesheet.pojo.dao.TipoAtividadeDao;
+import br.com.dba.timesheet.pojo.dao.TotalHorasMesDao;
 import br.com.dba.timesheet.pojo.dao.UsuarioDao;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
@@ -70,6 +79,7 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private SegurancaFacadeHelper segurancaHelper;
 	private AtividadeDao atividadeDao;
 	private ClienteDao clienteDao;
 	private FuncionarioDao funcionarioDao;
@@ -80,9 +90,10 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
 	private TipoAtividadeDao tipoAtividadeDao;
 	private TimeSheetDao timeSheetDao;
 	private HistoricoTimeSheetDao historicoTimeSheetDao;
-	private UsuarioDao usuarioDao;
 	private SituacaoAtividadeDao situacaoAtividadeDao;
 	private AvaliacaoAtividadeDao avaliacaoAtividadeDao;
+	private TotalHorasMesDao totalHorasMesDao;
+	private ConfiguracaoDao configuracaoDao;
 	
 	/**
      * @ejb.create-method view-type = "remote"  
@@ -98,19 +109,22 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
 		tipoAtividadeDao = TimesheetDaoFactory.getInstance().getTipoAtividadeDao();		
 		timeSheetDao = TimesheetDaoFactory.getInstance().getTimeSheetDao();		
 		historicoTimeSheetDao = TimesheetDaoFactory.getInstance().getHistoricoTimeSheetDao();		
-		usuarioDao = TimesheetDaoFactory.getInstance().getUsuarioDao();		
 		situacaoAtividadeDao = TimesheetDaoFactory.getInstance().getSituacaoAtividadeDao();		
 		avaliacaoAtividadeDao = TimesheetDaoFactory.getInstance().getAvaliacaoAtividadeDao();		
+		totalHorasMesDao = TimesheetDaoFactory.getInstance().getTotalHorasMesDao();		
+		configuracaoDao = TimesheetDaoFactory.getInstance().getConfiguracaoDao();		
+		segurancaHelper = SegurancaFacadeHelper.getInstancia();
 	}
 	
-	
-    /**
+	/**
+     * @throws SessaoInvalidaException 
      * @ejb.interface-method view-type = "remote"
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TipoAtividade> listarTodosTipoAtividades() throws ParametroInvalidoException{
+    public List<TipoAtividade> listarTodosTipoAtividades(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
         	return tipoAtividadeDao.listarTodos();
         } catch (DAOException e) {
 			throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -122,8 +136,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<ProdutoServico> listarTodosProdutoServico() throws ParametroInvalidoException{
+    public List<ProdutoServico> listarTodosProdutoServico(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return produtoServicoDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -135,8 +150,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<OP> listarTodasOPs() throws ParametroInvalidoException{
+    public List<OP> listarTodasOPs(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return opDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -148,8 +164,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<Metodologia> listarTodasMetodologias() throws ParametroInvalidoException{
+    public List<Metodologia> listarTodasMetodologias(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return metodologiaDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -161,8 +178,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<Cliente> listarTodosCliente() throws ParametroInvalidoException{
+    public List<Cliente> listarTodosCliente(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return clienteDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -174,8 +192,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TimeSheet> listarTodosTimeSheet() throws ParametroInvalidoException{
+    public List<TimeSheet> listarTodosTimeSheet(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return timeSheetDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -187,8 +206,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<SituacaoAtividade> listarTodasSituacaoAtividade() throws ParametroInvalidoException{
+    public List<SituacaoAtividade> listarTodasSituacaoAtividade(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return situacaoAtividadeDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -200,8 +220,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TimeSheet> listarTodosTimeSheetOrdenadoPorDataHoraInicio()throws ParametroInvalidoException{
+    public List<TimeSheet> listarTodosTimeSheetOrdenadoPorDataHoraInicio(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return timeSheetDao.listaTodosTimeSheetOrdenadoPorDataHoraInicio();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -213,8 +234,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TimeSheet> consultarTimeSheetPorDataHoraInicio(Date dataInicio, Date dataFim)throws ParametroInvalidoException{
+    public List<TimeSheet> consultarTimeSheetPorDataHoraInicio(Date dataInicio, Date dataFim, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return timeSheetDao.consultarTimeSheetPorDataHoraInicio(dataInicio, dataFim);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -226,8 +248,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<Atividade> listarTodosAtividades() throws ParametroInvalidoException{
+    public List<Atividade> listarTodosAtividades(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return atividadeDao.listarTodos();
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -239,8 +262,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public TimeSheet salvarTimeSheet(TimeSheet pojo) throws ParametroInvalidoException{
+    public TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return timeSheetDao.salvar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -252,8 +276,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public SituacaoAtividade salvarSituacaoAtividade(SituacaoAtividade pojo) throws ParametroInvalidoException{
+    public SituacaoAtividade salvarSituacaoAtividade(SituacaoAtividade pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return situacaoAtividadeDao.salvar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -265,8 +290,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade pojo) throws ParametroInvalidoException{
+    public AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return avaliacaoAtividadeDao.salvar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -278,8 +304,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void alterarAvaliacaoAtividade(AvaliacaoAtividade pojo) throws ParametroInvalidoException{
+    public void alterarAvaliacaoAtividade(AvaliacaoAtividade pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             avaliacaoAtividadeDao.alterar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -291,8 +318,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void removerAvaliacaoAtividade(AvaliacaoAtividade pojo) throws ParametroInvalidoException{
+    public void removerAvaliacaoAtividade(AvaliacaoAtividade pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             avaliacaoAtividadeDao.remover(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -304,8 +332,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public HistoricoTimeSheet salvarHistoricoTimeSheet(HistoricoTimeSheet pojo) throws ParametroInvalidoException{
+    public HistoricoTimeSheet salvarHistoricoTimeSheet(HistoricoTimeSheet pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return historicoTimeSheetDao.salvar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -317,8 +346,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void alterarTimeSheet(TimeSheet pojo) throws ParametroInvalidoException{
+    public void alterarTimeSheet(TimeSheet pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             timeSheetDao.alterar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -330,12 +360,15 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void alterarUsuario(Usuario pojo) throws ParametroInvalidoException{
-    	try {
-    		usuarioDao.alterar(pojo);
-    	} catch (DAOException e) {
-    		throw new ErroInternoException(e.getMessage(),e.getCause());
-    	}
+    public void removerTimeSheet(TimeSheet pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
+        	if(pojo!=null){
+        		timeSheetDao.remover(pojo);
+        	}
+        } catch (DAOException e) {
+            throw new ErroInternoException(e.getMessage(),e.getCause());
+        }
     }
 
     /**
@@ -343,12 +376,15 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void removerTimeSheet(TimeSheet pojo) throws ParametroInvalidoException{
+    public void removerHistoricoTimeSheet(HistoricoTimeSheet pojo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            timeSheetDao.remover(pojo);
-        } catch (DAOException e) {
-            throw new ErroInternoException(e.getMessage(),e.getCause());
-        }
+        	segurancaHelper.verificarSessaoValida(sessao);
+    		if(pojo!=null){
+    			historicoTimeSheetDao.remover(pojo);
+    		}
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
     }
     
     /**
@@ -356,8 +392,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<ProdutoServico> consultarProdutoServicoPeloCodigoMetodologia(Integer codigo) throws ParametroInvalidoException{
+    public List<ProdutoServico> consultarProdutoServicoPeloCodigoMetodologia(Integer codigo, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return produtoServicoDao.getProdutoServicoPeloCodigoMetodologia(codigo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -369,8 +406,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public SituacaoAtividade getSituacaoAtividade(Integer id) throws ParametroInvalidoException{
+    public SituacaoAtividade getSituacaoAtividade(Integer id, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return situacaoAtividadeDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -382,8 +420,23 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public Funcionario getFuncionario(Integer id) throws ParametroInvalidoException{
+    public List<Configuracao> listarTodosConfiguracao(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
+    		return configuracaoDao.listarTodos();
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public Funcionario getFuncionario(Integer id, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return funcionarioDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -395,8 +448,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Integer codigoFuncionarioChefe) throws ParametroInvalidoException{
-    	try {
+    public List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Integer codigoFuncionarioChefe,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
     		return funcionarioDao.consultaFuncionariosPeloCodigoFuncionarioChefe(codigoFuncionarioChefe);
     	} catch (DAOException e) {
     		throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -408,8 +462,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public Cliente getCliente(Integer id) throws ParametroInvalidoException{
+    public Cliente getCliente(Integer id, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return clienteDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -421,8 +476,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public Atividade getAtividade(Integer id) throws ParametroInvalidoException{
+    public Atividade getAtividade(Integer id, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return atividadeDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -434,8 +490,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public OP getOP(Integer id) throws ParametroInvalidoException{
+    public OP getOP(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return opDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -447,8 +504,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public Metodologia getMetodologia(Integer id) throws ParametroInvalidoException{
+    public Metodologia getMetodologia(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return metodologiaDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -460,8 +518,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public ProdutoServico getProdutoServico(Integer id) throws ParametroInvalidoException{
+    public ProdutoServico getProdutoServico(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return produtoServicoDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -473,8 +532,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public TimeSheet getTimeSheet(Integer id) throws ParametroInvalidoException{
+    public TimeSheet getTimeSheet(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return timeSheetDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -486,8 +546,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public HistoricoTimeSheet getHistoricoTimeSheet(Integer id) throws ParametroInvalidoException{
+    public HistoricoTimeSheet getHistoricoTimeSheet(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return historicoTimeSheetDao.get(id);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -499,8 +560,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(Integer codigo)throws ParametroInvalidoException{
+    public List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return historicoTimeSheetDao.getHistoricoPeloCodigoTimeSheet(codigo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -512,8 +574,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<HistoricoTimeSheet> getHistoricoPelaDataOperacao(Date data)throws ParametroInvalidoException{
+    public List<HistoricoTimeSheet> getHistoricoPelaDataOperacao(Date data,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return historicoTimeSheetDao.getHistoricoPelaDataOperacao(data);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -525,64 +588,51 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public Usuario getUsuario(Integer id) throws ParametroInvalidoException{
+    public Projeto salvarProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
-            return usuarioDao.get(id);
-        } catch (DAOException e) {
-            throw new ErroInternoException(e.getMessage(),e.getCause());
-        }
-    }
-
-    /**
-     * @ejb.interface-method view-type = "remote"
-     * @ejb.transaction type = "Required"
-     */ 
-    @SuppressWarnings("deprecation")
-    public List<Usuario> consultarUsuario(Usuario pojo) throws ParametroInvalidoException{
-    	try {
-    		return usuarioDao.consultar(pojo);
-    	} catch (DAOException e) {
-    		throw new ErroInternoException(e.getMessage(),e.getCause());
-    	}
-    }
-
-    /**
-     * @ejb.interface-method view-type = "remote"
-     * @ejb.transaction type = "Required"
-     */ 
-    @SuppressWarnings("deprecation")
-    public Usuario getUsuario(Usuario pojo) throws ParametroInvalidoException{
-    	try {
-    		List<Usuario> lista = new ArrayList<Usuario>();
-    		
-    		lista = usuarioDao.consultar(pojo);
-    		
-    		return  !lista.isEmpty() ? lista.get(0):null;
-    	} catch (DAOException e) {
-    		throw new ErroInternoException(e.getMessage(),e.getCause());
-    	}
-    }
-    
-    /**
-     * @ejb.interface-method view-type = "remote"
-     * @ejb.transaction type = "Required"
-     */ 
-    @SuppressWarnings("deprecation")
-    public Projeto salvarProjeto(Projeto pojo) throws ParametroInvalidoException{
-        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return projetoDao.salvar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
         }
     }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public void alterarTotalHorasMes(TotalHorasMes pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
+    		totalHorasMesDao.alterar(pojo);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public void alterarConfiguracao(Configuracao pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
+    		configuracaoDao.alterar(pojo);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
     
     /**
      * @ejb.interface-method view-type = "remote"
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void alterarProjeto(Projeto pojo) throws ParametroInvalidoException{
+    public void alterarProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             projetoDao.alterar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -594,8 +644,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public void removerProjeto(Projeto pojo) throws ParametroInvalidoException{
+    public void removerProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
              projetoDao.remover(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -607,8 +658,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario) throws ParametroInvalidoException{
+    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
+        	segurancaHelper.verificarSessaoValida(sessao);
             return timeSheetDao.getListaTimeSheetVO(dataInicio, dataFim, codigoFuncionario);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -620,8 +672,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario) throws ParametroInvalidoException{
-    	try {
+    public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
     		return timeSheetDao.getListaTimeSheetVOPeloMesAno(mes, ano, codigoFuncionario);
     	} catch (DAOException e) {
     		throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -633,8 +686,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario) throws ParametroInvalidoException{
-    	try {
+    public List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
     		return timeSheetDao.getListaHorasAtividadeVO(UtilDate.getAno(data), UtilDate.getMes(data), codigoFuncionario);
     	} catch (DAOException e) {
     		throw new ErroInternoException(e.getMessage(),e.getCause());
@@ -647,8 +701,9 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo) throws ParametroInvalidoException{
-    	try {
+    public List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+        try {
+        	segurancaHelper.verificarSessaoValida(sessao);
     		return produtoServicoDao.getProdutoServicoPeloCodigoMetodologia(codigo);
     	} catch (DAOException e) {
     		throw new ErroInternoException(e.getMessage(),e.getCause());

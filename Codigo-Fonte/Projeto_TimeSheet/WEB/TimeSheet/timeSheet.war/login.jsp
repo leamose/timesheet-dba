@@ -23,7 +23,7 @@
 					<div class="topologin"></div>
 					<div class="formulario">
 						<span style="color:red;">
-							<span style="color:red;"><html:errors/></span>
+							<span style="color: red;">${param.msg}</span>							
 						</span>
 						<div style="width: 770px; float: left; background-image: url('${contexto}/WebContent/img/bg_login.jpg'); background-repeat: repeat-x; margin-bottom: 5px; vertical-align: middle; height: 121px;">
 							<img src="${contexto}/WebContent/img/cadeado.jpg" width="261" height="121" style="float: left;"/>

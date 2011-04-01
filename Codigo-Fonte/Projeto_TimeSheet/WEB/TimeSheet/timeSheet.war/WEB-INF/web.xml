@@ -20,7 +20,19 @@
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>application-message</param-value>
     </context-param>
-
+    
+      <!-- FILTROS -->
+	<filter>
+		<filter-name>FiltroSessao</filter-name>
+		<filter-class>br.com.dba.timesheet.web.filtros.FiltroSessao</filter-class>		
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>FiltroSessao</filter-name>
+		<!-- <servlet-name>action</servlet-name>-->
+		<url-pattern>/atividade/*</url-pattern>
+	</filter-mapping>
+    
     <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>        
@@ -45,30 +57,20 @@
             <param-value>3</param-value>
         </init-param>
     </servlet>
-
+    
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
-    
-    <session-config>
+
+	<session-config>
         <session-timeout>30</session-timeout>
     </session-config>
 
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
-    
-    <!-- FORM based authentication --> 
-	<login-config> 
-	    <auth-method>FORM</auth-method> 
-	    <form-login-config> 
-	        <form-login-page>/login.jsp</form-login-page> 
-	        <form-error-page>/WebContent/erro/erroLogin.jsp?mensagem=Login/Senha inválidos ou Usuário Bloqueado.</form-error-page> 
-	    </form-login-config> 
-	</login-config>
-	    
-
+	
     <error-page>
         <error-code>403</error-code>
         <location>/WebContent/erro/erroLogin.jsp?mensagem=Usuário sem permissão para acessar funcionalidade</location>

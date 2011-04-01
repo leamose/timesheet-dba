@@ -2,6 +2,7 @@ package br.com.dba.timesheet.web.form;
 
 import org.apache.struts.validator.ValidatorForm;
 
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.Usuario;
 
 public class DadosUsuarioForm extends ValidatorForm {
@@ -13,6 +14,8 @@ public class DadosUsuarioForm extends ValidatorForm {
 	private Boolean indicaAlterarSenha;
 	private Boolean indicaBloqueado;
 	private Integer codigoUsuario;
+	
+	private Sessao sessao;
 	
 	public Integer getCodigoUsuario() {
 		return codigoUsuario;
@@ -62,6 +65,14 @@ public class DadosUsuarioForm extends ValidatorForm {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Sessao getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
 	}
 	
 	

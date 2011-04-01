@@ -14,6 +14,7 @@ import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.OP;
 import br.com.dba.timesheet.pojo.ProdutoServico;
 import br.com.dba.timesheet.pojo.Projeto;
+import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
@@ -38,6 +39,8 @@ public class AtividadeComumForm extends ValidatorForm {
 	private Integer codigoFuncionarioSubordinado;
 	private Integer codigoSituacaoAtividade;	
 
+	private Sessao sessao;
+	
     private String dataHoraInicio;	
 	private String dataHoraFim;		
 	private String observacao;	
@@ -489,5 +492,11 @@ public class AtividadeComumForm extends ValidatorForm {
 	}
 	public void setSituacaoAtividade(SituacaoAtividade situacaoAtividade) {
 		this.situacaoAtividade = situacaoAtividade;
+	}
+	public Sessao getSessao() {
+		return sessao;
+	}
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
 	}
 }

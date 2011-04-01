@@ -45,7 +45,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
 	}
     
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked"})
     public List<TimeSheet> listaTodosTimeSheetOrdenadoPorDataHoraInicio()throws ParametroInvalidoException, DAOException{
 		Criteria query = getSession().createCriteria(TimeSheet.class);
         query.addOrder(Order.asc("dataHoraInicio"));
@@ -55,7 +55,8 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
         return resultado != null && !resultado.isEmpty() ? resultado:null;
     }
 
-    public List<TimeSheet> consultarTimeSheetPorDataHoraInicio(Date dataInicio, Date dataFim) throws ParametroInvalidoException, DAOException{
+    @SuppressWarnings("unchecked")
+	public List<TimeSheet> consultarTimeSheetPorDataHoraInicio(Date dataInicio, Date dataFim) throws ParametroInvalidoException, DAOException{
         Criteria query = getSession().createCriteria(TimeSheet.class);
         query.add(Restrictions.between("dataHoraInicio", dataInicio, dataFim));
         query.addOrder(Order.asc("dataHoraInicio"));
@@ -65,8 +66,8 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
         return resultado != null && !resultado.isEmpty() ? resultado:null;
     }
     
-    @SuppressWarnings("unchecked")
-    public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario) throws DAOException {
+    @SuppressWarnings("deprecation")
+	public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario) throws DAOException {
         StringBuilder hql = new StringBuilder(); 
         List<TimeSheetVO> lista = new ArrayList<TimeSheetVO>();
         try { 
@@ -153,8 +154,8 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
          	return lista;
     }
     
-    @SuppressWarnings("unchecked")
-    public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario) throws DAOException {
+    @SuppressWarnings("deprecation")
+	public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario) throws DAOException {
     	StringBuilder hql = new StringBuilder(); 
     	List<TimeSheetVO> lista = new ArrayList<TimeSheetVO>();
     	try { 
@@ -242,7 +243,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     	return lista;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "deprecation" })
     public List<HorasAtividadeVO> getListaHorasAtividadeVO(Integer ano, Integer mes, Integer codigofuncionario) throws DAOException {
     	StringBuilder hql = new StringBuilder(); 
     	List<HorasAtividadeVO> lista = new ArrayList<HorasAtividadeVO>();
@@ -253,7 +254,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     				" sum(datahorafim - datahorainicio) as horasTrabalhadas," +
     				" interval '8 hours' - sum(datahorafim - datahorainicio) as cargaHoraria" +
     				" from ts.timesheet where date_part('year', datahorainicio)  = " + ano +
-    				" and date_part('month', datahorainicio)=3 and codigofuncionario=" + mes +
+    				" and date_part('month', datahorainicio)=" + mes +
     				" and codigofuncionario=" + codigofuncionario +
     				" group by date_part('year', datahorainicio), date_part('month', datahorainicio), date_part('day', datahorainicio)" +
     				" order by date_part('year', datahorainicio), date_part('month', datahorainicio), date_part('day', datahorainicio)");

@@ -2,10 +2,15 @@
 
 <%@include file="/WebContent/jsp/comum/Global.jspf"%>
 
-<tiles:insert definition=".mainLayout">	
+
+<%@page import="br.com.dba.timesheet.pojo.Sessao"%><tiles:insert definition=".mainLayout">
+	
 	<tiles:put name="corpo" type="string"> 
 	
 		<script>
+
+			<%Sessao sessao = (Sessao)request.getAttribute("sessao");%>
+		
 			//CONSULTAR ATIVIDADE
 			function consultarAtividade() {
 				var form = document.forms[0];
@@ -15,29 +20,29 @@
 	
 			//DETALHAR
 			function detalharAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
-				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?acao=<%=Constantes.ACAO_DETALHAR%>&codigoTimeSheet='+codigoTimeSheet, null, "Detalhar Atividade", 800, altura) ;
+				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?popUp=true&acao=<%=Constantes.ACAO_DETALHAR%>&codigoTimeSheet='+codigoTimeSheet, null, "Detalhar Atividade", 790, altura);
 			}		
 	
 			//ALTERAR
 			function alterarAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
-				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?acao=<%=Constantes.ACAO_ALTERAR%>&codigoTimeSheet='+codigoTimeSheet, retornoInicio, "Alterar Atividade", 800, altura) ;
+				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?popUp=true&acao=<%=Constantes.ACAO_ALTERAR%>&codigoTimeSheet='+codigoTimeSheet, retornoInicio, "Alterar Atividade", 800, altura) ;
 			}		
 	
 			//EXCLUIR
-			function excluirAtividade(codigoTimeSheet) {
+			function excluirAtividade(codigoTimeSheet, codigoHistoricoTimeSheet) {
 				var form = document.forms[0];
-				form.action = contexto + '/atividade/excluir.do?codigoTimeSheet='+codigoTimeSheet; 
+				form.action = contexto + '/atividade/excluir.do?codigoTimeSheet='+codigoTimeSheet+'&codigoHistoricoTimeSheet='+codigoHistoricoTimeSheet; 
 				form.submit();
 			}
 
 			//CADASTRAR ATIVIDADE
-			function cadastrarAtividades(altura) {
-				open_popPpAtividade(false, contexto + '/atividade/cadastrarAtividade.do?acao=<%=Constantes.ACAO_SALVAR%>' , retornoInicio, "Cadastrar Atividade", 800, altura);
+			function abrirPopUpAtividade(altura) {
+				open_popPpAtividade(false, contexto + '/atividade/abrirPopUpAtividade.do?popUp=true&acao=<%=Constantes.ACAO_SALVAR%>' , retornoInicio, "Cadastrar Atividade", 800, altura);
 			}
 
 			//HOMOLOGAR ATIVIDADE
 			function avaliarAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
-				open_popPpAtividade(temOutrasAtividades, contexto + '/avaliacaoAtividade/inicioAvaliacao.do?acao=<%=Constantes.ACAO_AVALIAR%>&codigoTimeSheet='+codigoTimeSheet, retornoInicio, "Aprovar Atividade", 800, altura);
+				open_popPpAtividade(temOutrasAtividades, contexto + '/avaliacaoAtividade/inicioAvaliacao.do?popUp=true&acao=<%=Constantes.ACAO_AVALIAR%>&codigoTimeSheet='+codigoTimeSheet, retornoInicio, "Avaliar Atividade", 800, altura);
 			}
 
 			//POPULA COMBO COLABORADOR
@@ -53,7 +58,7 @@
 	
 		<html:form action="/atividade/inicio.do">		
 		
-			<html:hidden name="form" property="codigoUsuarioLogado"/>
+			<html:hidden name="form" property="codigoUsuario"/>
 			<html:hidden name="form" property="indicaChefe"/>
 			<html:hidden name="form" property="codigoFuncionarioLogado"/>
 			
