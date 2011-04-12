@@ -10,10 +10,6 @@ package br.com.dba.timesheet.exceptions;
 /**
  * Exceção responsável por tratar erro de parâmetro inválido.
  *
- * @author             União Federativa do Brasil
- * @author             Ministério da Justiça
- * @author             SE-SPOA-CGTI
- * @version            $Revision: 1.1 $ $Date: 2007-09-03 18:50:01 $
  *
  */
 public class RegistroJaCadastradoException extends Exception {

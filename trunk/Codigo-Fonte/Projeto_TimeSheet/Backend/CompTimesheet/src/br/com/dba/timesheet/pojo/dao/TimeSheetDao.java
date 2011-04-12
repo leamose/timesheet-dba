@@ -16,10 +16,12 @@ import org.hibernate.criterion.Restrictions;
 import br.com.dba.dao.hibernate.AbstractHibernateDAO;
 import br.com.dba.timesheet.exceptions.DAOException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.util.StringUtil;
+import br.com.dba.timesheet.util.UtilDate;
 
 /**
  * 
@@ -31,8 +33,11 @@ import br.com.dba.timesheet.util.StringUtil;
  */
 public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
 
+	private SessionFactory sessionFactory;
+	
 	protected TimeSheetDao(SessionFactory sf) {
 		super(sf);
+		sessionFactory = sf;
 	}
 
 	/**
@@ -65,6 +70,100 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
         
         return resultado != null && !resultado.isEmpty() ? resultado:null;
     }
+
+    @SuppressWarnings("unchecked")
+    public TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(Integer codigoTimeSheet) throws ParametroInvalidoException, DAOException{
+    	 StringBuilder hql = new StringBuilder(); 
+         List<TimeSheetVO> lista = new ArrayList<TimeSheetVO>();
+         try { 
+ 	        hql.append("SELECT timeSheet.codigoTimesheet, " +
+ 	              "timeSheet.dataHoraInicio, timeSheet.dataHoraFim, timeSheet.observacao, " +
+ 	              "timeSheet.outrasAtividades, timeSheet.indicaAlteracaoDataAvaliacao, timeSheet.codigoatividade, " +
+ 	              "timeSheet.codigoprodutoServico, timeSheet.codigoprojeto, timeSheet.codigometodologia, timeSheet.codigoop, " +
+ 	              "timeSheet.codigofuncionario, timeSheet.codigocliente," +
+ 	              "historico.codigohistoricotimesheet, historico.dataOperacao, historico.tipoOperacao," +
+ 	              "historico.codigousuario, historico.codigotimeSheet, " +
+ 	              "avaliacao.codigoavaliacaoatividade, " +
+ 	              " projeto.nome, projeto.numeroProjeto, usuario10_.login, atividade3_.descricao as descricaoAtividade, produtoser4_.descricao " +
+ 	              "   FROM TS.HistoricoTimeSheet historico " +
+ 	              "   INNER JOIN (select codigotimesheet, max(codigohistoricotimesheet) as codigohistoricotimesheet FROM TS.HistoricoTimeSheet " + 	              
+ 	              "  GROUP BY codigotimesheet) hts2 on historico.codigotimesheet=hts2.codigotimesheet and historico.codigohistoricotimesheet=hts2.codigohistoricotimesheet" +
+ 	              "   INNER JOIN TS.timeSheet timesheet on historico.codigoTimeSheet=timesheet.codigoTimeSheet AND timeSheet.codigoTimeSheet = " + codigoTimeSheet +
+ 	              "   LEFT JOIN TS.usuario usuario10_ on historico.codigousuario=usuario10_.codigoUsuario " +
+ 	              "   INNER JOIN TS.atividade atividade3_ on timesheet.codigoAtividade=atividade3_.codigoAtividade" + 
+ 	              "   INNER JOIN TS.produtoServico produtoser4_ on timesheet.codigoProdutoServico=produtoser4_.codigoProdutoServico" + 
+ 	              "   INNER JOIN TS.projeto projeto on timesheet.codigoProjeto=projeto.codigoProjeto " +
+ 	              "   INNER JOIN TS.metodologia metodologi6_ on timesheet.codigoMetodologia=metodologi6_.codigoMetodologia" + 
+ 	              "   INNER JOIN TS.op op7_ on timesheet.codigoOp=op7_.codigoOP " +
+ 	              "   INNER JOIN TS.funcionario funcionari8_ on timesheet.codigoFuncionario=funcionari8_.codigoFuncionario" + 
+ 	              "   INNER JOIN TS.cliente cliente9_ on timesheet.codigoCliente=cliente9_.codigoCliente" +
+ 	              "   LEFT JOIN (select codigotimesheet, max(codigoavaliacaoatividade) as codigoavaliacaoatividade FROM TS.avaliacaoAtividade" +
+ 	              " GROUP BY codigotimesheet) avaliacao on timesheet.codigoTimeSheet=avaliacao.codigoTimeSheet" +
+ 	              " ORDER BY timeSheet.dataHoraInicio" );
+           
+         
+         PreparedStatement query  = null;      
+         Connection conexao = getSession().connection();
+         
+         query = conexao.prepareStatement(hql.toString());
+         
+         ResultSet resultado = query.executeQuery();           
+         
+         while(resultado.next()){
+             TimeSheetVO vo = new TimeSheetVO();
+             
+             vo.setCodigoTimeSheet(resultado.getInt("codigoTimeSheet")); 
+             vo.setDataHoraInicio(resultado.getTimestamp("dataHoraInicio")); 
+             vo.setDataHoraFim(resultado.getTimestamp("dataHoraFim")); 
+             vo.setObservacao(resultado.getString("observacao")); 
+             vo.setOutrasAtividades(resultado.getString("outrasAtividades")); 
+             vo.setIndicaAlteracaoDataAvaliacao(resultado.getBoolean("indicaAlteracaoDataAvaliacao")); 
+             vo.setCodigoAtividade(resultado.getInt("codigoatividade")); 
+             vo.setCodigoProdutoServico(resultado.getInt("codigoprodutoServico")); 
+             vo.setCodigoProjeto(resultado.getInt("codigoprojeto")); 
+             vo.setCodigoMetodologia(resultado.getInt("codigometodologia")); 
+             vo.setCodigoOp(resultado.getInt("codigoop")); 
+             vo.setCodigoFuncionario(resultado.getInt("codigofuncionario")); 
+             vo.setCodigoCliente(resultado.getInt("codigocliente")); 
+             vo.setCodigoHistoricoTimeSheet(resultado.getInt("codigoHistoricoTimeSheet")); 
+             vo.setDataOperacao(resultado.getTimestamp("dataOperacao")); 
+             vo.setTipoOperacao(resultado.getString("tipoOperacao")); 
+             vo.setCodigoUsuario(resultado.getInt("codigousuario"));
+             
+             vo.setCodigoAvaliacaoTimeSheet(resultado.getInt("codigoAvaliacaoAtividade"));
+             if(vo.getCodigoAvaliacaoTimeSheet()!=null && vo.getCodigoAvaliacaoTimeSheet()!=0){
+             	
+             	AvaliacaoAtividadeDao avaliacaoDao = new AvaliacaoAtividadeDao(sessionFactory);
+             	
+             	//RECUPERA A AVALIACAO DA ATIVIDADE.
+             	AvaliacaoAtividade avaliacaoAtividade = avaliacaoDao.get(vo.getCodigoAvaliacaoTimeSheet());
+             	
+ 	            vo.setObservacaoAvaliacaoAtividade(avaliacaoAtividade.getObservacao()); 
+ 	            vo.setObservacaoPrivada(avaliacaoAtividade.getObservacaoPrivada()); 
+ 	            vo.setDataInicio(avaliacaoAtividade.getDataInicio()); 
+ 	            vo.setDataFim(avaliacaoAtividade.getDataFim()); 
+ 	            vo.setCodigoSituacaoAtividade(avaliacaoAtividade.getSituacaoAtividade()!=null?avaliacaoAtividade.getSituacaoAtividade().getId():null); 
+ 	            vo.setCodigoFuncionarioAvaliador(avaliacaoAtividade.getFuncionarioAvaliador()!=null ? avaliacaoAtividade.getFuncionarioAvaliador().getId():null);
+             }
+             
+             
+             
+             vo.setNomeProjeto(resultado.getString("nome"));
+             vo.setNumeroProjeto(resultado.getInt("numeroProjeto"));
+             vo.setLogin(resultado.getString("login"));
+             vo.setDescricaoAtividade(resultado.getString("descricaoAtividade"));
+             vo.setDescricaoProduto(resultado.getString("descricao"));
+             
+             lista.add(vo);
+             
+         }
+         
+         
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+         return !lista.isEmpty() ? lista.get(0):null;
+     }
     
     @SuppressWarnings("deprecation")
 	public List<TimeSheetVO> getListaTimeSheetVO(Date dataInicio, Date dataFim, Integer codigoFuncionario) throws DAOException {
@@ -78,9 +177,10 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
 	              "timeSheet.codigofuncionario, timeSheet.codigocliente," +
 	              "historico.codigohistoricotimesheet, historico.dataOperacao, historico.tipoOperacao," +
 	              "historico.codigousuario, historico.codigotimeSheet, " +
-	              "avaliacao.codigoavaliacaoatividade, avaliacao.observacao, avaliacao.observacaoPrivada, avaliacao.dataInicio, " +
-	              "avaliacao.dataFim, avaliacao.codigosituacaoAtividade, avaliacao.codigofuncionarioAvaliador," +
-	              "projeto.nome, projeto.numeroProjeto, usuario10_.login, atividade3_.descricao, produtoser4_.descricao " +
+	              "avaliacao.codigoavaliacaoatividade, " +
+//	              "	avaliacao.observacao, avaliacao.observacaoPrivada, avaliacao.dataInicio, " +
+//	              " avaliacao.dataFim, avaliacao.codigosituacaoAtividade, avaliacao.codigofuncionarioAvaliador," +
+	              " projeto.nome, projeto.numeroProjeto, usuario10_.login, atividade3_.descricao as descricaoAtividade, produtoser4_.descricao " +
 	              "   FROM TS.HistoricoTimeSheet historico " +
 	              "   INNER JOIN (select codigotimesheet, max(codigohistoricotimesheet) as codigohistoricotimesheet FROM TS.HistoricoTimeSheet " +
 	              "     WHERE datahorainicio between '" + dataInicio + "' and '" + dataFim + "' " +
@@ -94,7 +194,8 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
 	              "   INNER JOIN TS.op op7_ on timesheet.codigoOp=op7_.codigoOP " +
 	              "   INNER JOIN TS.funcionario funcionari8_ on timesheet.codigoFuncionario=funcionari8_.codigoFuncionario" + 
 	              "   INNER JOIN TS.cliente cliente9_ on timesheet.codigoCliente=cliente9_.codigoCliente" +
-	              "   LEFT JOIN TS.avaliacaoAtividade avaliacao on timesheet.codigoTimeSheet=avaliacao.codigoTimeSheet" +
+	              "   LEFT JOIN (select codigotimesheet, max(codigoavaliacaoatividade) as codigoavaliacaoatividade FROM TS.avaliacaoAtividade" +
+	              " GROUP BY codigotimesheet) avaliacao on timesheet.codigoTimeSheet=avaliacao.codigoTimeSheet" +
 	              " ORDER BY timeSheet.dataHoraInicio" );
           
         
@@ -130,17 +231,29 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
             vo.setDataOperacao(resultado.getTimestamp("dataOperacao")); 
             vo.setTipoOperacao(resultado.getString("tipoOperacao")); 
             vo.setCodigoUsuario(resultado.getInt("codigousuario"));
-            vo.setCodigoAvaliacaoTimeSheet(resultado.getInt("codigoAvaliacaoAtividade")); 
-            vo.setObservacaoAvaliacaoAtividade(resultado.getString("observacao")); 
-            vo.setObservacaoPrivada(resultado.getString("observacaoPrivada")); 
-            vo.setDataInicio(resultado.getTimestamp("dataInicio")); 
-            vo.setDataFim(resultado.getTimestamp("dataFim")); 
-            vo.setCodigoSituacaoAtividade(resultado.getInt("codigosituacaoAtividade")); 
-            vo.setCodigoFuncionarioAvaliador(resultado.getInt("codigofuncionarioAvaliador"));
+            
+            vo.setCodigoAvaliacaoTimeSheet(resultado.getInt("codigoAvaliacaoAtividade"));
+            if(vo.getCodigoAvaliacaoTimeSheet()!=null && vo.getCodigoAvaliacaoTimeSheet()!=0){
+            	
+            	AvaliacaoAtividadeDao avaliacaoDao = new AvaliacaoAtividadeDao(sessionFactory);
+            	
+            	//RECUPERA A AVALIACAO DA ATIVIDADE.
+            	AvaliacaoAtividade avaliacaoAtividade = avaliacaoDao.get(vo.getCodigoAvaliacaoTimeSheet());
+            	
+	            vo.setObservacaoAvaliacaoAtividade(avaliacaoAtividade.getObservacao()); 
+	            vo.setObservacaoPrivada(avaliacaoAtividade.getObservacaoPrivada()); 
+	            vo.setDataInicio(avaliacaoAtividade.getDataInicio()); 
+	            vo.setDataFim(avaliacaoAtividade.getDataFim()); 
+	            vo.setCodigoSituacaoAtividade(avaliacaoAtividade.getSituacaoAtividade()!=null?avaliacaoAtividade.getSituacaoAtividade().getId():null); 
+	            vo.setCodigoFuncionarioAvaliador(avaliacaoAtividade.getFuncionarioAvaliador()!=null ? avaliacaoAtividade.getFuncionarioAvaliador().getId():null);
+            }
+            
+            
+            
             vo.setNomeProjeto(resultado.getString("nome"));
             vo.setNumeroProjeto(resultado.getInt("numeroProjeto"));
             vo.setLogin(resultado.getString("login"));
-            vo.setDescricaoAtividade(resultado.getString("descricao"));
+            vo.setDescricaoAtividade(resultado.getString("descricaoAtividade"));
             vo.setDescricaoProduto(resultado.getString("descricao"));
             
             lista.add(vo);
@@ -152,6 +265,38 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
             e.printStackTrace();
         }
          	return lista;
+    }
+
+    @SuppressWarnings("deprecation")
+    public List<TimeSheetVO> getListaTimeSheet(Date dataInicio, Date dataFim, Integer codigoFuncionario) throws DAOException {
+    	StringBuilder hql = new StringBuilder(); 
+    	List<TimeSheetVO> lista = new ArrayList<TimeSheetVO>();
+    	try { 
+    		hql.append("select count(*) FROM TS.HistoricoTimeSheet " +
+    		" WHERE  '" + dataFim +"' between datahorainicio and datahorafim " +
+    		" OR '" + dataFim +"' between datahorainicio and datahorafim  GROUP BY codigotimesheet, datahorainicio" );
+    		
+    		PreparedStatement query  = null;      
+    		Connection conexao = getSession().connection();
+    		
+    		query = conexao.prepareStatement(hql.toString());
+    		
+    		ResultSet resultado = query.executeQuery();           
+    		
+    		while(resultado.next()){
+    			TimeSheetVO vo = new TimeSheetVO();
+    			
+    			vo.setCodigoTimeSheet(resultado.getInt("count"));
+    			
+    			lista.add(vo);
+    			
+    		}
+    		
+    		
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    	return lista;
     }
     
     @SuppressWarnings("deprecation")
@@ -166,9 +311,9 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     				"timeSheet.codigofuncionario, timeSheet.codigocliente," +
     				"historico.codigohistoricotimesheet, historico.dataOperacao, historico.tipoOperacao," +
     				"historico.codigousuario, historico.codigotimeSheet, " +
-    				"avaliacao.codigoavaliacaoatividade, avaliacao.observacao, avaliacao.observacaoPrivada, avaliacao.dataInicio, " +
+    				"avaliacao.codigoavaliacaoatividade, avaliacao.observacao as observacaoAvaliacao, avaliacao.observacaoPrivada, avaliacao.dataInicio, " +
     				"avaliacao.dataFim, avaliacao.codigosituacaoAtividade, avaliacao.codigofuncionarioAvaliador," +
-    				"projeto.nome, projeto.numeroProjeto, usuario10_.login, atividade3_.descricao, produtoser4_.descricao " +
+    				"projeto.nome, projeto.numeroProjeto, usuario10_.login, atividade3_.descricao  as descricaoAtividade, produtoser4_.descricao " +
     				"   FROM TS.HistoricoTimeSheet historico " +
     				"   INNER JOIN (select codigotimesheet, max(codigohistoricotimesheet) as codigohistoricotimesheet FROM TS.HistoricoTimeSheet " +
 //    				"     WHERE datahorainicio between '" + dataInicio + "' and '" + dataFim + "' " +
@@ -220,7 +365,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     			vo.setTipoOperacao(resultado.getString("tipoOperacao")); 
     			vo.setCodigoUsuario(resultado.getInt("codigousuario"));
     			vo.setCodigoAvaliacaoTimeSheet(resultado.getInt("codigoAvaliacaoAtividade")); 
-    			vo.setObservacaoAvaliacaoAtividade(resultado.getString("observacao")); 
+    			vo.setObservacaoAvaliacaoAtividade(resultado.getString("observacaoAvaliacao")); 
     			vo.setObservacaoPrivada(resultado.getString("observacaoPrivada")); 
     			vo.setDataInicio(resultado.getTimestamp("dataInicio")); 
     			vo.setDataFim(resultado.getTimestamp("dataFim")); 
@@ -229,7 +374,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     			vo.setNomeProjeto(resultado.getString("nome"));
     			vo.setNumeroProjeto(resultado.getInt("numeroProjeto"));
     			vo.setLogin(resultado.getString("login"));
-    			vo.setDescricaoAtividade(resultado.getString("descricao"));
+    			vo.setDescricaoAtividade(resultado.getString("descricaoAtividade"));
     			vo.setDescricaoProduto(resultado.getString("descricao"));
     			
     			lista.add(vo);

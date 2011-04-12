@@ -285,6 +285,18 @@
       <method >
          <ejb-name>TimesheetFacade</ejb-name>
          <method-intf>Remote</method-intf>
+         <method-name>verificaAtividadeJaCadastrada</method-name>
+         <method-params>
+            <method-param>br.com.dba.timesheet.pojo.TimeSheet</method-param>
+            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
          <method-name>salvarSituacaoAtividade</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.SituacaoAtividade</method-param>
@@ -512,6 +524,30 @@
       <method >
          <ejb-name>TimesheetFacade</ejb-name>
          <method-intf>Remote</method-intf>
+         <method-name>getAvaliacaoAtividade</method-name>
+         <method-params>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getAvaliacaoAtividadePeloCodigoTimeSheet</method-name>
+         <method-params>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
          <method-name>getHistoricoTimeSheet</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
@@ -612,6 +648,18 @@
          <method-params>
             <method-param>java.util.Date</method-param>
             <method-param>java.util.Date</method-param>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getTimeSheetEAvaliacaoAtividadePorIdTimeSheet</method-name>
+         <method-params>
             <method-param>java.lang.Integer</method-param>
             <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
