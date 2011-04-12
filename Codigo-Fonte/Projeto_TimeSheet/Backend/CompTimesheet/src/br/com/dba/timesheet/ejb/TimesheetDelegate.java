@@ -10,9 +10,8 @@ import javax.ejb.CreateException;
 import javax.naming.NamingException;
 
 import br.com.dba.timesheet.exceptions.ErroInternoException;
-import br.com.dba.timesheet.exceptions.IdentificadorSenhaIncorretosException;
-import br.com.dba.timesheet.exceptions.LogonBloqueadoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.RegistroJaCadastradoException;
 import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
 import br.com.dba.timesheet.pojo.Atividade;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
@@ -29,7 +28,6 @@ import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.TipoAtividade;
 import br.com.dba.timesheet.pojo.TotalHorasMes;
-import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.servicos.Timesheet;
@@ -73,7 +71,7 @@ public class TimesheetDelegate implements Timesheet {
 	}
 
     @SuppressWarnings("deprecation")
-    public TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+    public TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException, RegistroJaCadastradoException{
         try {
             return facade.salvarTimeSheet(pojo,sessao);
         } catch (RemoteException e) {           
@@ -449,6 +447,44 @@ public class TimesheetDelegate implements Timesheet {
 	           throw new ErroInternoException(e.getMessage(), e);
 	     }
 		
+	}
+
+	public TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(
+			Integer codigoTimeSheet, Sessao sessao)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		try {
+			return facade.getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(codigoTimeSheet, sessao);
+	    } catch (RemoteException e) {           
+	    	throw new ErroInternoException(e.getMessage(), e);
+	    }
+	}
+
+	public boolean verificaAtividadeJaCadastrada(TimeSheet pojo, Sessao sessao)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		try {
+			return facade.verificaAtividadeJaCadastrada(pojo, sessao);
+	    } catch (RemoteException e) {           
+	    	throw new ErroInternoException(e.getMessage(), e);
+	    }
+	}
+
+	public AvaliacaoAtividade getAvaliacaoAtividade(Integer id, Sessao sessao)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		try {
+			return facade.getAvaliacaoAtividade(id, sessao);
+	    } catch (RemoteException e) {           
+	    	throw new ErroInternoException(e.getMessage(), e);
+	    }
+	}
+
+	public AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(
+			Integer codigoTimesheet, Sessao sessao)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		try {
+			return facade.getAvaliacaoAtividadePeloCodigoTimeSheet(codigoTimesheet, sessao);
+	    } catch (RemoteException e) {           
+	    	throw new ErroInternoException(e.getMessage(), e);
+	    }
 	}
 
 }

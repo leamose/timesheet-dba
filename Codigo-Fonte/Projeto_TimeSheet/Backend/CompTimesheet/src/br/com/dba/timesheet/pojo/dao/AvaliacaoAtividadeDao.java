@@ -1,9 +1,14 @@
 package br.com.dba.timesheet.pojo.dao;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.dba.dao.hibernate.AbstractHibernateDAO;
-import br.com.dba.timesheet.pojo.Atividade;
+import br.com.dba.timesheet.exceptions.DAOException;
+import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 
 /**
@@ -27,6 +32,17 @@ public class AvaliacaoAtividadeDao extends AbstractHibernateDAO<AvaliacaoAtivida
 	 */
 	public Class<AvaliacaoAtividade> doGetClass() {
 		return AvaliacaoAtividade.class;
+	}
+
+	public AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(
+			Integer codigoTimesheet)throws ParametroInvalidoException, DAOException {
+		
+		Criteria query = getSession().createCriteria(AvaliacaoAtividade.class);
+        query.add(Restrictions.eq("timeSheet.id", codigoTimesheet));
+        
+        List<AvaliacaoAtividade> resultado = query.list();
+        
+        return resultado != null && !resultado.isEmpty() ? resultado.get(0):null;
 	}
     
 }

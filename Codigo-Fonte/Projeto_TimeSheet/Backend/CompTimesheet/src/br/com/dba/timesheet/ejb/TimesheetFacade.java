@@ -45,6 +45,9 @@ public interface TimesheetFacade
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
    public br.com.dba.timesheet.pojo.TimeSheet salvarTimeSheet( br.com.dba.timesheet.pojo.TimeSheet pojo,br.com.dba.timesheet.pojo.Sessao sessao )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, br.com.dba.timesheet.exceptions.RegistroJaCadastradoException, java.rmi.RemoteException;
+
+   public boolean verificaAtividadeJaCadastrada( br.com.dba.timesheet.pojo.TimeSheet pojo,br.com.dba.timesheet.pojo.Sessao sessao )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
    public br.com.dba.timesheet.pojo.SituacaoAtividade salvarSituacaoAtividade( br.com.dba.timesheet.pojo.SituacaoAtividade pojo,br.com.dba.timesheet.pojo.Sessao sessao )
@@ -104,6 +107,12 @@ public interface TimesheetFacade
    public br.com.dba.timesheet.pojo.TimeSheet getTimeSheet( java.lang.Integer id,br.com.dba.timesheet.pojo.Sessao sessao )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
+   public br.com.dba.timesheet.pojo.AvaliacaoAtividade getAvaliacaoAtividade( java.lang.Integer id,br.com.dba.timesheet.pojo.Sessao sessao )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
+
+   public br.com.dba.timesheet.pojo.AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet( java.lang.Integer codigoTimesheet,br.com.dba.timesheet.pojo.Sessao sessao )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
+
    public br.com.dba.timesheet.pojo.HistoricoTimeSheet getHistoricoTimeSheet( java.lang.Integer id,br.com.dba.timesheet.pojo.Sessao sessao )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
@@ -129,6 +138,9 @@ public interface TimesheetFacade
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
    public java.util.List getListaTimeSheetVO( java.util.Date dataInicio,java.util.Date dataFim,java.lang.Integer codigoFuncionario,br.com.dba.timesheet.pojo.Sessao sessao )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
+
+   public br.com.dba.timesheet.pojo.vo.TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet( java.lang.Integer codigoTimeSheet,br.com.dba.timesheet.pojo.Sessao sessao )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
    public java.util.List getListaTimeSheetVOPeloMesAno( java.lang.String mes,java.lang.String ano,java.lang.Integer codigoFuncionario,br.com.dba.timesheet.pojo.Sessao sessao )

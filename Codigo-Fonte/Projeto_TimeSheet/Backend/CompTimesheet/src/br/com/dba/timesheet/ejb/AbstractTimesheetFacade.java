@@ -1,7 +1,9 @@
 package br.com.dba.timesheet.ejb;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.CreateException;
@@ -9,11 +11,9 @@ import javax.ejb.SessionBean;
 
 import br.com.dba.timesheet.exceptions.DAOException;
 import br.com.dba.timesheet.exceptions.ErroInternoException;
-import br.com.dba.timesheet.exceptions.IdentificadorSenhaIncorretosException;
-import br.com.dba.timesheet.exceptions.LogonBloqueadoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.RegistroJaCadastradoException;
 import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
-import br.com.dba.timesheet.exceptions.UsuarioNaoEncontradoException;
 import br.com.dba.timesheet.pojo.Atividade;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.Cliente;
@@ -29,7 +29,6 @@ import br.com.dba.timesheet.pojo.SituacaoAtividade;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.TipoAtividade;
 import br.com.dba.timesheet.pojo.TotalHorasMes;
-import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.dao.AtividadeDao;
 import br.com.dba.timesheet.pojo.dao.AvaliacaoAtividadeDao;
 import br.com.dba.timesheet.pojo.dao.ClienteDao;
@@ -45,7 +44,6 @@ import br.com.dba.timesheet.pojo.dao.TimeSheetDao;
 import br.com.dba.timesheet.pojo.dao.TimesheetDaoFactory;
 import br.com.dba.timesheet.pojo.dao.TipoAtividadeDao;
 import br.com.dba.timesheet.pojo.dao.TotalHorasMesDao;
-import br.com.dba.timesheet.pojo.dao.UsuarioDao;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 import br.com.dba.timesheet.servicos.Timesheet;
@@ -258,18 +256,44 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
     }
 
     /**
+     * @throws RegistroJaCadastradoException 
      * @ejb.interface-method view-type = "remote"
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
-    public TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+    public TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException, RegistroJaCadastradoException{
         try {
         	segurancaHelper.verificarSessaoValida(sessao);
+        	
+        	if(pojo != null && UtilDate.data1MaiorQueData2(pojo.getDataHoraInicio(), pojo.getDataHoraFim()) == 1){
+        		throw new ParametroInvalidoException("Hora final não pode ser menor que a hora inicial.");
+        	}
+
+        	if(pojo != null && UtilDate.diferencaEmMinutos(pojo.getDataHoraFim(), pojo.getDataHoraInicio()) == 0){
+        		throw new ParametroInvalidoException("Hora final não pode ser a mesma que a hora inicial.");
+        	}
+        	
+        	if(verificaAtividadeJaCadastrada(pojo, sessao)){
+        		throw new RegistroJaCadastradoException();
+        	}
+        	
             return timeSheetDao.salvar(pojo);
         } catch (DAOException e) {
             throw new ErroInternoException(e.getMessage(),e.getCause());
         }
     }
+
+    /**
+     * @throws RegistroJaCadastradoException 
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+	public boolean verificaAtividadeJaCadastrada(TimeSheet pojo, Sessao sessao)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		List<TimeSheetVO> timeSheet = timeSheetDao.getListaTimeSheet(pojo.getDataHoraInicio(), pojo.getDataHoraFim(), pojo.getFuncionario().getId());
+		return !timeSheet.isEmpty();
+	}
 
     /**
      * @ejb.interface-method view-type = "remote"
@@ -540,7 +564,35 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
             throw new ErroInternoException(e.getMessage(),e.getCause());
         }
     }
-    
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public AvaliacaoAtividade getAvaliacaoAtividade(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+    	try {
+    		segurancaHelper.verificarSessaoValida(sessao);
+    		return avaliacaoAtividadeDao.get(id);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(Integer codigoTimesheet,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+    	try {
+    		segurancaHelper.verificarSessaoValida(sessao);
+    		return avaliacaoAtividadeDao.getAvaliacaoAtividadePeloCodigoTimeSheet(codigoTimesheet);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
     /**
      * @ejb.interface-method view-type = "remote"
      * @ejb.transaction type = "Required"
@@ -672,6 +724,20 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      * @ejb.transaction type = "Required"
      */ 
     @SuppressWarnings("deprecation")
+    public TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(Integer codigoTimeSheet, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+    	try {
+    		segurancaHelper.verificarSessaoValida(sessao);
+    		return timeSheetDao.getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(codigoTimeSheet);
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
     public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
         	segurancaHelper.verificarSessaoValida(sessao);
@@ -689,11 +755,60 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
     public List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
         try {
         	segurancaHelper.verificarSessaoValida(sessao);
-    		return timeSheetDao.getListaHorasAtividadeVO(UtilDate.getAno(data), UtilDate.getMes(data), codigoFuncionario);
+    		return montaListaHorasAtividade(timeSheetDao.getListaHorasAtividadeVO(UtilDate.getAno(data), UtilDate.getMes(data), codigoFuncionario));
+    		
     	} catch (DAOException e) {
     		throw new ErroInternoException(e.getMessage(),e.getCause());
     	}
     }
+    
+    /**
+     * Monta uma lista com as horas preenchidas e completa com os dias que tem Atividade.
+     * @param listaHorasAtividadeVOs
+     * @return
+     */
+    private List<HorasAtividadeVO> montaListaHorasAtividade(List<HorasAtividadeVO> listaHorasAtividadeVOs) {
+		
+		HashMap<Integer, HorasAtividadeVO> mapa = new HashMap<Integer, HorasAtividadeVO>();
+		
+		HorasAtividadeVO novaAtividade = new HorasAtividadeVO();
+		
+		for (int i = 0; i < listaHorasAtividadeVOs.size(); i++) {
+			HorasAtividadeVO vo = listaHorasAtividadeVOs.get(i);
+			mapa.put(vo.getDia(), vo);
+		}
+		
+		for (int dia = 1; dia <= UtilDate.getDiaMaximoDoMes(UtilDate.getDataAtual()); dia++) {
+			
+			HorasAtividadeVO vo = mapa.get(dia);
+			
+			//verifica se ja existe o dia no MAPA, senao cria um objeto VO para completar a lista.
+			if(vo == null || dia != vo.getDia().intValue()){
+				novaAtividade = new HorasAtividadeVO();
+				novaAtividade.setDia(dia);
+				novaAtividade.setHorasTrabalhadas("00:00");						
+				novaAtividade.setIndicaSaldoDevedor(true);
+				novaAtividade.setCargaHoraria("08:00");						
+				listaHorasAtividadeVOs.add(novaAtividade);
+			}
+		}
+		
+		ordernarListaHorasAtividadesVO(listaHorasAtividadeVOs);
+		
+		return listaHorasAtividadeVOs;
+	}
+
+    /**
+     * Ordena a lista pelo dia.  
+     * @param listaNova
+     */
+	private void ordernarListaHorasAtividadesVO(List<HorasAtividadeVO> listaNova) {
+		Collections.sort(listaNova, new Comparator<HorasAtividadeVO>() {  
+		    public int compare(HorasAtividadeVO p1, HorasAtividadeVO p2) {
+		        return p1.getDia().compareTo(p2.getDia());
+		    }   
+		});
+	}
 
     
     /**
@@ -709,5 +824,5 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
     		throw new ErroInternoException(e.getMessage(),e.getCause());
     	}
     }
-
+    
 }

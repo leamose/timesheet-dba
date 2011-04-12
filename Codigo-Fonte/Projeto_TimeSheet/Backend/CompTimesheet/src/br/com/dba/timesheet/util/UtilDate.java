@@ -581,17 +581,14 @@ public class UtilDate {
 		return calendar;
 	}
 	
-	public static Boolean data1MaiorQueData2(Date data1, Date data2) {
+	public static int data1MaiorQueData2(Date data1, Date data2) {
 		Calendar calendar1 = Calendar.getInstance();
 		Calendar calendar2 = Calendar.getInstance();
 		
 		calendar1.setTime(data1);
 		calendar2.setTime(data2);
 		
-		zeraCalendar(calendar1);
-		zeraCalendar(calendar2);
-		
-		return calendar1.after(calendar2);
+		return calendar1.compareTo(calendar2);
 	}
-
+	
 }
