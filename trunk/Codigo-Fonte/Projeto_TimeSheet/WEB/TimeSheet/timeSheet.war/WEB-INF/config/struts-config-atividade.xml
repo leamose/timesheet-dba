@@ -15,8 +15,7 @@
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
 				input="/atividade/inicio.do">
-			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>
-			<forward name="erroLogin" path="/login.do"/>
+			<forward name="cadastro" path="/WebContent/jsp/atividades/index.jsp"/>			
 		</action>
 	    <action path="/atividade/abrirPopUpAtividade" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
@@ -40,7 +39,8 @@
 		 <action path="/atividade/consultar" 
 				type="br.com.dba.timesheet.web.action.AtividadesAction"
 				name="atividadeForm" 
-				input="/atividade/inicio.do">
+				input="/atividade/inicio.do"
+				validate="true">
 			<forward name="retorno" path="/WebContent/jsp/atividades/index.jsp"/>
 		</action>
 

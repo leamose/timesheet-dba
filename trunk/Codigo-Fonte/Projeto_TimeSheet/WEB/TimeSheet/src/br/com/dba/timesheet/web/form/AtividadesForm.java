@@ -69,7 +69,7 @@ public class AtividadesForm extends ValidatorForm{
     //Descricao do Mes : Exemplo (Março, Abril....)
     private String mesLiteral;
     private String outros;    	
-    private String observacaoChefia;	
+    private String observacaoAvaliacaoAtividade;	
 	private String observacaoPrivada;
     
 	private Boolean alteracao_data_avaliacao;	
@@ -332,11 +332,11 @@ public class AtividadesForm extends ValidatorForm{
 	public void setOutros(String outros) {
 		this.outros = outros;
 	}
-	public String getObservacaoChefia() {
-		return observacaoChefia;
+	public String getObservacaoAvaliacaoAtividade() {
+		return observacaoAvaliacaoAtividade;
 	}
-	public void setObservacaoChefia(String observacaoChefia) {
-		this.observacaoChefia = observacaoChefia;
+	public void setObservacaoAvaliacaoAtividade(String observacaoChefia) {
+		this.observacaoAvaliacaoAtividade = observacaoChefia;
 	}
 	public String getObservacaoPrivada() {
 		return observacaoPrivada;

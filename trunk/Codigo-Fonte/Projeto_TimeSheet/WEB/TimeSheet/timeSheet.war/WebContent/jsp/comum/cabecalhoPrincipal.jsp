@@ -2,6 +2,26 @@
 
 <script>
 
+
+	//REFRESH NA TELA PAI
+	if(<%=request.getAttribute("submiter")%>) {
+		confirmaOperacao();
+	} 
+
+	function mostraConsulta(){
+		document.getElementById('consulta').style.display = '';				
+		document.getElementById('consultaCombo').style.display = '';				
+		document.getElementById('consultaCombo2').style.display = 'none';				
+		document.getElementById('cadastroAtividade').style.display = 'none';				
+	}
+
+	function escondeConsulta(){
+		document.getElementById('consulta').style.display = 'none';				
+		document.getElementById('consultaCombo').style.display = 'none';				
+		document.getElementById('consultaCombo2').style.display = '';				
+		document.getElementById('cadastroAtividade').style.display = '';				
+	}
+
 	//ABRE POPUP FUNCIONARIOS
 	function open_popPpFuncionario(url, urlRetorno, titulo) {
 		var largura = 700;
@@ -66,14 +86,18 @@
 		
 		</div>
 		<div class="barraIcones">
-				<a href="#" onclick="javascript:inicioAtividade();">
-					<html:img src="${contexto}/WebContent/img/pesquisarAtividade.png" title="atividade"/></a>
-				
-				<!--<c:if test="${form.indicaChefe}">						
-					<a href="#" onclick="javascript:cadastrarFuncionario();">
-						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/></a>
+				<a href="#" onclick="javascript:escondeConsulta();inicioAtividade();">
+					<html:img src="${contexto}/WebContent/img/iconeTarefas.png" title="minhas atividade"/></a>
+				<c:if test="${form.indicaChefe}">
+					<a href="#" onclick="javascript:mostraConsulta();">
+						<html:img src="${contexto}/WebContent/img/pesquisarAtividade.png" title="atividade"/></a>
 					<a href="#" onclick="javascript:configurar();">
 						<html:img src="${contexto}/WebContent/img/configurarQuestionarios.png" title="configurar"/></a>
+				</c:if>
+					
+				<!--<c:if test="${form.indicaChefe}">						
+					<a href="#" onclick="javascript:cadastrarFuncionario();">
+						<html:img src="${contexto}/WebContent/img/cadastrarUsuario.png" title="funcionário"/></a>					
 				</c:if>	
 				--><a href="#" onclick="javascript:sair();">
 			    	<html:img src="${contexto}/WebContent/img/sair.png" alt="sair"/>

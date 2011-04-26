@@ -26,11 +26,16 @@ public class ConfigurarAction extends TimeSheetComum {
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		ConfigurarForm formulario = (ConfigurarForm) form;
+		String retorno = "cadastro";
 		
 		List<Configuracao> lista = new ArrayList<Configuracao>();
+				
+		//Seta a sessao.
+		setSessao((Sessao) request.getSession().getAttribute("sessao"));    
+		
 		
 		try {
-			lista = getTimeSheetDelegate().listarTodosConfiguracao(new Sessao());
+			lista = getTimeSheetDelegate().listarTodosConfiguracao(getSessao());
 			
 			if(lista!= null){
 				for (Configuracao configuracao : lista) {
@@ -45,14 +50,16 @@ public class ConfigurarAction extends TimeSheetComum {
 			}
 			
 			
-		} catch (ParametroInvalidoException e) {		
+		} catch (ParametroInvalidoException e) {
+			salvarMsgErro("erro.parametro.invalido", request);
 			e.printStackTrace();
 		} catch (SessaoInvalidaException e) {
-			// TODO Auto-generated catch block
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
 			e.printStackTrace();
 		}
 		
-		return mapping.findForward("cadastro");		
+		return mapping.findForward(retorno);		
 	}
 	
 	public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
@@ -64,57 +71,49 @@ public class ConfigurarAction extends TimeSheetComum {
 	        HttpServletRequest request, HttpServletResponse response) {
 	    
 		ConfigurarForm formulario = (ConfigurarForm) form;		
+		String retorno = "retorno";
 		
-		salvarTotalHorasMes(formulario, Integer.toString(UtilDate.getAnoAtual()), formulario.getTotalHoras());
-		
-	    return mapping.findForward("retorno");        
-	}
-
-	private void salvaConfiguracao(ConfigurarForm formulario, TotalHorasMes totalHorasMes) {
 		try {
-			Configuracao pojo = new Configuracao();
-			pojo.setHoraAlmocoFim(formulario.getHora_almoco_fim());
-			pojo.setHoraAlmocoInicio(formulario.getHora_almoco_inicio());
-			pojo.setHoraFim(formulario.getHora_trabalho_fim());
-			pojo.setHoraInicio(formulario.getHora_trabalho_inicio());
-			pojo.setMinimoAlmoco(formulario.getMininoAlmoco());
-			pojo.setTotalHorasMes(totalHorasMes);
-			
-			getTimeSheetDelegate().alterarConfiguracao(pojo, new Sessao());
+		
+			salvarTotalHorasMes(formulario, Integer.toString(UtilDate.getAnoAtual()), formulario.getTotalHoras());
 		
 		} catch (ParametroInvalidoException e) {
-			// TODO Auto-generated catch block
+			salvarMsgErro("erro.parametro.invalido", request);
 			e.printStackTrace();
 		} catch (SessaoInvalidaException e) {
-			// TODO Auto-generated catch block
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
 			e.printStackTrace();
 		}
+		
+	    return mapping.findForward(retorno);        
 	}
 
-	private TotalHorasMes salvarTotalHorasMes(ConfigurarForm formulario, String ano, String[] totalHoras){
+	private void salvaConfiguracao(ConfigurarForm formulario, TotalHorasMes totalHorasMes) throws ParametroInvalidoException, SessaoInvalidaException {
+		Configuracao pojo = new Configuracao();
+		pojo.setHoraAlmocoFim(formulario.getHora_almoco_fim());
+		pojo.setHoraAlmocoInicio(formulario.getHora_almoco_inicio());
+		pojo.setHoraFim(formulario.getHora_trabalho_fim());
+		pojo.setHoraInicio(formulario.getHora_trabalho_inicio());
+		pojo.setMinimoAlmoco(formulario.getMininoAlmoco());
+		pojo.setTotalHorasMes(totalHorasMes);
+		
+		getTimeSheetDelegate().alterarConfiguracao(pojo, getSessao());
+	}
+
+	private TotalHorasMes salvarTotalHorasMes(ConfigurarForm formulario, String ano, String[] totalHoras) throws ParametroInvalidoException, SessaoInvalidaException{
 		TotalHorasMes totalHorasMes = new TotalHorasMes();
 		
-		try {
+		for (int i = 0; i < totalHoras.length; i++) {
 			
-			for (int i = 0; i < totalHoras.length; i++) {
+			if(StringUtils.isNotEmpty(ano) && totalHoras[i] != null ){
+				totalHorasMes.setId(ano + i);
+				totalHorasMes.setTotalHorasMes(Integer.parseInt(totalHoras[i]));
+				getTimeSheetDelegate().alterarTotalHorasMes(totalHorasMes, getSessao());
 				
-				if(StringUtils.isNotEmpty(ano) && totalHoras[i] != null ){
-					totalHorasMes.setId(ano + i);
-					totalHorasMes.setTotalHorasMes(Integer.parseInt(totalHoras[i]));
-					getTimeSheetDelegate().alterarTotalHorasMes(totalHorasMes, new Sessao());
-					
-					salvaConfiguracao(formulario, totalHorasMes);
-				}
+				salvaConfiguracao(formulario, totalHorasMes);
 			}
-			
-			
-		} catch (ParametroInvalidoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SessaoInvalidaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}	
 		
 		return totalHorasMes;
 	}

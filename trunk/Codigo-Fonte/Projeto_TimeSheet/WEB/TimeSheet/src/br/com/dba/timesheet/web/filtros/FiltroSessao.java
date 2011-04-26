@@ -28,15 +28,8 @@ public class FiltroSessao implements Filter {
 		
 		String url = "";
 		
-		String popUp = request.getParameter("popUp");
-		
-		if(popUp!= null && popUp.equals("true")){
-			url = "/WebContent/erro/erroGeral.jsp?mensagem=Sessão Expirada.&popUp=true";
-		}else{
-			url = "/WebContent/erro/erroGeral.jsp?mensagem=Sessão Expirada.&popUp=false";
-		}
-		
 		if(sessao==null){
+			url = "/WebContent/jsp/erro/erroAcesso.jsp?mensagem=Sessão Expirada.";
 			request.getRequestDispatcher(url).forward(req, response);
 		}else{			
 			chain.doFilter(request, response);

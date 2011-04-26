@@ -71,10 +71,10 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 	
-    <error-page>
-        <error-code>403</error-code>
-        <location>/WebContent/erro/erroLogin.jsp?mensagem=Usuário sem permissão para acessar funcionalidade</location>
-    </error-page>
+   	<error-page>
+		<error-code>403</error-code>
+		<location>/WebContent/jsp/erro/erroAcesso.jsp?mensagem=Usuário sem permissão para acessar funcionalidade</location>
+	</error-page>
 
     <error-page>
         <error-code>404</error-code>

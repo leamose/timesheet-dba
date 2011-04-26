@@ -12,7 +12,8 @@
         <put name="javascript" value="" />
         <put name="corpo" value="" />
         <put name="tituloPaginas" value="" />
-        <put name="tituloCabecalho" value="" />        
+        <put name="tituloCabecalho" value="" />   
+        <put name="areaTrabalho" value="área alterada" />     
     </definition>   
     <definition name=".popUp" template="/WebContent/jsp/comum/layoutPopUp.jsp">
         <put name="title" value="TimeSheet" />     

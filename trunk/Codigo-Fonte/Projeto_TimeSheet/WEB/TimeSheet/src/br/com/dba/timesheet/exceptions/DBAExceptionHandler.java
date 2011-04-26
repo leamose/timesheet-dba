@@ -22,7 +22,7 @@ import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleException;
 
-public class MjExceptionHandler extends ExceptionHandler {
+public class DBAExceptionHandler extends ExceptionHandler {
 
     /**
      * Trata um exceção.
