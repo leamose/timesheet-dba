@@ -149,6 +149,9 @@ public interface TimesheetFacade
    public java.util.List getListaHorasAtividadeVO( java.util.Date data,java.lang.Integer codigoFuncionario,br.com.dba.timesheet.pojo.Sessao sessao )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 
+   public java.util.List getTotalHorasTrabalhadas( java.lang.Integer ano,java.lang.Integer mes,java.lang.Integer codigofuncionario,br.com.dba.timesheet.pojo.Sessao sessao )
+      throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
+
    public java.util.List getProdutoServicoPeloCodigoMetodologia( java.lang.Integer codigo,br.com.dba.timesheet.pojo.Sessao sessao )
       throws br.com.dba.timesheet.exceptions.ParametroInvalidoException, br.com.dba.timesheet.exceptions.SessaoInvalidaException, java.rmi.RemoteException;
 

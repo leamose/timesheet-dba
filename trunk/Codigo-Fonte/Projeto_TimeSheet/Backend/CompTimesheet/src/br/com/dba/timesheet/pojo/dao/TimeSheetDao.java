@@ -452,5 +452,39 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     	}
     	return lista;
     }
+
+    @SuppressWarnings({ "deprecation" })
+    public List<HorasAtividadeVO> getTotalHorasTrabalhadas(Integer ano, Integer mes, Integer codigofuncionario) throws DAOException {
+    	StringBuilder hql = new StringBuilder(); 
+    	List<HorasAtividadeVO> lista = new ArrayList<HorasAtividadeVO>();
+    	try { 
+    		hql.append("select  date_part('month', datahorainicio) as mes, " +
+    				" sum(datahorafim - datahorainicio) as totalHorasTrabalhadas " +
+    				" from ts.timesheet where date_part('year', datahorainicio) = "+ ano + " " +
+    				" and date_part('month', datahorainicio)= "+ mes +" " +
+    				" and codigofuncionario=" + codigofuncionario + " " +
+    				" group by date_part('month', datahorainicio) ");
+    		
+    		PreparedStatement query  = null;      
+    		Connection conexao = getSession().connection();
+    		
+    		query = conexao.prepareStatement(hql.toString());
+    		
+    		ResultSet resultado = query.executeQuery();           
+    		
+    		while(resultado.next()){
+    			HorasAtividadeVO vo = new HorasAtividadeVO();
+    			vo.setMes(resultado.getInt("mes"));
+    			vo.setHorasTrabalhadas(resultado.getString("totalHorasTrabalhadas"));
+    			lista.add(vo);
+    			
+    		}
+    		
+    		
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    	return lista;
+    }
     
 }
