@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import br.com.dba.timesheet.ejb.SegurancaDelegate;
 import br.com.dba.timesheet.ejb.TimesheetDelegate;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.RegistroJaCadastradoException;
 import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
 import br.com.dba.timesheet.pojo.Atividade;
+import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.Cliente;
 import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
@@ -213,7 +215,7 @@ public class TimeSheetComum extends BaseDispatchAction{
     //* CRUD's :
     //*********************************************
     public void salvarTimeSheet(TimeSheet pojo)
-            throws ParametroInvalidoException, SessaoInvalidaException {
+            throws ParametroInvalidoException, SessaoInvalidaException, RegistroJaCadastradoException {
     	getTimeSheetDelegate().salvarTimeSheet(pojo,getSessao());
     }
 
@@ -278,11 +280,7 @@ public class TimeSheetComum extends BaseDispatchAction{
      */
     public Cliente getClientePeloID(Integer id) throws Exception, SessaoInvalidaException {
         Cliente pojo = null;
-        try{    
-            pojo = getTimeSheetDelegate().getCliente(id,getSessao());
-        } catch (Exception e) {
-        	throw new Exception(e.getMessage(), e);
-        }
+        pojo = getTimeSheetDelegate().getCliente(id,getSessao());
         return pojo;
     }
 
@@ -294,11 +292,7 @@ public class TimeSheetComum extends BaseDispatchAction{
      */
     public Atividade getAtividadePeloID(Integer id) throws Exception, SessaoInvalidaException {
         Atividade pojo = null;
-        try{    
-            pojo = getTimeSheetDelegate().getAtividade(id,getSessao());
-        } catch (Exception e) {
-        	throw new Exception(e.getMessage(), e);
-        }
+        pojo = getTimeSheetDelegate().getAtividade(id,getSessao());
         return pojo;
     }
 
@@ -310,11 +304,7 @@ public class TimeSheetComum extends BaseDispatchAction{
      */
     public Metodologia getMetodologiaPeloID(Integer id) throws Exception, SessaoInvalidaException {
         Metodologia pojo = null;
-        try {
-            pojo = getTimeSheetDelegate().getMetodologia(id,getSessao());
-        } catch (Exception e) {
-        	throw new Exception(e.getMessage(), e);
-        }
+        pojo = getTimeSheetDelegate().getMetodologia(id,getSessao());
         return pojo;
     }    
 
@@ -326,11 +316,7 @@ public class TimeSheetComum extends BaseDispatchAction{
      */
     public Funcionario getFuncionarioPeloID(Integer id) throws Exception, SessaoInvalidaException {
         Funcionario pojo = null;
-        try {
-            pojo = getTimeSheetDelegate().getFuncionario(id,getSessao());
-        } catch (Exception e) {
-        	throw new Exception(e.getMessage(), e);
-        }
+        pojo = getTimeSheetDelegate().getFuncionario(id,getSessao());
         return pojo;
     }
 
@@ -353,6 +339,11 @@ public class TimeSheetComum extends BaseDispatchAction{
     public TimeSheet getTimeSheetPeloID(Integer id)
         throws ParametroInvalidoException, SessaoInvalidaException {
         return getTimeSheetDelegate().getTimeSheet(id,getSessao());
+    }
+
+    public TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(Integer id)
+    throws ParametroInvalidoException, SessaoInvalidaException {
+    	return getTimeSheetDelegate().getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(id,getSessao());
     }
     
   //*********************************************
@@ -436,6 +427,27 @@ public class TimeSheetComum extends BaseDispatchAction{
 	protected void atualizaSessao(HttpServletRequest request) {
 		request.getSession().setAttribute("sessao", getSessao());
 	}
+
+	public AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade avaliacaoAtividade)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				return getTimeSheetDelegate().salvarAvaliacaoAtividade(avaliacaoAtividade, getSessao());
+			}
+
+	public List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mesConsulta, String anoConsulta,
+			Integer codigoFuncionarioLogado) throws ParametroInvalidoException,
+			SessaoInvalidaException {
+				return getTimeSheetDelegate().getListaTimeSheetVOPeloMesAno(mesConsulta, anoConsulta, codigoFuncionarioLogado, getSessao());
+			}
+
+	public void removerAvaliacaoAtividade(AvaliacaoAtividade avaliacaoAtividade)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				getTimeSheetDelegate().removerAvaliacaoAtividade(avaliacaoAtividade, getSessao());
+			}
+
+	public AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(Integer codigoTimeSheet)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+				return getTimeSheetDelegate().getAvaliacaoAtividadePeloCodigoTimeSheet(codigoTimeSheet, getSessao());
+			}
 
 	
     

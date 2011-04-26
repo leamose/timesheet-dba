@@ -12,27 +12,27 @@ import br.com.dba.timesheet.exceptions.ErroInternoException;
 import br.com.dba.timesheet.exceptions.IdentificadorSenhaIncorretosException;
 import br.com.dba.timesheet.exceptions.LogonBloqueadoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.SessaoIndisponivelException;
 import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.web.form.LoginForm;
 
 public class LoginAction extends TimeSheetComum {
 	
-	 /**
-     * Constante que define o atributo na sessão que indica se o usuário está ou não logado.
-     */
-    public static final String AUTENTICACAO = "br.com.dba.timesheet.login.att";
- 
     /**
-     * Constante que define o atributo que especifica que o usuário está logado.
+     * Método responsável pela autenticação do usuário.
+     * 
+     * @param mapping mapeamento do struts.
+     * @param form formulário com os dados do usuário.
+     * @param request requisição do usuário.
+     * @param response resposta do servidor.
      */
-    public static final String AUTENTICACAO_OK = "%autenticado%";
-
-    /**
-     * Constante que define o atributo que especifica que o usuário não está logado.
-     */
-    public static final String AUTENTICACAO_NOT_OK = "%nao_autenticado%";
-	
+    public ActionForward inicio(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        return mapping.findForward("pagina.login");
+    }
+    
+    
 	public ActionForward logout(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
@@ -46,20 +46,26 @@ public class LoginAction extends TimeSheetComum {
 		return mapping.findForward("retorno");		
 	}
 
+	public ActionForward erroAcesso(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		return mapping.findForward("pagina.de.erro.acesso");		
+	}
+
 	public ActionForward login(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) throws Exception{
+	        HttpServletRequest request, HttpServletResponse response) {
 
 		LoginForm formulario = (LoginForm) form;
-		String retorno = "";
+		String retorno = "retorno";
 		try {
 			Sessao sessao = getSegurancaDelegate().autenticarUsuario(formulario.getLogin(), formulario.getSenha());
 			
 			if(getSegurancaDelegate().isSessaoValida(sessao)){
 				request.setAttribute("codigoUsuarioLogado", sessao.getUsuario().getId());
+				formulario.setCodigoUsuario(sessao.getUsuario().getId());
 				request.getSession().setAttribute("sessao", sessao);
-				retorno = "retorno";
 			}else{
-				retorno = "erroLogin";
+				throw new SessaoIndisponivelException("MSG015");
 			}	
 			
 			if(sessao.getUsuario().getIndicaAlterarSenha()){
@@ -67,15 +73,21 @@ public class LoginAction extends TimeSheetComum {
 			}
 			
 		} catch (IdentificadorSenhaIncorretosException e) {			
-			throw new Exception(e.getMessage(), e);
+	        salvarMsgErro("MSG024", request);
+	        retorno = "pagina.de.erro.acesso";
 		} catch (ErroInternoException e) {
-			throw new Exception(e.getMessage(), e);
+			retorno = "pagina.de.erro.acesso";
 		} catch (ParametroInvalidoException e) {
-			throw new Exception(e.getMessage(), e);
+			salvarMsgErro("MSG024", request);
+			retorno = "pagina.de.erro.acesso";
 		} catch (LogonBloqueadoException e) {
-			throw new Exception(e.getMessage(), e);
+			salvarMsgErro("MSG011", request);
+			retorno = "pagina.de.erro.acesso";
+		} catch (SessaoIndisponivelException e) {
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
 		}
 		return mapping.findForward(retorno);
 	}
-		
+	
 }

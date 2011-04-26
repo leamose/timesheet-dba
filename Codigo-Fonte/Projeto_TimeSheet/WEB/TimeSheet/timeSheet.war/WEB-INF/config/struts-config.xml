@@ -12,22 +12,24 @@
     
 	<global-exceptions>
         <exception type="br.com.dba.timesheet.exceptions.NegocioException"
-            handler="br.gov.mj.struts.exceptionhandler.MjExceptionHandler" 
+            handler="br.com.dba.timesheet.exceptions.DBAExceptionHandler" 
             key=""/>
 
         <exception type="java.lang.Exception" 
-            handler="br.com.dba.timesheet.exceptions.MjExceptionHandler"
-            path="/WebContent/erro/erroGeral.jsp"
+            handler="br.com.dba.timesheet.exceptions.DBAExceptionHandler"
+            path="/WebContent/jsp/erro/erro.jsp"
             key="erro.geral"/>
 
-        <exception type="br.com.dba.timesheet.exceptions.ParametrosSistemaNaoCadastradoException" 
-            handler="br.com.dba.timesheet.exceptions.MjExceptionHandler"
-            path="/WebContent/erro/erroGeral.jsp"
+        <exception type="br.com.dba.timesheet.exceptions.ParametroInvalidoException" 
+            handler="br.com.dba.timesheet.exceptions.DBAExceptionHandler"
+            path="/WebContent/jsp/erro/erro.jsp"
             key="erro.paramentro.nao.cadastrado"/>
     </global-exceptions>
     
     <global-forwards>
+    	<forward path="/" name="pagina.login"/>
 		<forward name="erroGeral" path="/WebContent/jsp/erro/erroGeral.jsp"/>
+		<forward name="pagina.de.erro.acesso" path="/WebContent/jsp/erro/erroAcesso.jsp" />
 	</global-forwards>
 	
     <action-mappings>    
@@ -35,24 +37,17 @@
 		<action path="/login" 
 			type="br.com.dba.timesheet.web.action.LoginAction"
 			name="loginForm"			
-			scope="request">
-			<forward name="retorno" path="/atividade/inicio.do"/>
-			<forward name="usuarioBloqueado" path="/login.jsp"/>
-			<forward name="alterarSenha" path="/WebContent/jsp/usuario/popUpCadastroSenha.jsp"/>
-			<forward name="erroLogin" path="/login.jsp"/>
-		</action>		
+			scope="request"			
+			validate="false">
+			<forward name="retorno" path="/atividade/inicio.do"/>						
+			<forward name="alterarSenha" path="/WebContent/jsp/usuario/popUpCadastroSenha.jsp"/>			
+		</action>
 		
 		<action path="/logout" type="br.com.dba.timesheet.web.action.LogoutAction" validate="false">
             <forward name="exibir.tela.login" path="/login.jsp"/>
 		</action>
 
-		<action path="/login/erroLogin" 
-			type="br.com.dba.timesheet.web.action.LoginAction"
-			name="loginForm"
-			input="/login.do"
-			scope="request">
-			<forward name="retorno" path="/login.jsp"/>			
-		</action>
+		<action path="/erroAcesso" type="br.com.dba.timesheet.web.action.LoginAction" validate="false"/>
 
 		<action path="/senha/alterarSenha" 
 			type="br.com.dba.timesheet.web.action.DadosUsuarioAction"
@@ -62,13 +57,6 @@
 			<forward name="retorno" path="/login.do"/>
 		</action>		
 
-		<action path="/senha/desbloquearUsuario" 
-			type="br.com.dba.timesheet.web.action.DadosUsuarioAction"
-			name="dadosUsuarioForm"
-			input="/login.do"
-			scope="request">
-			<forward name="retorno" path="/login.do"/>
-		</action>		
 	</action-mappings>
 	
 	<!--
@@ -80,9 +68,8 @@
 		=================================================== Validator plugin
 	-->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property property="pathnames" 
-            value="/org/apache/struts/validator/validator-rules.xml, /WEB-INF/config/validation.xml"/>
-        <set-property property="stopOnFirstError" value="false"/>
+        <set-property property="pathnames"
+            value="/org/apache/struts/validator/validator-rules.xml, /WEB-INF/config/validation.xml" />
     </plug-in>
     
     <!-- 

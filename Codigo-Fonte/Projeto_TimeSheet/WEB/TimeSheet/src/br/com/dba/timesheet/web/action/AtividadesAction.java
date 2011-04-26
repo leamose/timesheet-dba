@@ -1,7 +1,6 @@
 package br.com.dba.timesheet.web.action;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,9 +11,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import br.com.dba.timesheet.dominios.ListaDominios;
 import br.com.dba.timesheet.exceptions.ErroInternoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.exceptions.RegistroJaCadastradoException;
 import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
 import br.com.dba.timesheet.pojo.AvaliacaoAtividade;
 import br.com.dba.timesheet.pojo.Funcionario;
@@ -44,18 +43,19 @@ public class AtividadesAction extends TimeSheetComum {
 	 * @return
 	 * @throws Exception
 	 */
-    public ActionForward inicio(ActionMapping mapping, ActionForm form,
+    @SuppressWarnings("deprecation")
+	public ActionForward inicio(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
+    	AtividadesForm formulario = (AtividadesForm) form;
+    	List<Funcionario> listaFuncionariosSubordinados = null;
+    	boolean indicaChefe = false;
+    	Integer codigoUsuario = null;
+    	String retorno = "cadastro";
+    	
 	    try {
-    		AtividadesForm formulario = (AtividadesForm) form;
-    		List<Funcionario> listaFuncionariosSubordinados = null;
-    		List<HorasAtividadeVO> listaHorasAtividadeVOs = null;
-    		List<TimeSheetVO> listaTimeSheet = null;
-    		boolean indicaChefe = false;
-    		Integer codigoUsuario = null;
-    		
-    		//Seta a sessao.
+
+	    	//Seta a sessao.
     		setSessao((Sessao) request.getSession().getAttribute("sessao"));    		
     		
     		//Recupera da requisicao ou do formulario o codigo do usuario logado.
@@ -65,54 +65,105 @@ public class AtividadesAction extends TimeSheetComum {
     			codigoUsuario = Integer.valueOf(formulario.getCodigoUsuario());
     		}
 
-    		Usuario usuarioLogado = getUsuarioPeloID(codigoUsuario);
-    		
-    		if(usuarioLogado!=null){
-    			if(usuarioLogado.getFuncionario()!=null && usuarioLogado.getFuncionario().getIndicaChefe()){
-	    			indicaChefe = usuarioLogado.getFuncionario().getIndicaChefe();
-	    			
-					listaFuncionariosSubordinados = consultaFuncionariosPeloCodigoFuncionarioChefe(usuarioLogado);
-	    		}else{
-	    			indicaChefe = false;
-	    		}	    		
-	    		
-    			listaTimeSheet = getListaTimeSheetVO(usuarioLogado.getFuncionario());
-    			
-    			listaHorasAtividadeVOs = getListaHorasAtividadeVO(usuarioLogado.getFuncionario());
-
-    			//Preenche formulario
-    			formulario.setTamanhoListaHoras(listaHorasAtividadeVOs != null ? listaHorasAtividadeVOs.size():0);
-	    		formulario.setCodigoUsuario(usuarioLogado.getId());
-    			formulario.setUsuario(usuarioLogado);
-    			formulario.setCodigoFuncionarioLogado(usuarioLogado.getFuncionario()!=null ? usuarioLogado.getFuncionario().getId():null);
-	    		formulario.setIndicaChefe(indicaChefe);
-	    		formulario.setMesLiteral(UtilDate.getMesLiteral());
-    			formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
-    			formulario.setListaTimeSheetVO(listaTimeSheet);
-	    		formulario.setListaFuncionariosSubordinados(listaFuncionariosSubordinados);
-	    		formulario.setIndicaAvaliacao(false);
-	    		
-	    	}else{
-    			salvarMsgErro("MSG017", request);
-    			return mapping.findForward("erroLogin");
-    		}
+    		populaTelaInicial(formulario, listaFuncionariosSubordinados,indicaChefe, request);
     		
 		} catch (ErroInternoException e) {
-			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
 		} catch (ParametroInvalidoException e) {
-			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+			salvarMsgErro("erro.parametro.invalido", request);
+			e.printStackTrace();
 		} catch (SessaoInvalidaException e) {
-			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
+			e.printStackTrace();
 		} catch (Exception e) {
-			throw new ErroInternoException("Erro interno do sistema, contacte o Administrados do Sistemas ! \n Dados do erro:" + e.getMessage());
+			salvarMsgErro("errors.general2", request);
+			e.printStackTrace();
 		}
 		
 		atualizaSessao(request);
 		
-		return mapping.findForward("cadastro");		
+		return mapping.findForward(retorno);		
 	}
 
-    public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
+    /**
+     * Méto responsavel em configurar e popular o formulario para a tela inicial.
+     * @param formulario
+     * @param listaFuncionariosSubordinados
+     * @param indicaChefe
+     * @param request 
+     * @throws ParametroInvalidoException
+     * @throws SessaoInvalidaException
+     */
+	public void populaTelaInicial(AtividadesForm formulario, List<Funcionario> listaFuncionariosSubordinados, boolean indicaChefe, HttpServletRequest request)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		
+		List<HorasAtividadeVO> listaHorasAtividadeVOs;		
+		List<HorasAtividadeVO> totalHorasTrabalhadas = null;
+			
+		if(getSegurancaDelegate().isSessaoValida(getSessao())){
+			Usuario usuarioLogado = getSessao().getUsuario();
+			
+			if(usuarioLogado.getFuncionario()!=null && usuarioLogado.getFuncionario().getIndicaChefe()){
+				//verifica se o usuario logado é chefe.
+				indicaChefe = usuarioLogado.getFuncionario().getIndicaChefe();
+				
+				//recupera uma lista de funcionarios colaboradores pelo codigo do usuario chefe.
+				listaFuncionariosSubordinados = consultaFuncionariosPeloCodigoFuncionarioChefe(usuarioLogado);
+			}	    		
+			
+			//recupera as horas trabalhadas.
+			listaHorasAtividadeVOs = getListaHorasAtividadeVO(usuarioLogado.getFuncionario());
+			
+			//Preenche formulario
+			formulario.setTamanhoListaHoras(listaHorasAtividadeVOs != null ? listaHorasAtividadeVOs.size():0);
+			formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
+			formulario.setCodigoUsuario(usuarioLogado.getId());
+			formulario.setUsuario(usuarioLogado);
+			formulario.setCodigoFuncionarioLogado(usuarioLogado.getFuncionario()!=null ? usuarioLogado.getFuncionario().getId():null);
+			formulario.setIndicaChefe(indicaChefe);
+			formulario.setMesLiteral(UtilDate.getMesLiteral());
+			
+			formulario.setMesConsulta(Integer.toString(UtilDate.getMesAtual()));
+			formulario.setAnoConsulta(Integer.toString(UtilDate.getAnoAtual()));
+
+			//recupera as atividade do usuario logado.
+			formulario.setListaTimeSheetVO(getListaTimeSheetVO(usuarioLogado.getFuncionario()));
+			
+			formulario.setListaFuncionariosSubordinados(listaFuncionariosSubordinados);
+			
+			//indica false, pois o mesmo nao pode se avaliar.
+			formulario.setIndicaAvaliacao(false);
+			
+			if(usuarioLogado.getFuncionario() != null){
+	    		totalHorasTrabalhadas = getTimeSheetDelegate().getTotalHorasTrabalhadas(UtilDate.getAnoAtual(), 
+	    				UtilDate.getMesAtual(), usuarioLogado.getFuncionario().getId(), getSessao());
+			}
+			
+			if(totalHorasTrabalhadas!=null && !totalHorasTrabalhadas.isEmpty()){
+				request.setAttribute("totalCargaHoraria", "176");
+				request.setAttribute("totalHorasTrabalhadas", totalHorasTrabalhadas.get(0).getHorasTrabalhadas());
+				request.setAttribute("totalSaldoDiario", UtilDate.subtrairHoras("176:00", totalHorasTrabalhadas.get(0).getHorasTrabalhadas()));
+			}
+			
+			
+			
+		}else{
+			throw new SessaoInvalidaException();
+		}
+	}
+
+	/**
+	 * Responsavel em retornar a tela anterior.
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	
+	public ActionForward operacaoCancelada(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		return mapping.findForward("retorno");        
 	}
@@ -126,15 +177,16 @@ public class AtividadesAction extends TimeSheetComum {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward recuperarAtividades(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response){
 		
 		List<TimeSheetVO> listaTimeSheet = null;
 		List<HorasAtividadeVO> listaHorasAtividadeVOs = null;
 		Funcionario subordinado = null;
 		
 		AtividadesForm formulario = (AtividadesForm) form;
-		
+		String retorno = "";
 		try {
     		
     		//CONSULTA Funcionario Subordinado.
@@ -159,26 +211,35 @@ public class AtividadesAction extends TimeSheetComum {
     		}
 
 		} catch (ErroInternoException e) {
-		    e.printStackTrace();
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
+		} catch (SessaoInvalidaException e) {
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
+			e.printStackTrace();
+		} catch (Exception e) {
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
 		}
 		
-		return mapping.findForward("retorno");        
+		return mapping.findForward(retorno);        
 	}
 
+	@SuppressWarnings("deprecation")
 	public ActionForward salvar(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) throws Exception {
+	        HttpServletRequest request, HttpServletResponse response) throws Exception{
 	    
 		HistoricoTimeSheet historicoTimeSheet = null;
 		TimeSheet timeSheet = null;
-		
+		String retorno = "retorno";
 	    try {
     	    AtividadesForm formulario = (AtividadesForm) form;
-    	    
     	    
     	    //TODO: Verificar se a Atividade(TimeSheet) ja foi fechado 
     	    // --- ERRO "Seu Timesheet de Março de 2010  já está fechado." 
     	    
     	    timeSheet = preencherTimeSheet(formulario);    	    
+    	    
     	    salvarTimeSheet(timeSheet);
     	    
     	    historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "I", formulario);            
@@ -187,13 +248,20 @@ public class AtividadesAction extends TimeSheetComum {
             //Submeter a pagina pai. 
             request.setAttribute("submiter", true);
             
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (NumberFormatException e) {        	
+			salvarMsgErro("MSG022", request);
+			e.printStackTrace();
         }catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        	salvarMsgErro("errors.custom", e.getMessage(), request);
+        	e.printStackTrace();
+        } catch (SessaoInvalidaException e) {
+			salvarMsgErro(e.getMessage(), request);
+			retorno = "pagina.de.erro.acesso";
+			e.printStackTrace();
+		} catch (RegistroJaCadastradoException e) {
+			salvarMsgErro("MSG023", request);
+			e.printStackTrace();
+		} 
         
 	    return mapping.findForward("retorno");        
 	}
@@ -204,24 +272,23 @@ public class AtividadesAction extends TimeSheetComum {
      * @param formulario
      * @param metodologia
      * @return
+     * @throws SessaoInvalidaException 
+     * @throws ParametroInvalidoException 
      * @throws ParametroInvalidoException
+     * @throws Exception 
      */
     public Projeto salvarProjeto(AtividadesForm formulario,
-            Metodologia metodologia) throws ParametroInvalidoException {
+            Metodologia metodologia) throws ParametroInvalidoException, SessaoInvalidaException {
     	
     	Projeto projetoSalvo = null;
-    	
-    	try {
-	        Projeto projeto = new Projeto();       
-	        projeto.setMetodologia(metodologia);
-	        projeto.setNome(formulario.getNomeProjeto());
-	        projeto.setNumeroProjeto(Integer.valueOf(formulario.getNumeroProjeto()));
-        
-			projetoSalvo = getTimeSheetDelegate().salvarProjeto(projeto, getSessao());
-		} catch (SessaoInvalidaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+        Projeto projeto = new Projeto();       
+        projeto.setMetodologia(metodologia);
+        projeto.setNome(formulario.getNomeProjeto());
+        projeto.setNumeroProjeto(Integer.valueOf(formulario.getNumeroProjeto()));
+
+		projetoSalvo = getTimeSheetDelegate().salvarProjeto(projeto, getSessao());
+		
 		return projetoSalvo;
     }
 
@@ -232,66 +299,86 @@ public class AtividadesAction extends TimeSheetComum {
      * @param request
      * @param response
      * @return
+     * @throws SessaoInvalidaException 
+     * @throws ParametroInvalidoException 
      */
-	public ActionForward excluir(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward excluir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
 	    
 	    AtividadesForm formulario = (AtividadesForm) form;
 	    
 	    TimeSheet pojo;
 	    HistoricoTimeSheet historicoTimeSheet;
-	    
-        try {
+	    String retorno = "retorno";
         	
-//        	historicoTimeSheet = getTimeSheetDelegate().getHistoricoTimeSheet(formulario.getCodigoHistoricoTimeSheet());
-//        	getTimeSheetDelegate().removerHistoricoTimeSheet(historicoTimeSheet);
-        	
-            pojo = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
-            removerTimeSheet(pojo);
-            
-        } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SessaoInvalidaException e) {
-			// TODO Auto-generated catch block
+    	try {
+			historicoTimeSheet = getTimeSheetDelegate().getHistoricoTimeSheet(formulario.getCodigoHistoricoTimeSheet(), getSessao());
+	    	getTimeSheetDelegate().removerHistoricoTimeSheet(historicoTimeSheet, getSessao());
+	    	
+	    	AvaliacaoAtividade avaliacaoAtividade = getAvaliacaoAtividadePeloCodigoTimeSheet(formulario.getCodigoTimeSheet());
+	    	
+	    	if(avaliacaoAtividade!=null){
+	    		removerAvaliacaoAtividade(avaliacaoAtividade);
+	    	}
+	    	
+	        pojo = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
+	        removerTimeSheet(pojo);
+	        
+    	} catch (ParametroInvalidoException e) {
+    		salvarMsgErro("erro.geral2", request);	
+    		e.printStackTrace();
+    	} catch (SessaoInvalidaException e) {
+    		salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
 			e.printStackTrace();
-		}
+    	}
 	    
-		return mapping.findForward("retorno");        
+		return mapping.findForward(retorno);        
 	}
 
+	/**
+	 * Responsavel por alterar um atividade
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward alterar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		TimeSheet timesheet = null;
+		TimeSheetVO timesheet = null;
 		
 	    try {
             AtividadesForm formulario = (AtividadesForm) form;
             
-            timesheet = getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet()));
+            timesheet = getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(Integer.valueOf(formulario.getCodigoTimeSheet()));
             
             if(timesheet != null){
-            	formulario.setListaProdutosServicos(recuperarListaProdutoServico(timesheet.getMetodologia().getId())); 
+            	formulario.setListaProdutosServicos(recuperarListaProdutoServico(timesheet.getCodigoMetodologia())); 
             	
             	preencherFormularioInicial(formulario);
-                preencherFormulario(formulario, timesheet);
+                preencherFormularioVO(formulario, timesheet);
             }
             
             formulario.setAcao(Constantes.ACAO_ALTERAR);
             
         } catch (IOException e) {
-            e.printStackTrace();
+        	salvarMsgErro("erro.geral", request);
+        	e.printStackTrace();
         } catch (ParametroInvalidoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	salvarMsgErro("erro.geral2", request);
+        	e.printStackTrace();
         }
         
 		return mapping.findForward("retorno");        
 	}
 	
 
+	@SuppressWarnings("deprecation")
 	public ActionForward popularComboProdutoServico(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response){
 		
 		try {
 			AtividadesForm formulario = (AtividadesForm) form;
@@ -301,10 +388,13 @@ public class AtividadesAction extends TimeSheetComum {
 			formulario.setListaProdutosServicos(recuperarListaProdutoServico(Integer.valueOf(formulario.getCodigoMetodologia())));
 			
 		} catch (ParametroInvalidoException e) {
-			// TODO Auto-generated catch block
+			salvarMsgErro("erro.geral2", request);
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			salvarMsgErro("erro.geral", request);
+			e.printStackTrace();
+		} catch (Exception e) {
+			salvarMsgErro("erro.geral2", request);
 			e.printStackTrace();
 		}
 		
@@ -319,6 +409,7 @@ public class AtividadesAction extends TimeSheetComum {
 	 * @param response
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward retornoAlterar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
 	
@@ -336,8 +427,8 @@ public class AtividadesAction extends TimeSheetComum {
             request.setAttribute("submiter", true);
 	    
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	salvarMsgErro("erro.geral2", request);
+        	e.printStackTrace();
         }
 	    
 	    return mapping.findForward("retorno");        
@@ -351,27 +442,37 @@ public class AtividadesAction extends TimeSheetComum {
 	 * @param response
 	 * @return
 	 */
-    public ActionForward detalhar(ActionMapping mapping, ActionForm form,
+    @SuppressWarnings("deprecation")
+	public ActionForward detalhar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 	    
-	    try {
-
 	        AtividadesForm formulario = (AtividadesForm) form;
+            String retorno = "retorno";
+            try {
+				preencherFormularioInicial(formulario);
+           
+				preencherFormulario(formulario, getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet())));
+				            
+	            formulario.setAcao(Constantes.ACAO_DETALHAR);
+	            formulario.setDesabilitarCampo(true);
+	            
+	            request.setAttribute("sessao", getSessao());
+	            
+            } catch (ParametroInvalidoException e) {
+            	salvarMsgErro("erro.geral2", request);
+            	e.printStackTrace();
+            } catch (SessaoInvalidaException e) {
+            	salvarMsgErro("MSG015", request);
+            	retorno = "pagina.de.erro.acesso";
+            	e.printStackTrace();
+            } catch (Exception e1) {
+            	salvarMsgErro("erro.geral2", request);
+            	e1.printStackTrace();
+            }
             
-            preencherFormularioInicial(formulario);
-            preencherFormulario(formulario, getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet())));
             
-            formulario.setAcao(Constantes.ACAO_DETALHAR);
-            formulario.setDesabilitarCampo(true);
-            
-            request.setAttribute("sessao", getSessao());
-            
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }    
 	    
-		return mapping.findForward("retorno");        
+		return mapping.findForward(retorno);        
 	}
 
 	public ActionForward retornoDetalhar(ActionMapping mapping, ActionForm form,
@@ -384,43 +485,86 @@ public class AtividadesAction extends TimeSheetComum {
         return mapping.findForward("voltar");       
     }
     
-    public ActionForward consultar(ActionMapping mapping, ActionForm form,
+	public ActionForward consultar(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         
-        AtividadesForm formulario = (AtividadesForm)form;
-       
-        try {
-            
-            List<TimeSheetVO> lista = getTimeSheetDelegate()
-                    .getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(), formulario.getCodigoFuncionarioLogado(), getSessao());
-            
-            formulario.setListaTimeSheetVO(lista);
-            
-            
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    	AtividadesForm formulario = (AtividadesForm)form;
+        List<TimeSheetVO> lista;
+        String retorno = "retorno";
+		List<HorasAtividadeVO> listaHorasAtividadeVOs = null;
+		Funcionario funcionario = null;
+		
+		try {
         
+			if(formulario.getCodigoFuncionario()!=null){
+				//CONSULTA Funcionario Subordinado.
+				funcionario = getFuncionarioPeloID(Integer.valueOf(formulario.getCodigoFuncionario()));
+			}else{
+				salvarMsgErro("errors.required", "Colaborador ", request);
+			}
+		
+			if(formulario.getCodigoFuncionario()!=null){
+				
+				// Recupera a lista de Atividades do usuario subordinado
+				lista = getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(),
+						formulario.getCodigoFuncionario());
+				
+				listaHorasAtividadeVOs = getListaHorasAtividadeVO(funcionario);
+				
+				//Descricao do Mes : Exemplo (Março, Abril....)
+    			formulario.setMesLiteral(UtilDate.getMesLiteral());
+    			formulario.setCodigoFuncionarioSubordinado(funcionario.getId());
+    			formulario.setSubordinado(funcionario);	    			
+    			formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
+    			formulario.setListaTimeSheetVO(lista);
+    			formulario.setIndicaAvaliacao(true);
+				
+				
+			}else{
+				//Recupera a lista de Atividades do usuario logado
+				lista = getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(),
+						formulario.getCodigoFuncionarioLogado());
+			}
+			
+			formulario.setListaTimeSheetVO(lista);
         
-        return mapping.findForward("retorno");       
+			request.setAttribute("consulta", true);
+        
+		} catch (ParametroInvalidoException e) {
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
+		} catch (SessaoInvalidaException e) {
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
+			e.printStackTrace();
+		} catch (Exception e) {
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
+		} 
+        
+        return mapping.findForward(retorno);       
     }
-    
-    public ActionForward abrirPopUpAtividade(ActionMapping mapping, ActionForm form,
+
+    /**
+     * Responsavel por abrir PopUp.
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+	public ActionForward abrirPopUpAtividade(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
-        try {
-            AtividadesForm formulario = (AtividadesForm) form;
-            
-            formulario.limparFormulario();
-            
-            //Lista para as combos.
-            preencherFormularioInicial(formulario);
-            preencherFormulario(formulario, null);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
+        AtividadesForm formulario = (AtividadesForm) form;
+        
+        formulario.limparFormulario();
+        
+        //Lista para as combos.
+        preencherFormularioInicial(formulario);
+        preencherFormulario(formulario, null);
         
        return mapping.findForward("retorno");      
     }
@@ -431,69 +575,77 @@ public class AtividadesAction extends TimeSheetComum {
         return mapping.findForward("retorno");      
     }
     
-    public ActionForward inicioAvaliacao(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @SuppressWarnings("deprecation")
+	public ActionForward inicioAvaliacao(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response){
 	    	    
     	AtividadesForm formulario = (AtividadesForm) form;
-	    
+	    String retorno = "retorno";
     	try {
 
     		formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
 		    formulario.setId(Integer.valueOf(formulario.getCodigoTimeSheet()));	    
 	    
-            TimeSheet timesheet = getTimeSheetPeloID(formulario.getId());
-	    
+            TimeSheetVO timesheet;
+			timesheet = getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(formulario.getId());
             preencherFormularioInicial(formulario);
-            preencherFormulario(formulario, timesheet);
+            preencherFormularioVO(formulario, timesheet);
             
-	    } catch (Exception e) {
-	    	throw new Exception(e.getMessage(), e);
-	    }
-	    
-	    
-	    
-		return mapping.findForward("retorno");		
+    	} catch (ParametroInvalidoException e) {
+    		salvarMsgErro("erro.geral2", request);
+    		e.printStackTrace();
+    	} catch (SessaoInvalidaException e) {
+    		salvarMsgErro("MSG015", request);
+    		retorno = "pagina.de.erro.acesso";
+    		e.printStackTrace();
+    	} catch (Exception e) {
+    		salvarMsgErro("erro.geral2", request);
+    		e.printStackTrace();
+		}
+    	
+		return mapping.findForward(retorno);		
 	}
 
+	@SuppressWarnings("deprecation")
 	public ActionForward salvarAvaliacao(ActionMapping mapping, ActionForm form,
-	        HttpServletRequest request, HttpServletResponse response) throws Exception {
+	        HttpServletRequest request, HttpServletResponse response){
+		String retorno = "retorno";
+		try {
 	    
-	    try {
 	    	AtividadesForm formulario = (AtividadesForm) form;
     	    
-    //	    formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
+	    	TimeSheet timeSheetPreenchido = preencherTimeSheet(formulario);	    	
+	    	alterarTimeSheet(timeSheetPreenchido);
     	    
     	    AvaliacaoAtividade avaliacaoAtividade = new AvaliacaoAtividade();
 	    
-    	    // TODO RECUPERANDO O USUARIO FABIO....ARRUMAR
     	    avaliacaoAtividade.setFuncionarioAvaliador(getFuncionarioPeloID(formulario.getCodigoFuncionarioLogado()));
-    	    
-    	    avaliacaoAtividade.setObservacao(formulario.getObservacao());
+    	    avaliacaoAtividade.setObservacao(formulario.getObservacaoAvaliacaoAtividade());
     	    avaliacaoAtividade.setObservacaoPrivada(formulario.getObservacaoPrivada());
     	    avaliacaoAtividade.setSituacaoAtividade(getSituacaoAtividadePeloID(Integer.valueOf(formulario.getCodigoSituacaoAtividade())));
-    	    avaliacaoAtividade.setTimeSheet(getTimeSheetPeloID(formulario.getId()));
+			avaliacaoAtividade.setTimeSheet(timeSheetPreenchido);
     	    
-    	    try {
-                getTimeSheetDelegate().salvarAvaliacaoAtividade(avaliacaoAtividade, getSessao());
-            } catch (Exception e) {
-            	throw new Exception(e.getMessage(), e);
-            }
+			salvarAvaliacaoAtividade(avaliacaoAtividade);
             
           //Submeter a pagina pai. 
             request.setAttribute("submiter", true);
+		} catch (ParametroInvalidoException e) {
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
+		} catch (SessaoInvalidaException e) {
+			salvarMsgErro("MSG015", request);
+			retorno = "pagina.de.erro.acesso";
+			e.printStackTrace();
+		} catch (Exception e) {
+			salvarMsgErro("erro.geral2", request);
+			e.printStackTrace();
+		}
             
-	    } 
-	    catch (NumberFormatException e) {
-	    	throw new Exception(e.getMessage(), e);
-        } catch (ParametroInvalidoException e) {
-        	throw new Exception(e.getMessage(), e);
-        }
 	    
-	    return mapping.findForward("retorno");		
+	    return mapping.findForward(retorno);		
 	}
-    
 
-    //*********************************************
+	//*********************************************
     //* METODOS AUXILIARES :
     //*********************************************
     public void preencherFormulario(AtividadesForm formulario, TimeSheet timesheet) throws ParametroInvalidoException, SessaoInvalidaException{
@@ -512,13 +664,47 @@ public class AtividadesAction extends TimeSheetComum {
             formulario.setCodigoProdutoServico(timesheet.getProdutoServico().getId());
             formulario.setObservacao(timesheet.getObservacao());
             formulario.setOutros(timesheet.getOutrasAtividades());
-            
             formulario.setListaProdutosServicos(recuperarListaProdutoServico(timesheet.getMetodologia().getId()));
             
         }
         formulario.setDesabilitarCampo(false);
     }
 
+    //*********************************************
+    //* METODOS AUXILIARES :
+    //*********************************************
+    public void preencherFormularioVO(AtividadesForm formulario, TimeSheetVO timesheet) throws ParametroInvalidoException, SessaoInvalidaException{
+    	
+    	if(timesheet !=null){
+    		formulario.setId(timesheet.getCodigoTimeSheet());
+    		formulario.setData(UtilDate.getDataComoString(timesheet.getDataHoraInicio()));
+    		formulario.setDataHoraInicio(UtilDate.getHoraComoString(timesheet.getDataHoraInicio()));
+    		formulario.setDataHoraFim(UtilDate.getHoraComoString(timesheet.getDataHoraFim()));
+    		formulario.setCodigoOp(timesheet.getCodigoOp());
+    		formulario.setCodigoMetodologia(timesheet.getCodigoMetodologia());
+    		formulario.setNomeProjeto(timesheet.getNomeProjeto());
+    		formulario.setNumeroProjeto(Integer.toString(timesheet.getCodigoProjeto()));
+    		formulario.setCodigoCliente(timesheet.getCodigoCliente());
+    		formulario.setCodigoAtividade(timesheet.getCodigoAtividade());
+    		formulario.setCodigoProdutoServico(timesheet.getCodigoProdutoServico());
+    		formulario.setObservacao(timesheet.getObservacao());
+    		formulario.setOutros(timesheet.getOutrasAtividades());
+    		
+    		formulario.setCodigoSituacaoAtividade(timesheet.getCodigoSituacaoAtividade());
+    		formulario.setObservacaoPrivada(timesheet.getObservacaoPrivada());
+    		formulario.setObservacaoAvaliacaoAtividade(timesheet.getObservacaoAvaliacaoAtividade());
+    		
+    		formulario.setListaProdutosServicos(recuperarListaProdutoServico(timesheet.getCodigoMetodologia()));
+    		
+    	}
+    	formulario.setDesabilitarCampo(false);
+    }
+
+    /**
+     * Responsavel em preencher o formulario os campos iniciais (COMBOs e Data atual...)
+     * @param formulario
+     * @throws Exception
+     */
     public void preencherFormularioInicial(AtividadesForm formulario)  throws Exception {
         formulario.setListaAtividades(getListarTodasAtividades()) ;        
         formulario.setListaClientes(getListarTodosClientes());
@@ -535,45 +721,42 @@ public class AtividadesAction extends TimeSheetComum {
      * @param metodologia
      * @return
      * @throws Exception 
+     * @throws SessaoInvalidaException 
+     * @throws Exception 
      * @throws NumberFormatException 
      */
-    public TimeSheet preencherTimeSheet(AtividadesForm formulario)
-            throws NumberFormatException, Exception {
+    public TimeSheet preencherTimeSheet(AtividadesForm formulario) throws SessaoInvalidaException, Exception{
         
         TimeSheet pojo = new TimeSheet();
 
-        try {            
-            
-            if(formulario.getAcao().equals(Constantes.ACAO_ALTERAR)){
-                pojo.setId(formulario.getId());
-            }
-            
-            //COMBOS
-            pojo.setAtividade(getAtividadePeloID(Integer.valueOf(formulario.getCodigoAtividade())));
-            pojo.setCliente(getClientePeloID(Integer.valueOf(formulario.getCodigoCliente())));
-            
-            Metodologia metodologia = getMetodologiaPeloID(Integer.valueOf(formulario.getCodigoMetodologia()));
-            pojo.setMetodologia(metodologia);
-            
-            pojo.setOp(getOPPeloID(Integer.valueOf(formulario.getCodigoOp())));
-            pojo.setProdutoServico(getProdutoServicoPeloID(Integer.valueOf(formulario.getCodigoProdutoServico())));
-    
-           
-            pojo.setFuncionario(getFuncionarioPeloID(formulario.getCodigoFuncionarioLogado()));
-                        
-            Projeto projetoSalvo = salvarProjeto(formulario, metodologia);            
-            pojo.setProjeto(projetoSalvo);
-            
-            //TEXTOS
-            pojo.setDataHoraInicio(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraInicio() + ":00"));
-            pojo.setDataHoraFim(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraFim() + ":00"));
-            pojo.setObservacao(formulario.getObservacao());
-            pojo.setOutrasAtividades(formulario.getOutros());
-            
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if(formulario.getAcao().equals(Constantes.ACAO_ALTERAR) || formulario.getAcao().equals(Constantes.ACAO_AVALIAR)){
+            pojo.setId(formulario.getCodigoTimeSheet());
         }
+        
+        //COMBOS
+        pojo.setAtividade(getAtividadePeloID(Integer.valueOf(formulario.getCodigoAtividade())));
+        pojo.setCliente(getClientePeloID(Integer.valueOf(formulario.getCodigoCliente())));
+        
+        Metodologia metodologia = getMetodologiaPeloID(Integer.valueOf(formulario.getCodigoMetodologia()));
+        pojo.setMetodologia(metodologia);
+        
+        pojo.setOp(getOPPeloID(Integer.valueOf(formulario.getCodigoOp())));
+        pojo.setProdutoServico(getProdutoServicoPeloID(Integer.valueOf(formulario.getCodigoProdutoServico())));
+
+        if(formulario.getAcao().equals(Constantes.ACAO_AVALIAR)){
+        	pojo.setFuncionario(getFuncionarioPeloID(formulario.getCodigoFuncionarioSubordinado()));
+        }else{
+        	pojo.setFuncionario(getFuncionarioPeloID(formulario.getCodigoFuncionarioLogado()));
+        }
+                    
+        Projeto projetoSalvo = salvarProjeto(formulario, metodologia);            
+        pojo.setProjeto(projetoSalvo);
+        
+        
+        pojo.setDataHoraInicio(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraInicio() + ":00"));
+        pojo.setDataHoraFim(UtilDate.getDataHora(formulario.getData() + " " + formulario.getDataHoraFim() + ":00"));
+        pojo.setObservacao(formulario.getObservacao());
+        pojo.setOutrasAtividades(formulario.getOutros());            
         
         return pojo;
     }

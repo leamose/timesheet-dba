@@ -146,6 +146,20 @@ public abstract class BaseDispatchAction extends Action {
     }
 
     /**
+     * Salva uma mensagem de erro.
+     * 
+     * @param msg mensagem a ser salva.
+     * @param request requisição do usuário.
+     */
+    protected void salvarMsgErro(String key, String msg, HttpServletRequest request){
+    	ActionMessage message = new ActionMessage(key, msg);
+    	ActionErrors errors = new ActionErrors();
+    	
+    	errors.add(key, message);
+    	saveErrors(request, errors);
+    }
+
+    /**
      * Atribui o valor a sessão de autenticação.
      * 
      * @param request requisição do usuário.

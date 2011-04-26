@@ -15,40 +15,38 @@
 
 	</head>
 
-	<body>
-		<div id="wrap">	
-			<div id="header"></div>		
-			<div id="main">
-				<div id="corpologin">
-					<div class="topologin"></div>
-					<div class="formulario">
-						<span style="color:red;">
-							<span style="color: red;">${param.msg}</span>							
-						</span>
-						<div style="width: 770px; float: left; background-image: url('${contexto}/WebContent/img/bg_login.jpg'); background-repeat: repeat-x; margin-bottom: 5px; vertical-align: middle; height: 121px;">
-							<img src="${contexto}/WebContent/img/cadeado.jpg" width="261" height="121" style="float: left;"/>
-								
-							<html:form action="/login.do" method="post">
-								<div class="foco" style="margin-top: 32px;">
-									<div class="labelLogin">Usu&aacute;rio:</div>
-									<html:text property="login" maxlength="100" style="width: 120px;" styleClass="campoLogin"/>
-								</div>
+	<body>			
+		<div id="header"></div>		
+		<div id="main">
+			<div id="corpologin">
+				<div class="topologin"></div>
+				<div class="formulario">
+					<span style="color:red;">
+						<span style="color: red;">${param.msg}</span>							
+					</span>
+					<div style="width: 770px; float: left; background-image: url('${contexto}/WebContent/img/bg_login.jpg'); background-repeat: repeat-x; margin-bottom: 5px; vertical-align: middle; height: 121px;">
+						<img src="${contexto}/WebContent/img/cadeado.jpg" width="261" height="121" style="float: left;"/>
+							
+						<html:form action="/login.do" method="post">
+							<div class="foco" style="margin-top: 32px;">
+								<div class="labelLogin">Usu&aacute;rio:</div>
+								<html:text property="login" maxlength="100" style="width: 120px;" styleClass="campoLogin"/>
+							</div>
 
-								<div class="foco" style="margin-top: 32px;">
-									<div class="labelLogin">Senha:</div>
-									<html:password property="senha" style="width: 120px;" styleClass="campoLogin"/>
-								</div>
-								<div>
-									<a href="#" class="button" onclick="javascript:document.forms[0].submit();">	
-										<img src="${contexto}/WebContent/img/entrar.png" 
-											style="float:left; margin-left:15px; margin-top:32px; border:none;"/>
-									</a>
-								</div>
-							</html:form>
-						</div>
+							<div class="foco" style="margin-top: 32px;">
+								<div class="labelLogin">Senha:</div>
+								<html:password property="senha" style="width: 120px;" styleClass="campoLogin"/>
+							</div>
+							<div>
+								<a href="#" class="button" onclick="javascript:document.forms[0].submit();">	
+									<img src="${contexto}/WebContent/img/entrar.png" 
+										style="float:left; margin-left:15px; margin-top:32px; border:none;"/>
+								</a>
+							</div>
+						</html:form>
 					</div>
-					<div class="final_login"></div>
 				</div>
+				<div class="final_login"></div>
 			</div>
 		</div>
 	</body>
