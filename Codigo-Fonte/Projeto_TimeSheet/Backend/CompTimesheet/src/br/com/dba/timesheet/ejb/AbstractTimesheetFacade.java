@@ -761,6 +761,21 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
     		throw new ErroInternoException(e.getMessage(),e.getCause());
     	}
     }
+
+    /**
+     * @ejb.interface-method view-type = "remote"
+     * @ejb.transaction type = "Required"
+     */ 
+    @SuppressWarnings("deprecation")
+    public List<HorasAtividadeVO> getTotalHorasTrabalhadas(Integer ano, Integer mes, Integer codigofuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException{
+    	try {
+    		segurancaHelper.verificarSessaoValida(sessao);
+    		return timeSheetDao.getTotalHorasTrabalhadas(ano, mes, codigofuncionario);
+    		
+    	} catch (DAOException e) {
+    		throw new ErroInternoException(e.getMessage(),e.getCause());
+    	}
+    }
     
     /**
      * Monta uma lista com as horas preenchidas e completa com os dias que tem Atividade.
@@ -769,6 +784,8 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
      */
     private List<HorasAtividadeVO> montaListaHorasAtividade(List<HorasAtividadeVO> listaHorasAtividadeVOs) {
 		
+    	String totalCargaHoraria = "00:00:00";
+    	
 		HashMap<Integer, HorasAtividadeVO> mapa = new HashMap<Integer, HorasAtividadeVO>();
 		
 		HorasAtividadeVO novaAtividade = new HorasAtividadeVO();
@@ -792,6 +809,7 @@ public abstract class AbstractTimesheetFacade implements SessionBean, Timesheet 
 				listaHorasAtividadeVOs.add(novaAtividade);
 			}
 		}
+		
 		
 		ordernarListaHorasAtividadesVO(listaHorasAtividadeVOs);
 		

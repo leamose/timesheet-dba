@@ -3,6 +3,7 @@ package br.com.dba.timesheet.servicos;
 import java.util.Date;
 import java.util.List;
 
+import br.com.dba.timesheet.exceptions.DAOException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.exceptions.RegistroJaCadastradoException;
 import br.com.dba.timesheet.exceptions.SessaoInvalidaException;
@@ -114,6 +115,13 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  */
 	 List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+
+	 /**
+	  * Lista todos os TimeSheetVO. 
+	  * @return
+	  * @throws ParametroInvalidoException
+	  */
+	 List<HorasAtividadeVO> getTotalHorasTrabalhadas(Integer ano, Integer mes, Integer codigofuncionario, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
 	 
 	 /**
 	  * Salva um TimeSheet(Atividade).

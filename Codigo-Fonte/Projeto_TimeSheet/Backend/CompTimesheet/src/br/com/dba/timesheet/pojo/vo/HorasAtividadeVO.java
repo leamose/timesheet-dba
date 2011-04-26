@@ -13,7 +13,9 @@ public class HorasAtividadeVO implements Serializable {
     private Integer dia;        
     private String horasTrabalhadas;
     private Boolean indicaSaldoDevedor = false;
-	
+    private Date dataHoraInicio;
+    private Date dataHoraFim;
+    
 	public String getCargaHoraria() {
 		return cargaHoraria;
 	}
@@ -49,6 +51,18 @@ public class HorasAtividadeVO implements Serializable {
 	}
 	public void setIndicaSaldoDevedor(Boolean indicaSaldoDevedor) {
 		this.indicaSaldoDevedor = indicaSaldoDevedor;
+	}
+	public Date getDataHoraInicio() {
+		return dataHoraInicio;
+	}
+	public void setDataHoraInicio(Date dataHoraInicio) {
+		this.dataHoraInicio = dataHoraInicio;
+	}
+	public Date getDataHoraFim() {
+		return dataHoraFim;
+	}
+	public void setDataHoraFim(Date dataHoraFim) {
+		this.dataHoraFim = dataHoraFim;
 	}
     
 

@@ -697,6 +697,20 @@
       <method >
          <ejb-name>TimesheetFacade</ejb-name>
          <method-intf>Remote</method-intf>
+         <method-name>getTotalHorasTrabalhadas</method-name>
+         <method-params>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
          <method-name>getProdutoServicoPeloCodigoMetodologia</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>

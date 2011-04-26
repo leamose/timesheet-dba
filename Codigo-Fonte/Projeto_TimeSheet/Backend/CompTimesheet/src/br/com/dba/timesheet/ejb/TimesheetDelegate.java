@@ -459,6 +459,7 @@ public class TimesheetDelegate implements Timesheet {
 	    }
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public boolean verificaAtividadeJaCadastrada(TimeSheet pojo, Sessao sessao)
 			throws ParametroInvalidoException, SessaoInvalidaException {
 		try {
@@ -468,6 +469,7 @@ public class TimesheetDelegate implements Timesheet {
 	    }
 	}
 
+	@SuppressWarnings({ "deprecation" })
 	public AvaliacaoAtividade getAvaliacaoAtividade(Integer id, Sessao sessao)
 			throws ParametroInvalidoException, SessaoInvalidaException {
 		try {
@@ -477,11 +479,22 @@ public class TimesheetDelegate implements Timesheet {
 	    }
 	}
 
+	@SuppressWarnings({ "deprecation" })
 	public AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(
 			Integer codigoTimesheet, Sessao sessao)
 			throws ParametroInvalidoException, SessaoInvalidaException {
 		try {
 			return facade.getAvaliacaoAtividadePeloCodigoTimeSheet(codigoTimesheet, sessao);
+	    } catch (RemoteException e) {           
+	    	throw new ErroInternoException(e.getMessage(), e);
+	    }
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<HorasAtividadeVO> getTotalHorasTrabalhadas(Integer ano, Integer mes, Integer codigofuncionario,Sessao sessao)
+			throws ParametroInvalidoException, SessaoInvalidaException {
+		try {
+			return facade.getTotalHorasTrabalhadas(ano, mes, codigofuncionario, sessao);
 	    } catch (RemoteException e) {           
 	    	throw new ErroInternoException(e.getMessage(), e);
 	    }
