@@ -29,7 +29,7 @@ public class FiltroSessao implements Filter {
 		String url = "";
 		
 		if(sessao==null){
-			url = "/WebContent/jsp/erro/erroAcesso.jsp?mensagem=Sessão Expirada.";
+			url = "/WebContent/jsp/erro/erroAcesso.jsp?mensagem=Sessão Expirada.&popUp=true";
 			request.getRequestDispatcher(url).forward(req, response);
 		}else{			
 			chain.doFilter(request, response);
