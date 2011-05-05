@@ -11,20 +11,8 @@
 	
 		<script>
 
-			<%Sessao sessao = (Sessao)request.getSession().getAttribute("sessao");%>
-
-			function validaSessao(){
-				if('<%=sessao%>' == null){
-					var form = document.forms[0];
-					form.action = contexto + '/erroAcesso.do'; 
-					form.submit();
-				}
-				
-			}
-			
 			//CONSULTAR ATIVIDADE
-			function consultarAtividade() {
-				validaSessao();
+			function consultarAtividade() {				
 				validaCampos();
 				var form = document.forms[0];
 				form.action = contexto + '/atividade/consultar.do'; 
@@ -51,19 +39,16 @@
 	
 			//DETALHAR
 			function detalharAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
-				validaSessao();
 				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?popUp=true&acao=<%=Constantes.ACAO_DETALHAR%>&codigoTimeSheet='+codigoTimeSheet, null, "Detalhar Atividade", 800, altura);				
 			}		
 	
 			//ALTERAR
 			function alterarAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
-				validaSessao();
 				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/alterar.do?popUp=true&acao=<%=Constantes.ACAO_ALTERAR%>&codigoTimeSheet='+codigoTimeSheet, retornoInicio, "Alterar Atividade", 800, altura) ;
 			}		
 	
 			//EXCLUIR
 			function excluirAtividade(codigoTimeSheet, codigoHistoricoTimeSheet) {
-				validaSessao();
 				if(confirm('Confirma a exclusão do registro?')){
 					var form = document.forms[0];
 					form.action = contexto + '/atividade/excluir.do?codigoTimeSheet='+codigoTimeSheet+'&codigoHistoricoTimeSheet='+codigoHistoricoTimeSheet; 
@@ -73,19 +58,16 @@
 
 			//CADASTRAR ATIVIDADE
 			function abrirPopUpAtividade(altura) {
-				validaSessao();
 				open_popPpAtividade(false, contexto + '/atividade/abrirPopUpAtividade.do?popUp=true&acao=<%=Constantes.ACAO_SALVAR%>' , retornoInicio, "Cadastrar Atividade", 800, altura);
 			}
 
 			//HOMOLOGAR ATIVIDADE
 			function avaliarAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
-				validaSessao();
 				open_popPpAtividade(temOutrasAtividades, contexto + '/avaliacaoAtividade/inicioAvaliacao.do?popUp=true&acao=<%=Constantes.ACAO_AVALIAR%>&codigoTimeSheet='+codigoTimeSheet, retornoInicio, "Avaliar Atividade", 800, altura);
 			}
 
 			//POPULA COMBO COLABORADOR
 			function recuperarAtividadesSubordinados() {
-				validaSessao();				
 				if(document.forms[0].codigoFuncionario.value != '#') {
 					var form = document.forms[0];
 					form.action = contexto + '/atividade/recuperarAtividades.do';
