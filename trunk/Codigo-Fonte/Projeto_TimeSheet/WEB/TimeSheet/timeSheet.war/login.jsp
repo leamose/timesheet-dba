@@ -27,7 +27,7 @@
 					<div style="width: 770px; float: left; background-image: url('${contexto}/WebContent/img/bg_login.jpg'); background-repeat: repeat-x; margin-bottom: 5px; vertical-align: middle; height: 121px;">
 						<img src="${contexto}/WebContent/img/cadeado.jpg" width="261" height="121" style="float: left;"/>
 							
-						<html:form action="/login.do" method="post">
+						<html:form action="/autenticar.do" method="post">
 							<div class="foco" style="margin-top: 32px;">
 								<div class="labelLogin">Usu&aacute;rio:</div>
 								<html:text property="login" maxlength="100" style="width: 120px;" styleClass="campoLogin"/>

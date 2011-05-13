@@ -3,6 +3,7 @@ package br.com.dba.timesheet.web.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -14,7 +15,8 @@ import br.com.dba.timesheet.exceptions.LogonBloqueadoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.exceptions.SessaoIndisponivelException;
 import br.com.dba.timesheet.pojo.Sessao;
-import br.com.dba.timesheet.pojo.Usuario;
+import br.com.dba.timesheet.web.filtros.ConstantesLogin;
+import br.com.dba.timesheet.web.filtros.FiltroSessao;
 import br.com.dba.timesheet.web.form.LoginForm;
 
 public class LoginAction extends TimeSheetComum {
@@ -33,7 +35,7 @@ public class LoginAction extends TimeSheetComum {
     }
     
     
-	public ActionForward logout(ActionMapping mapping, ActionForm form,
+	public ActionForward sair(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		Sessao sessao = (Sessao) request.getSession().getAttribute("sessao");
@@ -52,18 +54,39 @@ public class LoginAction extends TimeSheetComum {
 		return mapping.findForward("pagina.de.erro.acesso");		
 	}
 
-	public ActionForward login(ActionMapping mapping, ActionForm form,
+	/**
+     * Método responsável pela autenticação do usuário.
+     * 
+     * @param mapping mapeamento do struts.
+     * @param form formulário com os dados do usuário.
+     * @param request requisição do usuário.
+     * @param response resposta do servidor.
+     */
+    public ActionForward login(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HttpSession session = request.getSession();
+        String msgErro = (String)session.getAttribute(FiltroSessao.ERRO_LOGIN);
+        if (msgErro != null && !msgErro.equals("")) {
+            salvarMsgErro(msgErro, request);
+            request.getSession().setAttribute(FiltroSessao.ERRO_LOGIN, "");
+        }
+        return mapping.findForward("pagina.login");
+    }
+	
+	
+	public ActionForward autenticar(ActionMapping mapping, ActionForm form,
 	        HttpServletRequest request, HttpServletResponse response) {
 
 		LoginForm formulario = (LoginForm) form;
 		String retorno = "retorno";
 		try {
+			
 			Sessao sessao = getSegurancaDelegate().autenticarUsuario(formulario.getLogin(), formulario.getSenha());
 			
 			if(getSegurancaDelegate().isSessaoValida(sessao)){
 				request.setAttribute("codigoUsuarioLogado", sessao.getUsuario().getId());
-				formulario.setCodigoUsuario(sessao.getUsuario().getId());
-				request.getSession().setAttribute("sessao", sessao);
+				formulario.setCodigoUsuario(sessao.getUsuario().getId());				
+				marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_OK);
+				request.getSession().setAttribute(TimeSheetComum.SESSAO_EJB, sessao);
 			}else{
 				throw new SessaoIndisponivelException("MSG015");
 			}	
@@ -72,22 +95,39 @@ public class LoginAction extends TimeSheetComum {
 				retorno = "alterarSenha";				
 			}
 			
-		} catch (IdentificadorSenhaIncorretosException e) {			
+		} catch (IdentificadorSenhaIncorretosException e) {		
+			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 	        salvarMsgErro("MSG024", request);
 	        retorno = "pagina.de.erro.acesso";
 		} catch (ErroInternoException e) {
+			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			retorno = "pagina.de.erro.acesso";
 		} catch (ParametroInvalidoException e) {
+			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			salvarMsgErro("MSG024", request);
 			retorno = "pagina.de.erro.acesso";
 		} catch (LogonBloqueadoException e) {
+			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			salvarMsgErro("MSG011", request);
 			retorno = "pagina.de.erro.acesso";
 		} catch (SessaoIndisponivelException e) {
+			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			salvarMsgErro("MSG015", request);
 			retorno = "pagina.de.erro.acesso";
 		}
 		return mapping.findForward(retorno);
 	}
+	
+	/**
+     * Atribui parametro na sessão que indica se o usário está ou não logado.
+     * 
+     * @param request requisição do usuário.
+     * @param att atributo a ser colocado na sessão.
+     */
+    private void marcarAutenticacao(HttpServletRequest request, String att)
+    {
+        request.getSession().setAttribute(ConstantesLogin.AUTENTICACAO, att);
+    }
+	
 	
 }

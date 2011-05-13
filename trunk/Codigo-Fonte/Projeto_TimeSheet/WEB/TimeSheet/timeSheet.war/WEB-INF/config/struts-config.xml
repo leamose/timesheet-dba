@@ -33,8 +33,17 @@
 	</global-forwards>
 	
     <action-mappings>    
+    <!-- login -->
+        <action 
+        	type="br.com.dba.timesheet.web.action.LoginAction"
+            name="loginForm" 
+            path="/login" 
+            scope="request" 
+            validate="false">
+        </action>
+    
 		<!-- redireciona para o template da p�gina inicial -->
-		<action path="/login" 
+		<action path="/autenticar" 
 			type="br.com.dba.timesheet.web.action.LoginAction"
 			name="loginForm"			
 			scope="request"			
@@ -43,7 +52,7 @@
 			<forward name="alterarSenha" path="/WebContent/jsp/usuario/popUpCadastroSenha.jsp"/>			
 		</action>
 		
-		<action path="/logout" type="br.com.dba.timesheet.web.action.LogoutAction" validate="false">
+		<action path="/sair" type="br.com.dba.timesheet.web.action.LogoutAction" validate="false">
             <forward name="exibir.tela.login" path="/login.jsp"/>
 		</action>
 
