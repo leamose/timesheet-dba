@@ -33,11 +33,7 @@ public class DadosUsuarioAction extends TimeSheetComum {
 		try {
 			DadosUsuarioForm formulario = (DadosUsuarioForm) form;
 
-			//Seta a sessao.
-    		setSessao((Sessao) request.getSession().getAttribute("sessao"));
-			
-			
-			Usuario usuario = getUsuarioPeloID(formulario.getCodigoUsuario());
+			Usuario usuario = getUsuarioPeloID(formulario.getCodigoUsuario(), request);
 			
 			if(usuario!=null){
 				usuario.setSenha(formulario.getSenha());
@@ -46,7 +42,7 @@ public class DadosUsuarioAction extends TimeSheetComum {
 				usuario.setIndicaBloqueado(false);
 			}
 			
-			getSegurancaDelegate().alterarUsuario(usuario, getSessao());
+			getSegurancaDelegate().alterarUsuario(usuario, getSessao(request));
 			
 		} catch (ParametroInvalidoException e) {
 			// TODO Auto-generated catch block

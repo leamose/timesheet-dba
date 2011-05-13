@@ -1,12 +1,14 @@
 package br.com.dba.timesheet.web.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,7 +22,6 @@ import br.com.dba.timesheet.pojo.Funcionario;
 import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.Projeto;
-import br.com.dba.timesheet.pojo.Sessao;
 import br.com.dba.timesheet.pojo.TimeSheet;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
@@ -54,10 +55,7 @@ public class AtividadesAction extends TimeSheetComum {
     	String retorno = "cadastro";
     	
 	    try {
-
-	    	//Seta a sessao.
-    		setSessao((Sessao) request.getSession().getAttribute("sessao"));    		
-    		
+	    	
     		//Recupera da requisicao ou do formulario o codigo do usuario logado.
     		if(request.getAttribute("codigoUsuarioLogado")!=null){
     			codigoUsuario = (Integer)request.getAttribute("codigoUsuarioLogado");
@@ -82,12 +80,10 @@ public class AtividadesAction extends TimeSheetComum {
 			e.printStackTrace();
 		}
 		
-		atualizaSessao(request);
-		
 		return mapping.findForward(retorno);		
 	}
 
-    /**
+	/**
      * Méto responsavel em configurar e popular o formulario para a tela inicial.
      * @param formulario
      * @param listaFuncionariosSubordinados
@@ -102,8 +98,8 @@ public class AtividadesAction extends TimeSheetComum {
 		List<HorasAtividadeVO> listaHorasAtividadeVOs;		
 		List<HorasAtividadeVO> totalHorasTrabalhadas = null;
 			
-		if(getSegurancaDelegate().isSessaoValida(getSessao())){
-			Usuario usuarioLogado = getSessao().getUsuario();
+		if(getSegurancaDelegate().isSessaoValida(getSessao(request))){
+			Usuario usuarioLogado = getSessao(request).getUsuario();
 			
 			if(usuarioLogado.getFuncionario()!=null && usuarioLogado.getFuncionario().getIndicaChefe()){
 				//verifica se o usuario logado é chefe.
@@ -138,7 +134,7 @@ public class AtividadesAction extends TimeSheetComum {
 			
 			if(usuarioLogado.getFuncionario() != null){
 	    		totalHorasTrabalhadas = getTimeSheetDelegate().getTotalHorasTrabalhadas(UtilDate.getAnoAtual(), 
-	    				UtilDate.getMesAtual(), usuarioLogado.getFuncionario().getId(), getSessao());
+	    				UtilDate.getMesAtual(), usuarioLogado.getFuncionario().getId());
 			}
 			
 			if(totalHorasTrabalhadas!=null && !totalHorasTrabalhadas.isEmpty()){
@@ -235,18 +231,21 @@ public class AtividadesAction extends TimeSheetComum {
 	    try {
     	    AtividadesForm formulario = (AtividadesForm) form;
     	    
-    	    //TODO: Verificar se a Atividade(TimeSheet) ja foi fechado 
-    	    // --- ERRO "Seu Timesheet de Março de 2010  já está fechado." 
+    	    if(validarCampos(formulario, request)){
     	    
-    	    timeSheet = preencherTimeSheet(formulario);    	    
-    	    
-    	    salvarTimeSheet(timeSheet);
-    	    
-    	    historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "I", formulario);            
-            salvarHistoricoTimeSheet(historicoTimeSheet);
-            
-            //Submeter a pagina pai. 
-            request.setAttribute("submiter", true);
+	    	    //TODO: Verificar se a Atividade(TimeSheet) ja foi fechado 
+	    	    // --- ERRO "Seu Timesheet de Março de 2010  já está fechado." 
+	    	    
+	    	    timeSheet = preencherTimeSheet(formulario);    	    
+	    	    
+	    	    salvarTimeSheet(timeSheet);
+	    	    
+	    	    historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "I", formulario, request);            
+	            salvarHistoricoTimeSheet(historicoTimeSheet);
+	            
+	            //Submeter a pagina pai. 
+	            request.setAttribute("submiter", true);
+    	    }
             
         } catch (NumberFormatException e) {        	
 			salvarMsgErro("MSG022", request);
@@ -266,7 +265,101 @@ public class AtividadesAction extends TimeSheetComum {
 	    return mapping.findForward("retorno");        
 	}
     
-    /**
+    public boolean validarCampos(AtividadesForm form, HttpServletRequest request) {
+    	
+    	List<String> erros = new ArrayList<String>();
+    	
+    	if(form.getCodigoOp() == null || StringUtils.equals(form.getCodigoOp().toString(), "#")){
+			erros.add("OP");
+		}
+    	
+    	if(form.getCodigoCliente() == null || StringUtils.equals(form.getCodigoCliente().toString(), "#")){
+    		erros.add("Cliente");
+    	}
+    	
+    	if(form.getCodigoMetodologia() == null || StringUtils.equals(form.getCodigoMetodologia().toString(), "#")){
+    		erros.add("Metodologia");
+    	}
+    	
+    	if(form.getCodigoProdutoServico() == null || StringUtils.equals(form.getCodigoProdutoServico().toString(), "#")){
+    		erros.add("Produto/Servico");
+    	}
+    	
+    	if(form.getCodigoAtividade() == null || StringUtils.equals(form.getCodigoAtividade().toString(), "#")){
+    		erros.add("Atividade");
+    	}
+
+    	if(StringUtils.isEmpty(form.getNomeProjeto())){
+    		erros.add("Nome do Projeto");
+    	}
+
+    	if(StringUtils.isEmpty(form.getNumeroProjeto())){
+    		erros.add("Número do Projeto");
+    	}
+    	
+    	
+    	if(erros.size()>0){
+			 Object[] o = new Object[erros.size()+1];
+			 o[0]="Erro! Favor preencher todos os Campos Obrigatórios.";
+			 int i =1;
+			 for(String m:erros){
+				 o[i]=m;
+				 i++;
+			 }
+			 salvarMsgErro(request,"errors.generico", o);
+			 return false;
+		}else{
+	    	if(form.getData().length()<10){
+				 salvarMsgErro(request,"errors.required", new Object[]{"Data Atividade","data"});
+				 return false;
+			}
+			try {
+				Date data = UtilDate.getData(form.getData());
+				Date dataAutal = UtilDate.getHoraZero(UtilDate.getDataAtual());
+				if(data.getTime()>= dataAutal.getTime()){
+					 salvarMsgErro(request,"errors.generico", new Object[]{"Data deve ser menor que data atual.","data"});
+					 return false;
+				}
+			} catch (Exception e) {
+				 salvarMsgErro(request,"errors.date", new Object[]{"","data"});
+				 return false;
+			}
+		}
+    	
+		return false;
+	}
+    
+    public boolean validarCamposAvaliacao(AtividadesForm form, HttpServletRequest request) {
+    	
+    	List<String> erros = new ArrayList<String>();
+    	
+    	validarCampos(form, request);
+    	
+    	if(form.getCodigoSituacaoAtividade() == null || StringUtils.equals(form.getCodigoSituacaoAtividade().toString(), "#")){
+			erros.add("Situação");
+		}
+
+    	if(StringUtils.isEmpty(form.getObservacaoAvaliacaoAtividade().toString())){
+    		erros.add("Observações Chefia");
+    	}
+    	
+    	if(erros.size()>0){
+			 Object[] o = new Object[erros.size()+1];
+			 o[0]="Erro! Favor preencher todos os Campos Obrigatórios.";
+			 int i =1;
+			 for(String m:erros){
+				 o[i]=m;
+				 i++;
+			 }
+			 salvarMsgErro(request,"errors.generico", o);
+			 return false;
+		}
+    	
+		return false;
+	}
+    
+
+	/**
      * Salva o objeto Projeto no banco. 
      * 
      * @param formulario
@@ -287,7 +380,7 @@ public class AtividadesAction extends TimeSheetComum {
         projeto.setNome(formulario.getNomeProjeto());
         projeto.setNumeroProjeto(Integer.valueOf(formulario.getNumeroProjeto()));
 
-		projetoSalvo = getTimeSheetDelegate().salvarProjeto(projeto, getSessao());
+		projetoSalvo = getTimeSheetDelegate().salvarProjeto(projeto);
 		
 		return projetoSalvo;
     }
@@ -311,10 +404,10 @@ public class AtividadesAction extends TimeSheetComum {
 	    String retorno = "retorno";
         	
     	try {
-			historicoTimeSheet = getTimeSheetDelegate().getHistoricoTimeSheet(formulario.getCodigoHistoricoTimeSheet(), getSessao());
-	    	getTimeSheetDelegate().removerHistoricoTimeSheet(historicoTimeSheet, getSessao());
+			historicoTimeSheet = getTimeSheetDelegate().getHistoricoTimeSheet(formulario.getCodigoHistoricoTimeSheet());
+	    	getTimeSheetDelegate().removerHistoricoTimeSheet(historicoTimeSheet);
 	    	
-	    	AvaliacaoAtividade avaliacaoAtividade = getAvaliacaoAtividadePeloCodigoTimeSheet(formulario.getCodigoTimeSheet());
+	    	AvaliacaoAtividade avaliacaoAtividade = getAvaliacaoAtividadePeloCodigoTimeSheet(formulario.getCodigoTimeSheet(), request);
 	    	
 	    	if(avaliacaoAtividade!=null){
 	    		removerAvaliacaoAtividade(avaliacaoAtividade);
@@ -420,7 +513,7 @@ public class AtividadesAction extends TimeSheetComum {
             timeSheet = preencherTimeSheet(formulario);
             alterarTimeSheet(timeSheet);
         
-            historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "A", formulario);            
+            historicoTimeSheet = preencherHistoricoTimeSheet(timeSheet, "A", formulario, request);            
             salvarHistoricoTimeSheet(historicoTimeSheet);
             
             //Submeter a pagina pai. 
@@ -456,7 +549,6 @@ public class AtividadesAction extends TimeSheetComum {
 	            formulario.setAcao(Constantes.ACAO_DETALHAR);
 	            formulario.setDesabilitarCampo(true);
 	            
-	            request.setAttribute("sessao", getSessao());
 	            
             } catch (ParametroInvalidoException e) {
             	salvarMsgErro("erro.geral2", request);
@@ -733,6 +825,7 @@ public class AtividadesAction extends TimeSheetComum {
             pojo.setId(formulario.getCodigoTimeSheet());
         }
         
+        
         //COMBOS
         pojo.setAtividade(getAtividadePeloID(Integer.valueOf(formulario.getCodigoAtividade())));
         pojo.setCliente(getClientePeloID(Integer.valueOf(formulario.getCodigoCliente())));
@@ -770,7 +863,8 @@ public class AtividadesAction extends TimeSheetComum {
      * @return
      * @throws Exception 
      */
-    public HistoricoTimeSheet preencherHistoricoTimeSheet(TimeSheet timeSheet, String tipoOperacao, AtividadesForm formulario)throws Exception {
+	public HistoricoTimeSheet preencherHistoricoTimeSheet(TimeSheet timeSheet,
+			String tipoOperacao, AtividadesForm formulario, HttpServletRequest request) throws Exception {
         
         HistoricoTimeSheet pojo = new HistoricoTimeSheet();
         
@@ -791,7 +885,7 @@ public class AtividadesAction extends TimeSheetComum {
         pojo.setObservacao(timeSheet.getObservacao());
         pojo.setTipoOperacao(tipoOperacao);
         
-        pojo.setUsuario(getUsuarioPeloID(formulario.getCodigoUsuario()));
+        pojo.setUsuario(getUsuarioPeloID(formulario.getCodigoUsuario(), request));
         
         return pojo;
     }    

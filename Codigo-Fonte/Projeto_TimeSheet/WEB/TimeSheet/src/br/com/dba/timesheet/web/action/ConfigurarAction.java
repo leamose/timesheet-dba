@@ -29,13 +29,9 @@ public class ConfigurarAction extends TimeSheetComum {
 		String retorno = "cadastro";
 		
 		List<Configuracao> lista = new ArrayList<Configuracao>();
-				
-		//Seta a sessao.
-		setSessao((Sessao) request.getSession().getAttribute("sessao"));    
-		
 		
 		try {
-			lista = getTimeSheetDelegate().listarTodosConfiguracao(getSessao());
+			lista = getTimeSheetDelegate().listarTodosConfiguracao();
 			
 			if(lista!= null){
 				for (Configuracao configuracao : lista) {
@@ -53,12 +49,7 @@ public class ConfigurarAction extends TimeSheetComum {
 		} catch (ParametroInvalidoException e) {
 			salvarMsgErro("erro.parametro.invalido", request);
 			e.printStackTrace();
-		} catch (SessaoInvalidaException e) {
-			salvarMsgErro("MSG015", request);
-			retorno = "pagina.de.erro.acesso";
-			e.printStackTrace();
-		}
-		
+		}		
 		return mapping.findForward(retorno);		
 	}
 	
@@ -98,7 +89,7 @@ public class ConfigurarAction extends TimeSheetComum {
 		pojo.setMinimoAlmoco(formulario.getMininoAlmoco());
 		pojo.setTotalHorasMes(totalHorasMes);
 		
-		getTimeSheetDelegate().alterarConfiguracao(pojo, getSessao());
+		getTimeSheetDelegate().alterarConfiguracao(pojo);
 	}
 
 	private TotalHorasMes salvarTotalHorasMes(ConfigurarForm formulario, String ano, String[] totalHoras) throws ParametroInvalidoException, SessaoInvalidaException{
@@ -109,7 +100,7 @@ public class ConfigurarAction extends TimeSheetComum {
 			if(StringUtils.isNotEmpty(ano) && totalHoras[i] != null ){
 				totalHorasMes.setId(ano + i);
 				totalHorasMes.setTotalHorasMes(Integer.parseInt(totalHoras[i]));
-				getTimeSheetDelegate().alterarTotalHorasMes(totalHorasMes, getSessao());
+				getTimeSheetDelegate().alterarTotalHorasMes(totalHorasMes);
 				
 				salvaConfiguracao(formulario, totalHorasMes);
 			}

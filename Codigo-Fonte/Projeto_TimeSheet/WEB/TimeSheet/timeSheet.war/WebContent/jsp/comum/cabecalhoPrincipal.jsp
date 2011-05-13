@@ -51,7 +51,7 @@
 	//SAIR
 	function sair() {
 		var form = document.forms[0];
-		form.action = contexto + '/logout.do'; 
+		form.action = contexto + '/sair.do'; 
 		form.submit();
 	}
 </script>
