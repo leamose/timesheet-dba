@@ -21,35 +21,6 @@ public class StrutsValidator implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Verifica se um cpf é válido.
-     * 
-     * @param bean bean com o formulário do usuário.
-     * @param va action que está sendo validada.
-     * @param field campo que está sendo validado.
-     * @param errors resources de mensagens de erros.
-     * @param validator configurações de validação.
-     * @param request requisição do usuário.
-     * 
-     * @return true caso seja válido.
-     */
-    public static boolean validateCpf(Object bean, ValidatorAction va, Field field, 
-            ActionMessages errors, Validator validator, HttpServletRequest request) {
-        String valor = ValidatorUtils.getValueAsString(bean, field.getProperty());
-        boolean isValido = false;
-
-        if (valor == null || valor.trim().equals("")) {
-            return true;
-        }
-
-        isValido = CPF.validaCPF(valor);
-        if(!isValido) {
-            errors.add(field.getKey(), Resources.getActionMessage(validator, request, va, field));
-        }
-
-        return isValido;
-    }
-    
-    /**
      * Verifica se um período de datas é válido.
      * 
      * @param bean bean com o formulário do usuário.

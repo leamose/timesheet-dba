@@ -21,9 +21,12 @@
 			<div id="corpologin">
 				<div class="topologin"></div>
 				<div class="formulario">
-					<span style="color:red;">
-						<span style="color: red;">${param.msg}</span>							
-					</span>
+					<%if(erro){%>
+				   	  	<div class="textoErro">
+				   	  		<img src="${contexto}/WebContent/img/block.png" width="32" height="32" alt="entrar" style="margin-bottom:-10px; margin-left:8px; margin-right:5px;" />
+			   				<html:errors/>
+						</div>
+   					<%}%>
 					<div style="width: 770px; float: left; background-image: url('${contexto}/WebContent/img/bg_login.jpg'); background-repeat: repeat-x; margin-bottom: 5px; vertical-align: middle; height: 121px;">
 						<img src="${contexto}/WebContent/img/cadeado.jpg" width="261" height="121" style="float: left;"/>
 							

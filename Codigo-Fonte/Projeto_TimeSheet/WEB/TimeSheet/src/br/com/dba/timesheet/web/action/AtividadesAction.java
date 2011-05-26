@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 
 import br.com.dba.timesheet.exceptions.ErroInternoException;
 import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
@@ -23,6 +24,7 @@ import br.com.dba.timesheet.pojo.HistoricoTimeSheet;
 import br.com.dba.timesheet.pojo.Metodologia;
 import br.com.dba.timesheet.pojo.Projeto;
 import br.com.dba.timesheet.pojo.TimeSheet;
+import br.com.dba.timesheet.pojo.TotalHorasMes;
 import br.com.dba.timesheet.pojo.Usuario;
 import br.com.dba.timesheet.pojo.vo.HorasAtividadeVO;
 import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
@@ -33,6 +35,7 @@ import br.com.dba.timesheet.web.form.AtividadesForm;
 
 public class AtividadesAction extends TimeSheetComum {
 
+	
 	/**
 	 * Método responsavel em recuperar as atividades(TimeSheet's) e se o usuario logado for chefe, 
 	 * retorna a lista de funcionarios subordinado.
@@ -51,18 +54,11 @@ public class AtividadesAction extends TimeSheetComum {
     	AtividadesForm formulario = (AtividadesForm) form;
     	List<Funcionario> listaFuncionariosSubordinados = null;
     	boolean indicaChefe = false;
-    	Integer codigoUsuario = null;
     	String retorno = "cadastro";
     	
 	    try {
+	    	formulario.setUsuario(getSessao(request).getUsuario());
 	    	
-    		//Recupera da requisicao ou do formulario o codigo do usuario logado.
-    		if(request.getAttribute("codigoUsuarioLogado")!=null){
-    			codigoUsuario = (Integer)request.getAttribute("codigoUsuarioLogado");
-    		}else {
-    			codigoUsuario = Integer.valueOf(formulario.getCodigoUsuario());
-    		}
-
     		populaTelaInicial(formulario, listaFuncionariosSubordinados,indicaChefe, request);
     		
 		} catch (ErroInternoException e) {
@@ -95,59 +91,60 @@ public class AtividadesAction extends TimeSheetComum {
 	public void populaTelaInicial(AtividadesForm formulario, List<Funcionario> listaFuncionariosSubordinados, boolean indicaChefe, HttpServletRequest request)
 			throws ParametroInvalidoException, SessaoInvalidaException {
 		
-		List<HorasAtividadeVO> listaHorasAtividadeVOs;		
-		List<HorasAtividadeVO> totalHorasTrabalhadas = null;
+		List<HorasAtividadeVO> listaHorasAtividadeVOs = null;		
+		List<HorasAtividadeVO> listaTotalHorasTrabalhadas = null;
+		String totalCargaHoraria = null;
+		String totalHorasTrabalhadas = null;
+		String totalSaldoDiario = null;
+		String totalSaldoAcumulado = null;
 			
-		if(getSegurancaDelegate().isSessaoValida(getSessao(request))){
-			Usuario usuarioLogado = getSessao(request).getUsuario();
-			
-			if(usuarioLogado.getFuncionario()!=null && usuarioLogado.getFuncionario().getIndicaChefe()){
-				//verifica se o usuario logado é chefe.
-				indicaChefe = usuarioLogado.getFuncionario().getIndicaChefe();
-				
-				//recupera uma lista de funcionarios colaboradores pelo codigo do usuario chefe.
-				listaFuncionariosSubordinados = consultaFuncionariosPeloCodigoFuncionarioChefe(usuarioLogado);
-			}	    		
-			
-			//recupera as horas trabalhadas.
-			listaHorasAtividadeVOs = getListaHorasAtividadeVO(usuarioLogado.getFuncionario());
-			
-			//Preenche formulario
-			formulario.setTamanhoListaHoras(listaHorasAtividadeVOs != null ? listaHorasAtividadeVOs.size():0);
-			formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
-			formulario.setCodigoUsuario(usuarioLogado.getId());
-			formulario.setUsuario(usuarioLogado);
-			formulario.setCodigoFuncionarioLogado(usuarioLogado.getFuncionario()!=null ? usuarioLogado.getFuncionario().getId():null);
+		if(formulario.getUsuario()!=null &&  formulario.getUsuario().getFuncionario()!=null && formulario.getUsuario().getFuncionario().getIndicaChefe()){
+			//verifica se o usuario logado é chefe.
+			indicaChefe = formulario.getUsuario().getFuncionario().getIndicaChefe();
 			formulario.setIndicaChefe(indicaChefe);
-			formulario.setMesLiteral(UtilDate.getMesLiteral());
 			
-			formulario.setMesConsulta(Integer.toString(UtilDate.getMesAtual()));
-			formulario.setAnoConsulta(Integer.toString(UtilDate.getAnoAtual()));
-
-			//recupera as atividade do usuario logado.
-			formulario.setListaTimeSheetVO(getListaTimeSheetVO(usuarioLogado.getFuncionario()));
-			
+			//recupera uma lista de funcionarios colaboradores pelo codigo do usuario chefe.
+			listaFuncionariosSubordinados = consultaFuncionariosPeloCodigoFuncionarioChefe(formulario.getUsuario());
 			formulario.setListaFuncionariosSubordinados(listaFuncionariosSubordinados);
-			
-			//indica false, pois o mesmo nao pode se avaliar.
-			formulario.setIndicaAvaliacao(false);
-			
-			if(usuarioLogado.getFuncionario() != null){
-	    		totalHorasTrabalhadas = getTimeSheetDelegate().getTotalHorasTrabalhadas(UtilDate.getAnoAtual(), 
-	    				UtilDate.getMesAtual(), usuarioLogado.getFuncionario().getId());
-			}
-			
-			if(totalHorasTrabalhadas!=null && !totalHorasTrabalhadas.isEmpty()){
-				request.setAttribute("totalCargaHoraria", "176");
-				request.setAttribute("totalHorasTrabalhadas", totalHorasTrabalhadas.get(0).getHorasTrabalhadas());
-				request.setAttribute("totalSaldoDiario", UtilDate.subtrairHoras("176:00", totalHorasTrabalhadas.get(0).getHorasTrabalhadas()));
-			}
-			
-			
-			
-		}else{
-			throw new SessaoInvalidaException();
+		}	    		
+		
+		//recupera as HORAS trabalhadas do usuario logado.
+		listaHorasAtividadeVOs = getListaHorasAtividadeVO(formulario.getUsuario().getFuncionario());
+		
+		//Preenche formulario(TELA)
+		formulario.setTamanhoListaHoras(listaHorasAtividadeVOs != null ? listaHorasAtividadeVOs.size():0);
+		formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
+		formulario.setCodigoUsuario(formulario.getUsuario().getId());		
+		formulario.setCodigoFuncionarioLogado(formulario.getUsuario().getFuncionario()!=null ? formulario.getUsuario().getFuncionario().getId():null);
+		formulario.setMesLiteral(UtilDate.getMesLiteral());
+		formulario.setMesConsulta(Integer.toString(UtilDate.getMesAtual()));
+		formulario.setAnoConsulta(Integer.toString(UtilDate.getAnoAtual()));
+
+		//recupera as ATIVIDADES do usuario logado.
+		formulario.setListaTimeSheetVO(getListaTimeSheetVO(formulario.getUsuario().getFuncionario()));
+		
+		if(formulario.getUsuario() != null && formulario.getUsuario().getFuncionario() != null){
+    		listaTotalHorasTrabalhadas = getTimeSheetDelegate().getTotalHorasTrabalhadas(UtilDate.getAnoAtual(), 
+    				UtilDate.getMesAtual(), formulario.getUsuario().getFuncionario().getId());
 		}
+		
+		if(!listaTotalHorasTrabalhadas.isEmpty()){
+			TotalHorasMes totalHorasMes = getTimeSheetDelegate().consultaTotalHorasMesPorAnoMes(Integer.toString(UtilDate.getAnoAtual()), Integer.toString(UtilDate.getMesAtual()));
+			
+			if(totalHorasMes!=null && totalHorasMes.getTotalHorasMes()!=null){				
+				totalCargaHoraria = Integer.toString(totalHorasMes.getTotalHorasMes());
+			}
+			
+			totalHorasTrabalhadas = listaTotalHorasTrabalhadas.get(0).getHorasTrabalhadas();
+			totalSaldoDiario = UtilDate.subtrairHoras(totalCargaHoraria!=null? totalCargaHoraria.toString() + ":00":"", listaTotalHorasTrabalhadas.get(0).getHorasTrabalhadas());
+		}
+
+		
+		
+		formulario.setTotalCargaHoraria(totalCargaHoraria);
+		formulario.setTotalHorasTrabalhadas(totalHorasTrabalhadas);
+		formulario.setTotalSaldoDiario(totalSaldoDiario);
+		formulario.setTotalSaldoAcumulado(totalSaldoAcumulado);
 	}
 
 	/**
@@ -233,8 +230,6 @@ public class AtividadesAction extends TimeSheetComum {
     	    
     	    if(validarCampos(formulario, request)){
     	    
-	    	    //TODO: Verificar se a Atividade(TimeSheet) ja foi fechado 
-	    	    // --- ERRO "Seu Timesheet de Março de 2010  já está fechado." 
 	    	    
 	    	    timeSheet = preencherTimeSheet(formulario);    	    
 	    	    
@@ -245,7 +240,12 @@ public class AtividadesAction extends TimeSheetComum {
 	            
 	            //Submeter a pagina pai. 
 	            request.setAttribute("submiter", true);
-    	    }
+    	    }else{
+    	    	//Submeter a pagina pai. 
+	            request.setAttribute("preencherCombo", true);
+	            request.setAttribute("codigoProdutoServico", formulario.getCodigoProdutoServico());
+	            request.getSession().setAttribute("msg", formulario.getMessages());
+    	    }    	    
             
         } catch (NumberFormatException e) {        	
 			salvarMsgErro("MSG022", request);
@@ -306,27 +306,29 @@ public class AtividadesAction extends TimeSheetComum {
 				 o[i]=m;
 				 i++;
 			 }
-			 salvarMsgErro(request,"errors.generico", o);
+			 
+			 form.setMessages(salvarMsgErro(request,"errors.generico", o)); 
 			 return false;
 		}else{
 	    	if(form.getData().length()<10){
-				 salvarMsgErro(request,"errors.required", new Object[]{"Data Atividade","data"});
+	    		form.setMessages(salvarMsgErro(request,"errors.required", new Object[]{"Data Atividade","data"}));
 				 return false;
 			}
 			try {
 				Date data = UtilDate.getData(form.getData());
 				Date dataAutal = UtilDate.getHoraZero(UtilDate.getDataAtual());
-				if(data.getTime()>= dataAutal.getTime()){
-					 salvarMsgErro(request,"errors.generico", new Object[]{"Data deve ser menor que data atual.","data"});
+				if(data.getTime()> dataAutal.getTime()){
+					form.setMessages(salvarMsgErro(request,"errors.generico", new Object[]{"Data deve ser menor que data atual.","data"}));
 					 return false;
 				}
 			} catch (Exception e) {
-				 salvarMsgErro(request,"errors.date", new Object[]{"","data"});
+				form.setMessages(salvarMsgErro(request,"errors.date", new Object[]{"","data"}));
 				 return false;
 			}
 		}
     	
-		return false;
+    	form.setMessages(null);
+		return true;
 	}
     
     public boolean validarCamposAvaliacao(AtividadesForm form, HttpServletRequest request) {
@@ -355,8 +357,41 @@ public class AtividadesAction extends TimeSheetComum {
 			 return false;
 		}
     	
-		return false;
+		return true;
 	}
+
+    public boolean validarCamposConsulta(AtividadesForm form, HttpServletRequest request) {
+    	
+    	List<String> erros = new ArrayList<String>();
+    	
+    	validarCampos(form, request);
+    	
+    	if(form.getCodigoFuncionario() == null || StringUtils.equals(form.getCodigoFuncionario().toString(), "#")){
+    		erros.add("Colaborador");
+    	}
+    	
+    	if(StringUtils.isEmpty(form.getMesConsulta().toString())){
+    		erros.add("Mês");
+    	}
+
+    	if(StringUtils.isEmpty(form.getAnoConsulta().toString())){
+    		erros.add("Ano");
+    	}
+    	
+    	if(erros.size()>0){
+    		Object[] o = new Object[erros.size()+1];
+    		o[0]="Erro! Favor preencher todos os Campos Obrigatórios.";
+    		int i =1;
+    		for(String m:erros){
+    			o[i]=m;
+    			i++;
+    		}
+    		salvarMsgErro(request,"errors.generico", o);
+    		return false;
+    	}
+    	
+    	return true;
+    }
     
 
 	/**
@@ -476,9 +511,16 @@ public class AtividadesAction extends TimeSheetComum {
 		try {
 			AtividadesForm formulario = (AtividadesForm) form;
 			
+			ActionMessages msg = (ActionMessages) request.getSession().getAttribute("msg");
+			formulario.setCodigoProdutoServico(formulario.getCodigoProdutoSelecionadoAnteriormente());
+			if(msg!=null){
+				saveErrors(request, msg);
+				request.getSession().setAttribute("msg", null);
+			}
+				
 			preencherFormularioInicial(formulario);
 			
-			formulario.setListaProdutosServicos(recuperarListaProdutoServico(Integer.valueOf(formulario.getCodigoMetodologia())));
+			formulario.setListaProdutosServicos(formulario.getCodigoMetodologia()!=null?recuperarListaProdutoServico(Integer.valueOf(formulario.getCodigoMetodologia())):getListarTodosProdutosServicos());
 			
 		} catch (ParametroInvalidoException e) {
 			salvarMsgErro("erro.geral2", request);
@@ -544,7 +586,7 @@ public class AtividadesAction extends TimeSheetComum {
             try {
 				preencherFormularioInicial(formulario);
            
-				preencherFormulario(formulario, getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet())));
+				preencherFormularioComObjetoDoBanco(formulario, getTimeSheetPeloID(Integer.valueOf(formulario.getCodigoTimeSheet())));
 				            
 	            formulario.setAcao(Constantes.ACAO_DETALHAR);
 	            formulario.setDesabilitarCampo(true);
@@ -581,46 +623,40 @@ public class AtividadesAction extends TimeSheetComum {
             HttpServletRequest request, HttpServletResponse response) {
         
     	AtividadesForm formulario = (AtividadesForm)form;
-        List<TimeSheetVO> lista;
+        List<TimeSheetVO> lista = new ArrayList<TimeSheetVO>();
         String retorno = "retorno";
 		List<HorasAtividadeVO> listaHorasAtividadeVOs = null;
 		Funcionario funcionario = null;
 		
 		try {
         
-			if(formulario.getCodigoFuncionario()!=null){
+			if(validarCamposConsulta(formulario, request)){
 				//CONSULTA Funcionario Subordinado.
 				funcionario = getFuncionarioPeloID(Integer.valueOf(formulario.getCodigoFuncionario()));
-			}else{
-				salvarMsgErro("errors.required", "Colaborador ", request);
-			}
 		
-			if(formulario.getCodigoFuncionario()!=null){
-				
-				// Recupera a lista de Atividades do usuario subordinado
-				lista = getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(),
-						formulario.getCodigoFuncionario());
-				
-				listaHorasAtividadeVOs = getListaHorasAtividadeVO(funcionario);
-				
-				//Descricao do Mes : Exemplo (Março, Abril....)
-    			formulario.setMesLiteral(UtilDate.getMesLiteral());
-    			formulario.setCodigoFuncionarioSubordinado(funcionario.getId());
-    			formulario.setSubordinado(funcionario);	    			
-    			formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
-    			formulario.setListaTimeSheetVO(lista);
-    			formulario.setIndicaAvaliacao(true);
-				
-				
-			}else{
-				//Recupera a lista de Atividades do usuario logado
-				lista = getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(),
-						formulario.getCodigoFuncionarioLogado());
+				if(formulario.getCodigoFuncionario()!=null){
+					
+					// Recupera a lista de Atividades do usuario subordinado
+					lista = getListaTimeSheetVOPeloMesAno(formulario.getMesConsulta(), formulario.getAnoConsulta(),
+							formulario.getCodigoFuncionario());
+					
+					listaHorasAtividadeVOs = getListaHorasAtividadeVO(funcionario);
+					
+					//Descricao do Mes : Exemplo (Março, Abril....)
+	    			formulario.setMesLiteral(UtilDate.getMesLiteral());
+	    			formulario.setCodigoFuncionarioSubordinado(funcionario.getId());
+	    			formulario.setSubordinado(funcionario);	    			
+	    			formulario.setListaHorasAtividadeVOs(listaHorasAtividadeVOs);
+	    			formulario.setListaTimeSheetVO(lista);
+	    			formulario.setIndicaAvaliacao(true);
+					
+					
+				}
 			}
 			
 			formulario.setListaTimeSheetVO(lista);
-        
-			request.setAttribute("consulta", true);
+			formulario.setMostraConsulta(true);
+			formulario.setConsulta(false);
         
 		} catch (ParametroInvalidoException e) {
 			salvarMsgErro("erro.geral2", request);
@@ -636,6 +672,22 @@ public class AtividadesAction extends TimeSheetComum {
         
         return mapping.findForward(retorno);       
     }
+
+	public ActionForward inicioConsultar(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		AtividadesForm formulario = (AtividadesForm)form;
+		String retorno = "retorno";
+
+		formulario.setListaTimeSheetVO(new ArrayList<TimeSheetVO>());
+		formulario.setCodigoFuncionario(null);
+		
+		
+		formulario.setMostraConsulta(true);
+		formulario.setConsulta(false);			
+		
+		return mapping.findForward(retorno);       
+	}
 
     /**
      * Responsavel por abrir PopUp.
@@ -656,7 +708,7 @@ public class AtividadesAction extends TimeSheetComum {
         
         //Lista para as combos.
         preencherFormularioInicial(formulario);
-        preencherFormulario(formulario, null);
+        preencherFormularioComObjetoDoBanco(formulario, null);
         
        return mapping.findForward("retorno");      
     }
@@ -680,6 +732,9 @@ public class AtividadesAction extends TimeSheetComum {
 	    
             TimeSheetVO timesheet;
 			timesheet = getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(formulario.getId());
+			
+			formulario.limparFormulario();
+			
             preencherFormularioInicial(formulario);
             preencherFormularioVO(formulario, timesheet);
             
@@ -706,21 +761,31 @@ public class AtividadesAction extends TimeSheetComum {
 	    
 	    	AtividadesForm formulario = (AtividadesForm) form;
     	    
-	    	TimeSheet timeSheetPreenchido = preencherTimeSheet(formulario);	    	
-	    	alterarTimeSheet(timeSheetPreenchido);
-    	    
-    	    AvaliacaoAtividade avaliacaoAtividade = new AvaliacaoAtividade();
-	    
-    	    avaliacaoAtividade.setFuncionarioAvaliador(getFuncionarioPeloID(formulario.getCodigoFuncionarioLogado()));
-    	    avaliacaoAtividade.setObservacao(formulario.getObservacaoAvaliacaoAtividade());
-    	    avaliacaoAtividade.setObservacaoPrivada(formulario.getObservacaoPrivada());
-    	    avaliacaoAtividade.setSituacaoAtividade(getSituacaoAtividadePeloID(Integer.valueOf(formulario.getCodigoSituacaoAtividade())));
-			avaliacaoAtividade.setTimeSheet(timeSheetPreenchido);
-    	    
-			salvarAvaliacaoAtividade(avaliacaoAtividade);
+	    	if(validarCamposAvaliacao(formulario, request)){
+	    	
+		    	TimeSheet timeSheetPreenchido = preencherTimeSheet(formulario);	
+		    	
+		    	alterarTimeSheet(timeSheetPreenchido);
+	    	    
+	    	    AvaliacaoAtividade avaliacaoAtividade = new AvaliacaoAtividade();
+		    
+	    	    if(formulario.getCodigoAvaliacao()!=null && formulario.getCodigoAvaliacao()!=0){
+	    	    	avaliacaoAtividade.setId(formulario.getCodigoAvaliacao());
+	    	    }
+	    	    
+	    	    avaliacaoAtividade.setFuncionarioAvaliador(getFuncionarioPeloID(formulario.getCodigoFuncionarioLogado()));
+	    	    avaliacaoAtividade.setObservacao(formulario.getObservacaoAvaliacaoAtividade());
+	    	    avaliacaoAtividade.setObservacaoPrivada(formulario.getObservacaoPrivada());
+	    	    avaliacaoAtividade.setSituacaoAtividade(getSituacaoAtividadePeloID(Integer.valueOf(formulario.getCodigoSituacaoAtividade())));
+				avaliacaoAtividade.setTimeSheet(timeSheetPreenchido);
+	    	    
+				getTimeSheetDelegate().alterarAvaliacaoAtividade(avaliacaoAtividade);
+
+				//Submeter a pagina pai. 
+				request.setAttribute("submiter", true);				
+				
+    	    }
             
-          //Submeter a pagina pai. 
-            request.setAttribute("submiter", true);
 		} catch (ParametroInvalidoException e) {
 			salvarMsgErro("erro.geral2", request);
 			e.printStackTrace();
@@ -740,7 +805,7 @@ public class AtividadesAction extends TimeSheetComum {
 	//*********************************************
     //* METODOS AUXILIARES :
     //*********************************************
-    public void preencherFormulario(AtividadesForm formulario, TimeSheet timesheet) throws ParametroInvalidoException, SessaoInvalidaException{
+    public void preencherFormularioComObjetoDoBanco(AtividadesForm formulario, TimeSheet timesheet) throws ParametroInvalidoException, SessaoInvalidaException{
          
         if(timesheet !=null){
             formulario.setId(timesheet.getId());
@@ -778,6 +843,7 @@ public class AtividadesAction extends TimeSheetComum {
     		formulario.setNumeroProjeto(Integer.toString(timesheet.getCodigoProjeto()));
     		formulario.setCodigoCliente(timesheet.getCodigoCliente());
     		formulario.setCodigoAtividade(timesheet.getCodigoAtividade());
+    		formulario.setCodigoAvaliacao(timesheet.getCodigoAvaliacaoTimeSheet());
     		formulario.setCodigoProdutoServico(timesheet.getCodigoProdutoServico());
     		formulario.setObservacao(timesheet.getObservacao());
     		formulario.setOutros(timesheet.getOutrasAtividades());
@@ -803,7 +869,11 @@ public class AtividadesAction extends TimeSheetComum {
         formulario.setListaOPs(getListarTodasOPs());
         formulario.setListaMetodologias(getListarTodasMetodologias());
         formulario.setListaSituacaoAtividade(getListarTodasSituacaoAtividade());
-        formulario.setData(UtilDate.getDataComoString(UtilDate.getDataAtual()));
+        formulario.setConsulta(false);
+        
+        if(StringUtils.isEmpty(formulario.getData()))
+        	formulario.setData(UtilDate.getDataComoString(UtilDate.getDataAtual()));
+        
     }
     
     /**
@@ -822,7 +892,7 @@ public class AtividadesAction extends TimeSheetComum {
         TimeSheet pojo = new TimeSheet();
 
         if(formulario.getAcao().equals(Constantes.ACAO_ALTERAR) || formulario.getAcao().equals(Constantes.ACAO_AVALIAR)){
-            pojo.setId(formulario.getCodigoTimeSheet());
+            pojo.setId(formulario.getCodigoTimeSheet()!=null?formulario.getCodigoTimeSheet():formulario.getId());
         }
         
         

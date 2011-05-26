@@ -367,33 +367,31 @@ public class TimeSheetComum extends BaseDispatchAction{
 	}
 
 	/**
-	 * Recupera a lista com as horas das atividades(TIMESHEETs) pelo funcionario.
+	 * Recupera a lista com as horas das atividades(TIMESHEETs) pelo codigo funcionario.
 	 * @param subordinado
 	 * @return
 	 * @throws ParametroInvalidoException
 	 */
-	protected List<HorasAtividadeVO> getListaHorasAtividadeVO(Funcionario subordinado)
-			throws ParametroInvalidoException, SessaoInvalidaException {
-				return getTimeSheetDelegate().getListaHorasAtividadeVO(UtilDate.getDataAtual(),
-						subordinado.getId());
-			}
+	protected List<HorasAtividadeVO> getListaHorasAtividadeVO(Funcionario subordinado) throws ParametroInvalidoException, SessaoInvalidaException {
+		return getTimeSheetDelegate().getListaHorasAtividadeVO(UtilDate.getDataAtual(), subordinado.getId());
+	}
+	
 	/**
 	 * Recupera a lista de atividades por funcionario.
 	 * @param funcionario
 	 * @return
 	 * @throws ParametroInvalidoException
 	 */
-	protected List<TimeSheetVO> getListaTimeSheetVO(Funcionario funcionario)
-			throws ParametroInvalidoException, SessaoInvalidaException {
-				//Data do primeiro dia do mes atual.
-				String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
-				
-				//Data do ultimo dia do mes atual.
-				String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
-				
-				return getTimeSheetDelegate().getListaTimeSheetVO(UtilDate.getDataComHoraZero(data1),
-						UtilDate.getDataComHoraZero(data2), funcionario.getId());
-			}
+	protected List<TimeSheetVO> getListaTimeSheetVO(Funcionario funcionario)throws ParametroInvalidoException, SessaoInvalidaException {
+		//Data do primeiro dia do mes atual.
+		String data1 = UtilDate.getDataComoString(UtilDate.getCalendarPrimeiroDoMesAtual().getTime());
+		
+		//Data do ultimo dia do mes atual.
+		String data2 = UtilDate.getDataComoString(UtilDate.getDataNoUltimoDiaDoMes(UtilDate.getDataAtual()));
+		
+		return getTimeSheetDelegate().getListaTimeSheetVO(UtilDate.getDataComHoraZero(data1),
+				UtilDate.getDataComHoraZero(data2), funcionario.getId());
+	}
 
 	/**
 	 * Recupera a lista de Funcionario Subordinado pelo codigo do chefe.

@@ -21,6 +21,7 @@ public class TimeSheetVO implements Serializable {
     private Integer codigoOp;          
     private Integer codigoFuncionario;    
     private Integer codigoCliente;
+    private Boolean habilitaBotaoAlterar;
     
     //PRODUTO
     private String descricaoProduto;
@@ -475,6 +476,12 @@ public class TimeSheetVO implements Serializable {
         this.ultimaAtividade = ultimaAtividade;
     }
 
+	public Boolean getHabilitaBotaoAlterar() {
+		return habilitaBotaoAlterar;
+	}
 
+	public void setHabilitaBotaoAlterar(Boolean habilitaBotaoAlterar) {
+		this.habilitaBotaoAlterar = habilitaBotaoAlterar;
+	}
 
 }

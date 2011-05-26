@@ -83,11 +83,11 @@ public class LoginAction extends TimeSheetComum {
 			Sessao sessao = getSegurancaDelegate().autenticarUsuario(formulario.getLogin(), formulario.getSenha());
 			
 			if(getSegurancaDelegate().isSessaoValida(sessao)){
-				request.setAttribute("codigoUsuarioLogado", sessao.getUsuario().getId());
 				formulario.setCodigoUsuario(sessao.getUsuario().getId());				
 				marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_OK);
 				request.getSession().setAttribute(TimeSheetComum.SESSAO_EJB, sessao);
 			}else{
+				marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 				throw new SessaoIndisponivelException("MSG015");
 			}	
 			
@@ -98,22 +98,22 @@ public class LoginAction extends TimeSheetComum {
 		} catch (IdentificadorSenhaIncorretosException e) {		
 			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 	        salvarMsgErro("MSG024", request);
-	        retorno = "pagina.de.erro.acesso";
+	        retorno = "pagina.login";
 		} catch (ErroInternoException e) {
 			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
-			retorno = "pagina.de.erro.acesso";
+			retorno = "pagina.login";
 		} catch (ParametroInvalidoException e) {
 			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			salvarMsgErro("MSG024", request);
-			retorno = "pagina.de.erro.acesso";
+			retorno = "pagina.login";
 		} catch (LogonBloqueadoException e) {
 			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			salvarMsgErro("MSG011", request);
-			retorno = "pagina.de.erro.acesso";
+			retorno = "pagina.login";
 		} catch (SessaoIndisponivelException e) {
 			marcarAutenticacao(request, ConstantesLogin.AUTENTICACAO_NOT_OK);
 			salvarMsgErro("MSG015", request);
-			retorno = "pagina.de.erro.acesso";
+			retorno = "pagina.login";
 		}
 		return mapping.findForward(retorno);
 	}

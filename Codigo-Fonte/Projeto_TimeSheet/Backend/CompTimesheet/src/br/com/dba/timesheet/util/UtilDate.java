@@ -592,5 +592,136 @@ public class UtilDate {
 	}
 
 	
+	public static String somarHoras(String horaInicial, String horaFinal){
+		 String hora1    = horaInicial;  
+		 String hora2    = horaFinal;  
+//		 String hora1    = "23:05:46";  
+//		 String hora2    = "18:56:03";  
+ 
+		 String horas    = "00";  
+		 String minutos  = "00";  
+		 String segundos = "00";  
+		 
+		 int segundos1   = 0;
+		 int segundos2   = 0;
+       
+		 int sub       	 = 0;  
+		 int subHoras    = 0;  
+		 int subMinutos  = 0;  
+ 
+		 if(hora1.indexOf(":") == 2){
+		 	 segundos1   = (Integer.parseInt(hora1.substring(0,2))*3600)+(Integer.parseInt(hora1.substring(3,5))*60);     
+			 segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);
+		 }else{
+			 segundos1   = (Integer.parseInt(hora1.substring(0,3))*3600)+(Integer.parseInt(hora1.substring(4,6))*60);    
+			 segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);			 
+		 }
+       
+		 sub = segundos1 + segundos2;  
+ 
+		 if ( sub >= 3600){  
+			 subHoras = (sub-(sub%3600))/3600;  
+			 sub = sub - (subHoras*3600);  
+			 if (subHoras < 10){  
+				 horas = "0"+Integer.toString(subHoras);  
+			 }else{  
+				 horas = Integer.toString(subHoras);  
+			 }  
+		 }  
+ 
+		 if ( sub >= 60){  
+			 subMinutos = (sub-(sub%60))/60;  
+			 sub = sub - (subMinutos*60);  
+			 if (subMinutos < 10){  
+				 minutos = "0"+Integer.toString(subMinutos);  
+			 }else{  
+				 minutos = Integer.toString(subMinutos);  
+			 }  
+		 }  
+ 
+		 System.out.println("HH:MM:SS : "+horas+":"+minutos+":"+segundos);  
+		 return  horas + ":" + minutos;
+	}
+
+	public static String subtrairHoras(String horaInicial, String horaFinal){
+		String hora1    = horaInicial;  
+		String hora2    = horaFinal;  
+//		 String hora1    = "23:05:46";  
+//		 String hora2    = "18:56:03";  
+		
+		String horas    = "00";  
+		String minutos  = "00";  
+		
+		int segundos1   = 0;
+		int segundos2   = 0;
+		
+		int sub       	 = 0;  
+		int subHoras    = 0;  
+		int subMinutos  = 0;  
+		
+		if(hora1.indexOf(":") == 2){
+			segundos1   = (Integer.parseInt(hora1.substring(0,2))*3600)+(Integer.parseInt(hora1.substring(3,5))*60);     
+			segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);
+		}else{
+			segundos1   = (Integer.parseInt(hora1.substring(0,3))*3600)+(Integer.parseInt(hora1.substring(4,5))*60);    
+			segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);			 
+		}
+		
+		sub = segundos1 - segundos2;  
+		
+		if ( sub >= 3600){  
+			subHoras = (sub-(sub%3600))/3600;  
+			sub = sub - (subHoras*3600);  
+			if (subHoras < 10){  
+				horas = "0"+Integer.toString(subHoras);  
+			}else{  
+				horas = Integer.toString(subHoras);  
+			}  
+		}  
+		
+		if ( sub >= 60){  
+			subMinutos = (sub-(sub%60))/60;  
+			sub = sub - (subMinutos*60);  
+			if (subMinutos < 10){  
+				minutos = "0"+Integer.toString(subMinutos);  
+			}else{  
+				minutos = Integer.toString(subMinutos);  
+			}  
+		}  
+		
+		
+		System.out.println("HH:MM:SS : "+horas+":"+minutos);  
+		return  horas + ":" + minutos;
+	}	   
+
+	public static Boolean horaNegativa(String horaInicial, String horaFinal){
+		String hora1    = horaInicial;  
+		String hora2    = horaFinal;  
+//		 String hora1    = "23:05:46";  
+//		 String hora2    = "18:56:03";  
+		
+		String horas    = "00";  
+		String minutos  = "00";  
+		
+		int segundos1   = 0;
+		int segundos2   = 0;
+		
+		int sub       	 = 0;  
+		int subHoras    = 0;  
+		int subMinutos  = 0;  
+		
+		if(hora1.indexOf(":") == 2){
+			segundos1   = (Integer.parseInt(hora1.substring(0,2))*3600)+(Integer.parseInt(hora1.substring(3,5))*60);     
+			segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);
+		}else{
+			segundos1   = (Integer.parseInt(hora1.substring(0,3))*3600)+(Integer.parseInt(hora1.substring(4,5))*60);    
+			segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);			 
+		}
+		
+		sub = segundos1 - segundos2;
+		
+		return sub < 3600 || sub < 60;
+	}	   
+	
 	
 }

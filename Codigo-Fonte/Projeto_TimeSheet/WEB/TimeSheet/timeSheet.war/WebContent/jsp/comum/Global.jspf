@@ -8,6 +8,11 @@
 <%@ taglib uri="/WEB-INF/tlds/struts-tiles.tld" prefix="tiles" %>
 
 <%@page import="br.com.dba.timesheet.util.Constantes"%>
+<%@page import="org.apache.struts.action.ActionMessages"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.apache.struts.action.ActionMessage"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 
 <c:set var="contexto">${pageContext.request.contextPath}</c:set>
 <c:set var="ACAO_DETALHAR"><%=Constantes.ACAO_DETALHAR%></c:set>
@@ -15,3 +20,23 @@
 <c:set var="ACAO_REMOVER"><%=Constantes.ACAO_REMOVER%></c:set>
 <c:set var="ACAO_ALTERAR"><%=Constantes.ACAO_ALTERAR%></c:set>
 <c:set var="ACAO_AVALIAR"><%=Constantes.ACAO_AVALIAR%></c:set>
+
+
+
+<%
+boolean erro = false;
+List camposErros = new ArrayList();
+camposErros.add("");
+if(request!=null && request.getAttribute("org.apache.struts.action.ERROR")!=null){
+erro = true;
+ActionMessages a =  (ActionMessages) request.getAttribute("org.apache.struts.action.ERROR");
+Iterator iterator = a.get();
+while(iterator.hasNext()){
+	 ActionMessage as = (ActionMessage) iterator.next();
+	 if(as!=null&&as.getValues()!=null){
+		 for(int i = 0;i<as.getValues().length;i++){
+			  camposErros.add(as.getValues()[i].toString());
+		  }
+		}
+	 }
+}%>

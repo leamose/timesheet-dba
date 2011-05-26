@@ -13,30 +13,18 @@
 
 			//CONSULTAR ATIVIDADE
 			function consultarAtividade() {				
-				validaCampos();
 				var form = document.forms[0];
 				form.action = contexto + '/atividade/consultar.do'; 
 				form.submit();
 			}
 
-			function validaCampos(){
-				if (document.forms[0].codigoFuncionario.value == "#"){
-				       alert("Esqueceu de especificar o colaborador.");
-				       document.forms[0].codigoFuncionario.focus();
-				       return false;
-				}
-				if (document.forms[0].mesConsulta.value == ""){
-				       alert("Esqueceu de especificar o mes.");
-				       document.forms[0].codigoFuncionario.focus();
-				       return false;
-				}
-				if (document.forms[0].anoConsulta.value == ""){
-				       alert("Esqueceu de especificar o ano");
-				       document.forms[0].anoConsulta.focus();
-				       return false;
-				}
+			//INICIO CONSULTAR ATIVIDADE
+			function inicioConsultarAtividade() {				
+				var form = document.forms[0];
+				form.action = contexto + '/atividade/inicioConsultar.do?mostraConsulta=true&consulta=true'; 
+				form.submit();
 			}
-	
+				
 			//DETALHAR
 			function detalharAtividade(codigoTimeSheet, temOutrasAtividades, altura) {
 				open_popPpAtividade(temOutrasAtividades, contexto + '/atividade/detalhar.do?popUp=true&acao=<%=Constantes.ACAO_DETALHAR%>&codigoTimeSheet='+codigoTimeSheet, null, "Detalhar Atividade", 800, altura);				
@@ -82,53 +70,30 @@
 			<html:hidden name="form" property="codigoUsuario"/>
 			<html:hidden name="form" property="indicaChefe"/>
 			<html:hidden name="form" property="codigoFuncionarioLogado"/>
-			
+			<html:hidden name="form" property="codigoAvaliacao"/>
+			<html:hidden property="mostraConsulta" value="${form.consulta}"/>
+		
+		<div class="base">
+			<!-- TOPO -->	
+			<div style="top: 0">		
 			<%@include file="/WebContent/jsp/comum/cabecalhoPrincipal.jsp"%>
-	
-		<!-- MIOLO -->
-		<div id="miolo" style="background-color:#fff; background-image:none;height:78%;">
-			
-				<!-- TABELA DE MENSAGENS DE ERRO DO SISTEMA -->
-				<%@include file="/WebContent/jsp/erro/tabelaErros.jsp" %>
+			</div>
+			<div style="clear: both"></div>
+			<!-- MIOLO -->
+			<div id="miolo" style="background-color:#fff; width:100%; height:70%; position: absolute;">
 				
 				<!-- CABECALHO ATIVIDADES(consulta, adicao de atividade, escolha de colaborador subordinado) -->
-				<%@include file="/WebContent/jsp/atividades/cabecalhoAtividades.jsp" %>
+				<%@include file="/WebContent/jsp/atividades/miolo.jsp" %>
+				<div style="clear: both"></div>
+			</div>
+			
+			<!-- RODAPÉ -->
+			<%@include file="/WebContent/jsp/atividades/rodape.jsp" %>
+		</div>	 	
 				
-				<!-- TABELA COM AS ATIVIDADES -->
-				<%@include file="/WebContent/jsp/atividades/tabelaResultadoAtividades.jsp" %>
-				
-				<!-- TABELA COM OS HORARIOS, SALDO DIARIO e CARGA HORARIA -->
-				<%@include file="/WebContent/jsp/util/reguaHorasAtividades.jsp" %>
-				
-				
-				<!-- SITUACAO DAS ATIVIDADES -->
-				<div style="float:left; padding-right: 15px;padding-top: 5px;">
-					<table align="center">
-					 <tr>
-					   <td><font face="tahoma,arial,  helvetica" size="2">
-					   		<img src="${contexto}/WebContent/img/aprov_mao.gif"/>Aprovado</font></td>
-					   <td>&nbsp;</td>
-					   <td><font face="tahoma,arial,  helvetica" size="2">
-					   		<img src="${contexto}/WebContent/img/reprov_mao.gif"/>Reprovado</font></td> 
-					   <td>&nbsp;</td>
-					   <td><font face=" tahoma,arial, helvetica" size="2">
-					   		<img src="${contexto}/WebContent/img/aguardando_aprov.gif"/>Aguardando Aprovação</font></td>
-					
-					 </tr>
-					</table>
-				</div>
-				
-			</div>   	
 			
 		</html:form>
 		
-		<script>
-			if(<%=request.getAttribute("consulta")%>) {
-				mostraConsulta();
-			}else{
-				escondeConsulta();
-			} 
-		</script>
 		
 		<!-- FIM MIOLO -->
 				

@@ -83,14 +83,15 @@ public abstract class AbstractSegurancaFacade implements SessionBean, Seguranca 
             
             if(usuario.getIndicaAlterarSenha() != null && usuario.getIndicaAlterarSenha()){
 	            usuario.setDataUltimoLogin( new Date() );
-	            usuarioDao.alterar(usuario);
+	            usuarioDao.alterar(usuario);	            
+            }else{
+            
+	            if(!login.equals(usuario.getLogin()) && !senha.equals(usuario.getSenha())){
+	            	throw new IdentificadorSenhaIncorretosException("Identificador ou senha incorretos!");
+	            }
             }
             
-            if(login.equals(usuario.getLogin()) && senha.equals(usuario.getSenha())){            	
-            	return segurancaHelper.criarSessao(usuario);
-            }else{
-            	 throw new IdentificadorSenhaIncorretosException("Identificador ou senha incorretos!");
-            }
+            return segurancaHelper.criarSessao(usuario);
                 
         } catch (DAOException e) {
             throw new ErroInternoException("Problemas com a conexão ao banco de dados!",e);

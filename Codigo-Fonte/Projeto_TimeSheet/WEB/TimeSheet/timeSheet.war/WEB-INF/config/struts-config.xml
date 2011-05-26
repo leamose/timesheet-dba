@@ -17,19 +17,19 @@
 
         <exception type="java.lang.Exception" 
             handler="br.com.dba.timesheet.exceptions.DBAExceptionHandler"
-            path="/WebContent/jsp/erro/erro.jsp"
+            path="/WebContent/jsp/comum/erro.jsp"
             key="erro.geral"/>
 
         <exception type="br.com.dba.timesheet.exceptions.ParametroInvalidoException" 
             handler="br.com.dba.timesheet.exceptions.DBAExceptionHandler"
-            path="/WebContent/jsp/erro/erro.jsp"
+            path="/WebContent/jsp/comum/erro.jsp"
             key="erro.paramentro.nao.cadastrado"/>
     </global-exceptions>
     
     <global-forwards>
     	<forward path="/" name="pagina.login"/>
-		<forward name="erroGeral" path="/WebContent/jsp/erro/erroGeral.jsp"/>
-		<forward name="pagina.de.erro.acesso" path="/WebContent/jsp/erro/erroAcesso.jsp" />
+		<forward name="erroGeral" path="/WebContent/jsp/comum/erro.jsp"/>
+		<forward name="pagina.de.erro.acesso" path="/login.do" />
 	</global-forwards>
 	
     <action-mappings>    

@@ -163,7 +163,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosTipoAtividades</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -174,7 +173,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosProdutoServico</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -185,7 +183,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodasOPs</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -196,7 +193,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodasMetodologias</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -207,7 +203,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosCliente</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -218,7 +213,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosTimeSheet</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -229,7 +223,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodasSituacaoAtividade</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -240,7 +233,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosTimeSheetOrdenadoPorDataHoraInicio</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -253,7 +245,6 @@
          <method-params>
             <method-param>java.util.Date</method-param>
             <method-param>java.util.Date</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -264,7 +255,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosAtividades</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -276,7 +266,6 @@
          <method-name>salvarTimeSheet</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.TimeSheet</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -288,7 +277,6 @@
          <method-name>verificaAtividadeJaCadastrada</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.TimeSheet</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -300,7 +288,6 @@
          <method-name>salvarSituacaoAtividade</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.SituacaoAtividade</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -312,7 +299,6 @@
          <method-name>salvarAvaliacaoAtividade</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.AvaliacaoAtividade</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -324,7 +310,6 @@
          <method-name>alterarAvaliacaoAtividade</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.AvaliacaoAtividade</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -336,7 +321,6 @@
          <method-name>removerAvaliacaoAtividade</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.AvaliacaoAtividade</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -348,7 +332,6 @@
          <method-name>salvarHistoricoTimeSheet</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.HistoricoTimeSheet</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -360,7 +343,6 @@
          <method-name>alterarTimeSheet</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.TimeSheet</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -372,7 +354,6 @@
          <method-name>removerTimeSheet</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.TimeSheet</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -384,7 +365,6 @@
          <method-name>removerHistoricoTimeSheet</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.HistoricoTimeSheet</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -396,7 +376,6 @@
          <method-name>consultarProdutoServicoPeloCodigoMetodologia</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -408,7 +387,6 @@
          <method-name>getSituacaoAtividade</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -419,7 +397,6 @@
          <method-intf>Remote</method-intf>
          <method-name>listarTodosConfiguracao</method-name>
          <method-params>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -431,7 +408,6 @@
          <method-name>getFuncionario</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -443,7 +419,6 @@
          <method-name>consultaFuncionariosPeloCodigoFuncionarioChefe</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -455,7 +430,6 @@
          <method-name>getCliente</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -467,7 +441,6 @@
          <method-name>getAtividade</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -479,7 +452,6 @@
          <method-name>getOP</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -491,7 +463,6 @@
          <method-name>getMetodologia</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -503,7 +474,6 @@
          <method-name>getProdutoServico</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -515,7 +485,6 @@
          <method-name>getTimeSheet</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -527,7 +496,6 @@
          <method-name>getAvaliacaoAtividade</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -539,7 +507,6 @@
          <method-name>getAvaliacaoAtividadePeloCodigoTimeSheet</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -551,7 +518,6 @@
          <method-name>getHistoricoTimeSheet</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -563,7 +529,6 @@
          <method-name>getHistoricoPeloCodigoTimeSheet</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -575,7 +540,6 @@
          <method-name>getHistoricoPelaDataOperacao</method-name>
          <method-params>
             <method-param>java.util.Date</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -587,7 +551,6 @@
          <method-name>salvarProjeto</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.Projeto</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -599,7 +562,6 @@
          <method-name>alterarTotalHorasMes</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.TotalHorasMes</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -611,7 +573,6 @@
          <method-name>alterarConfiguracao</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.Configuracao</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -623,7 +584,6 @@
          <method-name>alterarProjeto</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.Projeto</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -635,7 +595,6 @@
          <method-name>removerProjeto</method-name>
          <method-params>
             <method-param>br.com.dba.timesheet.pojo.Projeto</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -649,7 +608,6 @@
             <method-param>java.util.Date</method-param>
             <method-param>java.util.Date</method-param>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -661,7 +619,6 @@
          <method-name>getTimeSheetEAvaliacaoAtividadePorIdTimeSheet</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -675,7 +632,6 @@
             <method-param>java.lang.String</method-param>
             <method-param>java.lang.String</method-param>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -688,7 +644,6 @@
          <method-params>
             <method-param>java.util.Date</method-param>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -702,7 +657,6 @@
             <method-param>java.lang.Integer</method-param>
             <method-param>java.lang.Integer</method-param>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
@@ -714,7 +668,30 @@
          <method-name>getProdutoServicoPeloCodigoMetodologia</method-name>
          <method-params>
             <method-param>java.lang.Integer</method-param>
-            <method-param>br.com.dba.timesheet.pojo.Sessao</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>consultaConfiguracaoPorAnoMes</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+   </container-transaction>
+   <container-transaction >
+      <method >
+         <ejb-name>TimesheetFacade</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>consultaTotalHorasMesPorAnoMes</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
          </method-params>
       </method>
       <trans-attribute>Required</trans-attribute>
