@@ -31,15 +31,19 @@
         </init-param>	
         <init-param>
             <param-name>br.com.dba.timesheet.web.login.excluidos</param-name>
-            <param-value>/jsp/erro/erroAcesso.jsp,/sair.do,/erroAcesso.do,/autenticar.do</param-value>
+            <param-value>/jsp/comum/erro.jsp,/sair.do,/erroAcesso.do,/autenticar.do, /login.do</param-value>
         </init-param>
 	</filter>
 	
 	<filter-mapping>
-		<filter-name>FiltroSessao</filter-name>
-		<!-- <servlet-name>action</servlet-name>-->
-		<url-pattern>/atividade/*</url-pattern>
-	</filter-mapping>
+        <filter-name>FiltroSessao</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>FiltroSessao</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
     
     <servlet>
         <servlet-name>action</servlet-name>
@@ -78,19 +82,4 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
-	
-   	<error-page>
-		<error-code>403</error-code>
-		<location>/WebContent/jsp/erro/erroAcesso.jsp?mensagem=Usuário sem permissão para acessar funcionalidade</location>
-	</error-page>
-
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WebContent/erro/erroGeral.jsp?mensagem=Página não encontrada.</location>
-    </error-page>
-       
-    <error-page>
-        <error-code>408</error-code>
-        <location>/WebContent/erro/erroLogin.jsp?mensagem=Página Expirada.</location>
-    </error-page>
 </web-app>

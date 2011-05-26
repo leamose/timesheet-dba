@@ -2,23 +2,24 @@
 /* CSS Document */
 
 
-html { height:100%; }
+body { background-color:#dadada;
+background-image:url(../img/fundo_topo_azul.jpg);
+background-position:top; background-repeat:repeat-x;
+margin:0px; text-align:center; font-family:Verdana, Geneva, sans-serif;
+font-size:11px; color:#666; }
 
 
-body { 			
-		background-position:top;
-		background-repeat:repeat-x;
-		margin:0px; text-align:center;
-		font-family:Verdana, Geneva, sans-serif;
-		font-size:11px;
-		color:#666; 
+.base {
+	position:absolute;  /*Contexto de posicionamento */
+	margin:0 auto;
+	text-align:left;
+	min-height:100%;/**/
+	width:100%;
 }
 
 a {color:#00779e; }
 
-.avaliado {color:red;}
-
-html, body, #wrap {height: 100%;} 
+.avaliado {color:red; text-decoration: blink;} 
 
 body > #wrap {height: auto; min-height: 100%;} 
 
@@ -33,35 +34,39 @@ background-image:url(../img/fundo_rodape_azul.jpg);
 text-align:center;
 }
 
+.titulo {
+	width:98%;
+	float:left;
+	color: #fff;
+	background-image:url(../img/fundo_topo_azul.jpg);
+	background-position:top; background-repeat:repeat-x;	
+	font-size:12px;
+	font-weight:bold;		
+	text-align: left;
+	padding-left: 20px;
+	margin-top: 5px;	
+}
 
+#header { width:99%; height:70px; }
 
-#header { width:100%; height:50px; margin:auto; background-repeat:no-repeat; background-position:top left; }
-
-#headerModulo { width:770px; height:130px; margin:auto; background-repeat:no-repeat; background-position:top left; *margin-bottom:0;/*hack para IE7*/ }
-
-.barraTextoTopo {width:700px; margin-right:10px; height:20px; text-align:right; display:block;  margin-top:5px;  float:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:black; }
-
-.barraIcones {margin-right:10px; text-align:right; display:block;  margin-top:10px; letter-spacing:10px; float:right; }
-.barraIcones img {cursor:pointer; }
+.barraIcones {margin-right:25px; text-align:right; display:block;  margin-top:5px; letter-spacing:10px; float:right; }
 
 img {border:none;}
-
-#corpo { width:770px; margin:auto; background-image:url(../img/main.png); }
-
-.conteudo {
-	width:800px;
-	height:auto;
-	float:let;
-	\padding-top:25px;
-}
 
 .titulo-formulario-pesquisa {
 	float:left;
 	font-weight:bold;
 	font-size:12px;
 	text-align:left;
-	margin-left:10px;
-	padding-top:6px;
+	margin-left:10px;	
+	padding-left: 10px;
+	padding: 5px;
+	background-image:url(../img/bgBotoesJanela.jpg); 
+	background-repeat:repeat-y; 
+	background-position:left;
+	margin-bottom:5px;
+	
+	width:100%; height:20px; 
 }
 
 .conteudo-formulario-detalhamento {
@@ -93,57 +98,31 @@ img {border:none;}
 	margin-right:8px;
 }
 
-.barra-titulo {
-	background:url(../img/bg_login.jpg) repeat-x;
-	height:28px;
+
+.cabecalho { height:30px; width:100%;
+	border-bottom:1px solid #00779e; 
+	display:block; 
+	background-image:url(../img/cabecalho.png); 
+	background-repeat:no-repeat; text-align:left; 
 }
 
-
-.cabecalho { height:30px; width:100%;; border-bottom:1px solid #00779e; display:block; background-image:url(../img/cabecalho.png); background-repeat:no-repeat; text-align:left; }
-
-.infoUsuario {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#fff; float:right;padding-right: 100px;}
+.infoUsuario {
+	font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#fff;float: right; margin-right: 15px;}
 
 .formulario { background-color:#FFF; display: table-cell; padding-top:5px; padding-bottom:5px; }
 
-.formulario-listagem {
-	width:800px;
-	border:1px solid #ccc;
-	margin-bottom:15px;
-}
 
-
-.final_formulario { width:100%; height:55px; border-top:1px solid #00779e; text-align:right;  }
+.final_formulario { width:100%; height:55px; text-align:right; }
 
 .final_formulario_popUp { width:100%; height:55px; border-top:1px solid #00779e; text-align:right;  }
 
 .final_formulario img{margin-top:5px; margin-right:20px; cursor:pointer; text-decoration:none; }
 
-.boxEsquerda { width:480px; height:280px; float:left; border-right:1px solid #999; border-bottom:1px solid #999; background-color:#FFF; margin:5px; margin-right:0px;}
-.boxDireita {width:480px; height:280px; float:right; border-right:1px solid #999; border-bottom:1px solid #999; background-color:#FFF; margin:5px; margin-left:0px;}
-
-.rolagem {width:13px; height:280px; float:left; margin:5px; background-image:url(../img/rolagem.png); }
-
-.boxIcones{width:200px; height:36px; float:right; background-image:url(../img/fundoicones.png); background-position:center; background-repeat:no-repeat; margin-top:15px; text-align:right; word-spacing:10px; padding-right:13px; padding-left:13px; padding-top:5px; margin-right:10px; text-align:center; }
-
-.barraExpan {width:750px; height:16px; border-bottom:1px solid #00779e; text-align:left; padding-right:10px; padding-left:10px; padding-top:2px; font-family:Verdana, Geneva, sans-serif; font-size:11px; font-weight:bold; color:#00779e;  background-color:#c9d3d8;}
-.barraExpan img{float:right; margin-left:10px; border:none;}
-.boxExpan {width:770px; background-color:#fff; display:table-cell; padding-top:3px; padding-bottom:7px;}
-.botoesExpan{ width:760px; height:18px; background-color:#ece9d8; text-align:right; padding-right:10px; padding-top:5px; border-bottom:1px solid #00779e; font-family:Verdana, Geneva, sans-serif; font-size:11px; font-weight:bold; color:#666; text-decoration:none; }
-.botoesExpan a:link {text-decoration:none; color:#666;}
-.botoesExpan a:active {text-decoration:none; color:#666;}
-.botoesExpan a:visited {text-decoration:none; color:#666;}
-
-.botoesJanela{width:100%; height:30px; background-image:url(../img/bgBotoesJanela.jpg); background-repeat:repeat-y; background-position:left; margin-bottom:5px; text-align:left; padding-top:3px;}
-
-.botoesJanela2{width:600px; height:30px; background-image:url(../img/bgBotoesJanela.jpg); background-repeat:repeat-y; background-position:left; margin-bottom:5px; text-align:left; padding-top:3px;}
+.botoesJanela{width:99%; height:7%; background-image:url(../img/bgBotoesJanela.jpg); background-repeat:repeat-y; background-position:left; margin-bottom:5px; text-align:left; padding-top:3px;}
 
 /*---------------------------------------------------Formulário----------------------------------------------------*/
 
 .subtitulo { font-family:Verdana, Geneva, sans-serif; font-size:11px; font-weight:bold; color:#00779e; float:left; margin-left:10px; text-align:left; width:100%; margin-top:10px; }
-
-.subsubtitulo { font-family:Verdana, Geneva, sans-serif; font-size:11px; font-weight:bold; color:#666; float:left; margin-left:10px; text-align:left; margin-bottom:3px; }
-
-.linha {width:770px; display: block;}
 
 .foco {
 	padding:1px; 
@@ -151,7 +130,6 @@ img {border:none;}
 	float:left; 
 	margin-left: 1px; 
 	margin-right:5px;
-	/*border:1px solid red;*/
 	width:auto;
 	margin-bottom:-3px;
 }
@@ -172,27 +150,12 @@ img {border:none;}
 	margin-right:1px;
 }
 
-.campo { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid #00779e; background-color:#ece9d8;}
-
 .campoLeitura { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#00779e; border:1px solid #00779e; background-color:#ece9d8;}
-
-.campoErro { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid red; background-color:#ece9d8;}
+.campo { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid #00779e; background-color:#ece9d8;}
 
 .botoesMeio { float:right; padding-right:40px; padding-top:20px; padding-bottom:20px;}
 
 .botoesMeioPopUp { float:right; padding-right:1px; padding-top:10px; padding-bottom:5px;}
-
-.boxBotoesVertical {width:30px; height:130px; text-align:center; float:right; margin-left:10px;}
-.boxBotoesVertical img{ margin-right:2px; margin-top:5px;}
-
-.boxImportante {width:100%; background-color:#ece9d8; display:table-cell; padding:10px; /*border-bottom:1px solid #00779e;*/ }
-
-.boxFoto {width:120px; height:128px; background-color:#c9d3d8; margin:5px; margin-top:2px; float:right;}
-
-.boxAzul { width:100%; float:left; background-color:#c9d3d8; margin-bottom:5px; padding-top:3px; padding-bottom:5px;}
-
-
-
 /*---------------------------------------------------Tabela----------------------------------------------------*/
 
 
@@ -211,46 +174,15 @@ img {border:none;}
 .lista td.h2 { background-color:#E2EBF3; }/* linha selecionada */
 .lista td.h3 { background-color:#fff; color:#00779e; }
 
+.lista td div {
+color:#FF0000; 
+padding:5px; 
+width:200px; 
+height:100px; 
+overflow:auto; 
+}
+
 .lista img { cursor:pointer;}
-
-.navegacao_tabalas{border-top:5px solid #c9d3d8; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#666666; text-align:center; height:20px; background:#FFFFFF; margin-left:10px; margin-right:10px;}
-.navegacao_tabalasE{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#666666; float:left; padding-left:3px;}
-.navegacao_tabalasD{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#666666; float:right; padding-right:3px; }
-
-.tabelaOcorrencia td { background:none; border-top:1px solid #666;}
-.tabelaOcorrencia td.h1{font-weight:bold; background:none; border:none;}
-
-
-/*------------------------------------------Abas-----------------------------------------*/
-
-.painelAba { width:689px; float:right; background-color:#FFF; }
-
-.paninelAbaCorpo{ height:430px; background-image:url(../img/bordaTab.jpg); background-position:left; background-repeat:repeat-y;}
-
-.painelAbaTopo{ width:674px; height:23px; background-image:url(../img/topopainel.jpg); font-family:Verdana, Geneva, sans-serif; font-size:11px; font-weight:bold; color:#666; padding-top:15px; padding-left:15px; text-align:left;}
-
-.painelAbaBottom {width:689px; height:38px; background-image: url(../img/bottompainel.jpg); text-align:right;}
-
-.fichaPessoal a:link {width:81px; height:80px; background-image:url(../img/ficha_cadastralIn.jpg);}
-.fichaPessoal a:hover{ background-image:url(../img/ficha_cadastralover.jpg);}
-.fichaPessoal a:active {background-image:url(../img/ficha_cadastralAc.jpg);}
-
-.fichaFuncional a:link {width:81px; height:80px; background-image: url(../img/ficha_funcinal_In.jpg);}
-.fichaFuncional a:hover{ background-image: url(../img/ficha_funcinal_over.jpg);}
-.fichaFuncional a:active {background-image: url(../img/ficha_funcinal_ac.jpg);}
-
-.historicoFuncional a:link {width:81px; height:80px; background-image: url(../img/Histo_Funcional_in.jpg);}
-.historicoFuncional a:hover{ background-image: url(../img/Histo_Funcional_over.jpg);}
-.historicoFuncional a:active {background-image: url(../img/Histo_Funcional_ac.jpg);}
-
-.botoesTabHoriz {width:743px; height:17px; background-color:#ece9d8; text-align:right; word-spacing:15px; font-family:Verdana, Geneva, sans-serif; font-size:11px; font-weight:bold; color:#666; padding-top:3px; padding-right:15px; }
-
-.botoesTabHoriz a:link{color:#666;text-decoration:none; }
-
-.botoesTabHoriz a:active{color:#666;text-decoration:none; }
-
-.botoesTabHoriz a:visited{color:#666;text-decoration:none; }
-
 
 /*--------------------------------------Login-------------------------------------------------*/
 
@@ -268,37 +200,21 @@ img {border:none;}
 	padding-top:2px; 
 	margin-top:12px; 
 	margin-left: 10px; 
-	margin-right:15px\9; }
+	margin-right:15px; }
 
 .campoLogin { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; border:1px solid #00779e; background-color:#fff; margin-left:10px; margin-top:13px;}
 
+/*-----------------------------Tabela Régua de Horarios-------------------------------------------------*/
 
+.regua {background-color:#FFFFFF;}
 
-/*-----------------------------------------------arvore-----------------------------------------------*/
-
-.arvore {  width:700px; min-height:260px; margin-top:30px;}
-
-.arvnivel1A { width:600px; margin-bottom:3px; background-image:url(../img/arvove1aberto.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:10px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-.arvnivel1F { width:600px; margin-bottom:3px; background-image:url(../img/arvove1fechado.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:10px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-
-.arvnivel2A { width:600px; margin-bottom:3px; background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:20px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-.arvnivel2F { width:600px; margin-bottom:3px; background-image:url(../img/arvove2fechado.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:20px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-
-.arvnivel3A { width:600px; margin-bottom:3px; background-image:url(../img/arvove3aberto.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:30px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-.arvnivel3F { width:600px; margin-bottom:3px; background-image:url(../img/arvove3fechado.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:30px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-
-.arvnivel4A { width:600px; margin-bottom:3px; background-image:url(../img/arvove4aberto.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:40px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-.arvnivel4F { width:600px; margin-bottom:3px; background-image:url(../img/arvove4fechado.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:40px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-
-.arvnivel5A { width:600px; margin-bottom:3px; background-image:url(../img/arvove5aberto.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:50px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-.arvnivel5F { width:600px; margin-bottom:3px; background-image:url(../img/arvove5fechado.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:50px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; }
-
-.arvUORG { width:600px; margin-bottom:3px; background-image: url(../img/arvoreUORG.png); background-position:left; background-repeat:no-repeat; padding-left:20px; margin-left:60px; text-align:left; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666;}
+.regua td {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal; border-left:1px solid #FFF; text-align:left; background-color:#fff; border:1px solid orange; }
+.regua td div {color:#FF0000;padding:5px;width:50%;height:100px;overflow-x:auto; border:1px solid green}
 
 
 /*-----------------------------Tabela Atividades-------------------------------------------------*/
 
-.paneEstatistica { background-color:#ece9d8; width:99%; }
+.paneEstatistica { background-color:#ece9d8;}
 
 .paneEstatistica th { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal; background-color:#ece9d8; border-left:1px solid #FFF; text-align:left;}
 .paneEstatistica th.h1 { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:bold; background-color:#c9d3d8; border-left:1px solid #FFF; text-align:left; padding-left:2px; padding-right:2px;}
@@ -309,10 +225,11 @@ img {border:none;}
 .paneEstatistica th.h6 { background-color: #fff; border:1px solid #F90; text-align:center; width:10px;  }/*ferias pedidas, mas ainda nao aprovadas*/
 
 
-.paneEstatistica td { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal; border-left:1px solid #FFF; text-align:left; background-color:#fff;}
+.paneEstatistica td { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:normal; border-left:1px solid #FFF; text-align:left; background-color:#fff;/*width: auto;*/}
 .paneEstatistica td.h1 { font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; font-weight:bold; border-left:1px solid #FFF; text-align:left; padding-left:2px; padding-right:2px; background-color:#ece9d8;}
 .paneEstatistica td.h2 { background-color:#F90; border-left:1px solid #FFF; text-align:left; }
 .paneEstatistica td.h4 { background-color:#808080; border-left:1px solid #FFF; text-align:left; }
+/*.paneEstatistica td div {color:#FF0000; width:100%; overflow:auto;}*/
 
 /*--------------------------------------Mensagens--------------------------------------------------------------*/
 
@@ -324,9 +241,3 @@ img {border:none;}
 .textoMensagemS {font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#666; width:620px; height:40px; vertical-align:middle; margin:10px; float:right;} 
 .iconeMensagemS {width:60px; float:left; height:40px; background-color:#ece9d8; padding-top:10px; }
 
-/*-------------------------------Menu Pop----------------------------------------*/
-
-.menupop { background-color:#fff;border:1px solid #00779e;display:none;width:130px;height:110px; padding:5px; text-align:left;}
-.menupop ul {margin-left:-40px; margin-top:0px; list-style:none; font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#00779e;}
-.menupop ul li {margin-bottom:5px;}
-.menupop ul li a: { text-decoration:none; color:#666;}

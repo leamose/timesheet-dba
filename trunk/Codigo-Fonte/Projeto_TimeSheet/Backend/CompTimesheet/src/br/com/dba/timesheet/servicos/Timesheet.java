@@ -36,7 +36,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<TipoAtividade> listarTodosTipoAtividades(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<TipoAtividade> listarTodosTipoAtividades() throws ParametroInvalidoException;
 	 
 
 	 /**
@@ -44,84 +44,84 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<SituacaoAtividade> listarTodasSituacaoAtividade(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<SituacaoAtividade> listarTodasSituacaoAtividade() throws ParametroInvalidoException;
 	 
 	 /**
       * Lista todos os ProdutoServico.
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<ProdutoServico> listarTodosProdutoServico(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<ProdutoServico> listarTodosProdutoServico() throws ParametroInvalidoException;
 	 
      /**
       * Lista todos os Metodologia.
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<Metodologia> listarTodasMetodologias(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<Metodologia> listarTodasMetodologias() throws ParametroInvalidoException;
 	 
 	 /**
 	  * Lista todos os TimeSheet's (Atividades)
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<TimeSheet> listarTodosTimeSheet(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<TimeSheet> listarTodosTimeSheet() throws ParametroInvalidoException;
 
 	 /**
 	  * Lista todos os TimeSheet's (Atividades) ordenado pela data de inicio.
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<TimeSheet> listarTodosTimeSheetOrdenadoPorDataHoraInicio(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<TimeSheet> listarTodosTimeSheetOrdenadoPorDataHoraInicio() throws ParametroInvalidoException;
 	 
 	 /**
       * Lista todos os Cliente. 
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<Cliente> listarTodosCliente(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<Cliente> listarTodosCliente() throws ParametroInvalidoException;
 	 
 	 /**
       * Lista todos os OP. 
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<OP> listarTodasOPs(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<OP> listarTodasOPs() throws ParametroInvalidoException;
 	 
 	 /**
       * Lista todos os Atividades. 
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<Atividade> listarTodosAtividades(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<Atividade> listarTodosAtividades() throws ParametroInvalidoException;
 
 	 /**
 	  * Lista todos os TimeSheetVO pelo mes e ano. 
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<TimeSheetVO> getListaTimeSheetVOPeloMesAno(String mes, String ano, Integer codigoFuncionario) throws ParametroInvalidoException;
 
 	 /**
 	  * Lista todos os TimeSheetVO pelo mes e ano. 
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(Integer codigoTimeSheet, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 TimeSheetVO getTimeSheetEAvaliacaoAtividadePorIdTimeSheet(Integer codigoTimeSheet) throws ParametroInvalidoException;
 
 	 /**
 	  * Lista todos os TimeSheetVO. 
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<HorasAtividadeVO> getListaHorasAtividadeVO(Date data, Integer codigoFuncionario) throws ParametroInvalidoException;
 
 	 /**
 	  * Lista todos os TimeSheetVO. 
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<HorasAtividadeVO> getTotalHorasTrabalhadas(Integer ano, Integer mes, Integer codigofuncionario, Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<HorasAtividadeVO> getTotalHorasTrabalhadas(Integer ano, Integer mes, Integer codigofuncionario) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Salva um TimeSheet(Atividade).
@@ -129,7 +129,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 TimeSheet salvarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException, RegistroJaCadastradoException;
+	 TimeSheet salvarTimeSheet(TimeSheet pojo) throws ParametroInvalidoException, RegistroJaCadastradoException;
 
 	 /**
 	  * Salva um AvaliacaoAtividade.
@@ -137,7 +137,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 AvaliacaoAtividade salvarAvaliacaoAtividade(AvaliacaoAtividade pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Salva um SituacaoAtividade.
@@ -145,7 +145,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 SituacaoAtividade salvarSituacaoAtividade(SituacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 SituacaoAtividade salvarSituacaoAtividade(SituacaoAtividade pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Salva um HistoricoTimeSheet.
@@ -153,7 +153,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 HistoricoTimeSheet salvarHistoricoTimeSheet(HistoricoTimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 HistoricoTimeSheet salvarHistoricoTimeSheet(HistoricoTimeSheet pojo) throws ParametroInvalidoException;
 	 
 	 /**
       * Altera um TimeSheet(Atividade).
@@ -161,7 +161,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @return
       * @throws ParametroInvalidoException
       */
-	 void alterarTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void alterarTimeSheet(TimeSheet pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Altera um AvaliacaoAtividade.
@@ -169,7 +169,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 void alterarAvaliacaoAtividade(AvaliacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void alterarAvaliacaoAtividade(AvaliacaoAtividade pojo) throws ParametroInvalidoException;
 	 
 	 /**
       * Remove um TimeSheet(Atividade).
@@ -177,7 +177,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @return
       * @throws ParametroInvalidoException
       */
-	 void removerTimeSheet(TimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void removerTimeSheet(TimeSheet pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Remove um HistoricoTimeSheet(Atividade).
@@ -185,7 +185,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 void removerHistoricoTimeSheet(HistoricoTimeSheet pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void removerHistoricoTimeSheet(HistoricoTimeSheet pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Remove um AvaliacaoAtividade.
@@ -193,7 +193,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 void removerAvaliacaoAtividade(AvaliacaoAtividade pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void removerAvaliacaoAtividade(AvaliacaoAtividade pojo) throws ParametroInvalidoException;
 
 	 /**
 	  * Salva um Projeto(Atividade).
@@ -201,7 +201,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 Projeto salvarProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 Projeto salvarProjeto(Projeto pojo) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Altera um Projeto(Atividade).
@@ -209,7 +209,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 void alterarProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void alterarProjeto(Projeto pojo) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Remove um Projeto(Atividade).
@@ -217,70 +217,70 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 void removerProjeto(Projeto pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void removerProjeto(Projeto pojo) throws ParametroInvalidoException;
 	 
 	 /**
       * Efetua uma consulta pela chave primária do Funcionario.
       * @param id
       * @throws ParametroInvalidoException
       */     
-	 Funcionario getFuncionario(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 Funcionario getFuncionario(Integer id) throws ParametroInvalidoException;
 
 	 /**
 	  * Efetua uma consulta pela chave primária do SituacaoAtividade.
 	  * @param id
 	  * @throws ParametroInvalidoException
 	  */     
-	 SituacaoAtividade getSituacaoAtividade(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 SituacaoAtividade getSituacaoAtividade(Integer id) throws ParametroInvalidoException;
 
 	 /**
 	  * Efetua uma consulta pela chave primária do AvaliacaoAtividade.
 	  * @param id
 	  * @throws ParametroInvalidoException
 	  */     
-	 AvaliacaoAtividade getAvaliacaoAtividade(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 AvaliacaoAtividade getAvaliacaoAtividade(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Efetua uma consulta pela chave primária do Cliente.
 	  * @param id
 	  * @throws ParametroInvalidoException
 	  */	 
-	 Cliente getCliente(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 Cliente getCliente(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
       * Efetua uma consulta pela chave primária do Atividade.
       * @param id
       * @throws ParametroInvalidoException
       */     
-	 Atividade getAtividade(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 Atividade getAtividade(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Efetua uma consulta pela chave primária do OP.
 	  * @param id
 	  * @throws ParametroInvalidoException
 	  */     
-	 OP getOP(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 OP getOP(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Efetua uma consulta pela chave primária do Metodologia.
 	  * @param id
 	  * @throws ParametroInvalidoException
 	  */     
-	 Metodologia getMetodologia(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 Metodologia getMetodologia(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
       * Efetua uma consulta pela chave primária do ProdutoServico.
       * @param id
       * @throws ParametroInvalidoException
       */     
-	 ProdutoServico getProdutoServico(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 ProdutoServico getProdutoServico(Integer id) throws ParametroInvalidoException;
 
 	 /**
 	  * Efetua uma consulta pela chave primária do TimeSheet.
 	  * @param id
 	  * @throws ParametroInvalidoException
 	  */     
-	 TimeSheet getTimeSheet(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 TimeSheet getTimeSheet(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Efetua uma consulta pelo codigo de Metodologia.
@@ -288,7 +288,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<ProdutoServico> consultarProdutoServicoPeloCodigoMetodologia(Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;	 
+	 List<ProdutoServico> consultarProdutoServicoPeloCodigoMetodologia(Integer codigo) throws ParametroInvalidoException;	 
 
 	 /**
 	  * Efetua uma consulta pelo codigo de funcionario pelo codigofuncionariochefe.
@@ -296,7 +296,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;	 
+	 List<Funcionario> consultaFuncionariosPeloCodigoFuncionarioChefe(Integer id) throws ParametroInvalidoException;	 
 	 
 	 /**
       * Efetua uma consulta pelo codigo de TimeSheet.
@@ -304,7 +304,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<HistoricoTimeSheet> getHistoricoPeloCodigoTimeSheet(Integer codigo) throws ParametroInvalidoException;
 	 
 	 /**
       * Efetua uma consulta pela chave primária do HistoricoTimeSheet.
@@ -312,7 +312,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @return
       * @throws ParametroInvalidoException
       */
-	 HistoricoTimeSheet getHistoricoTimeSheet(Integer id,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 HistoricoTimeSheet getHistoricoTimeSheet(Integer id) throws ParametroInvalidoException;
 	 
 	 /**
       * Efetua uma consulta pela Data Operacao e Tipo Operacao.
@@ -320,7 +320,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
       * @return
       * @throws ParametroInvalidoException
       */
-	 List<HistoricoTimeSheet> getHistoricoPelaDataOperacao(Date data,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<HistoricoTimeSheet> getHistoricoPelaDataOperacao(Date data) throws ParametroInvalidoException;
 	 
 	 /**
 	  * Efetua uma consulta pela Data.
@@ -328,7 +328,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @return
 	  * @throws ParametroInvalidoException
 	  */
-	 List<TimeSheet> consultarTimeSheetPorDataHoraInicio(Date dataInicio, Date dataFim,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<TimeSheet> consultarTimeSheetPorDataHoraInicio(Date dataInicio, Date dataFim) throws ParametroInvalidoException;
 	 
 	 /**
 	  * 
@@ -338,7 +338,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  * @throws SessaoInvalidaException
 	  */
-	 List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<ProdutoServico> getProdutoServicoPeloCodigoMetodologia(Integer codigo) throws ParametroInvalidoException;
 	 
 	 /**
 	  * 
@@ -347,7 +347,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  * @throws SessaoInvalidaException
 	  */
-	 List<Configuracao> listarTodosConfiguracao(Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 List<Configuracao> listarTodosConfiguracao() throws ParametroInvalidoException;
 	 
 	 /**
 	  * 
@@ -356,7 +356,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  * @throws SessaoInvalidaException
 	  */
-	 void alterarTotalHorasMes(TotalHorasMes pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void alterarTotalHorasMes(TotalHorasMes pojo) throws ParametroInvalidoException;
 	 
 	 /**
 	  * 
@@ -365,7 +365,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  * @throws SessaoInvalidaException
 	  */
-	 void alterarConfiguracao(Configuracao pojo,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 void alterarConfiguracao(Configuracao pojo) throws ParametroInvalidoException;
 	 
 	 /**
 	  * 
@@ -375,7 +375,7 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  * @throws SessaoInvalidaException
 	  */
-	 boolean verificaAtividadeJaCadastrada(TimeSheet pojo, Sessao sessao)throws ParametroInvalidoException, SessaoInvalidaException ;
+	 boolean verificaAtividadeJaCadastrada(TimeSheet pojo)throws ParametroInvalidoException ;
 	 
 	 /**
 	  * Consulta uma AvaliacaoAtividade pelo codigoTimeSheet
@@ -385,6 +385,10 @@ import br.com.dba.timesheet.pojo.vo.TimeSheetVO;
 	  * @throws ParametroInvalidoException
 	  * @throws SessaoInvalidaException
 	  */
-	 AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(Integer codigoTimesheet,Sessao sessao) throws ParametroInvalidoException, SessaoInvalidaException;
+	 AvaliacaoAtividade getAvaliacaoAtividadePeloCodigoTimeSheet(Integer codigoTimesheet) throws ParametroInvalidoException;
+	 
+	 Configuracao consultaConfiguracaoPorAnoMes(String ano, String mes)throws ParametroInvalidoException, DAOException;
+	 
+	 TotalHorasMes consultaTotalHorasMesPorAnoMes(String ano, String mes)throws ParametroInvalidoException, DAOException;
 	 
 }

@@ -246,8 +246,10 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
 	            vo.setDataFim(avaliacaoAtividade.getDataFim()); 
 	            vo.setCodigoSituacaoAtividade(avaliacaoAtividade.getSituacaoAtividade()!=null?avaliacaoAtividade.getSituacaoAtividade().getId():null); 
 	            vo.setCodigoFuncionarioAvaliador(avaliacaoAtividade.getFuncionarioAvaliador()!=null ? avaliacaoAtividade.getFuncionarioAvaliador().getId():null);
+	            
+            }else{            
+            	vo.setHabilitaBotaoAlterar(true);
             }
-            
             
             
             vo.setNomeProjeto(resultado.getString("nome"));
@@ -272,9 +274,9 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     	StringBuilder hql = new StringBuilder(); 
     	List<TimeSheetVO> lista = new ArrayList<TimeSheetVO>();
     	try { 
-    		hql.append("select count(*) FROM TS.HistoricoTimeSheet " +
-    		" WHERE  '" + dataFim +"' between datahorainicio and datahorafim " +
-    		" OR '" + dataFim +"' between datahorainicio and datahorafim  GROUP BY codigotimesheet, datahorainicio" );
+    		hql.append("select codigoTimeSheet FROM TS.HistoricoTimeSheet " +
+    		" WHERE  ('" + dataInicio +"' between datahorainicio and datahorafim) " +
+    		" OR ('" + dataFim +"' between datahorainicio and datahorafim) and codigofuncionario="+codigoFuncionario);
     		
     		PreparedStatement query  = null;      
     		Connection conexao = getSession().connection();
@@ -286,7 +288,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     		while(resultado.next()){
     			TimeSheetVO vo = new TimeSheetVO();
     			
-    			vo.setCodigoTimeSheet(resultado.getInt("count"));
+    			vo.setCodigoTimeSheet(resultado.getInt("codigoTimeSheet"));
     			
     			lista.add(vo);
     			
@@ -397,7 +399,7 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     				" date_part('month', datahorainicio)as mes," +
     				" date_part('day', datahorainicio)as dia," +
     				" sum(datahorafim - datahorainicio) as horasTrabalhadas," +
-    				" interval '8 hours' - sum(datahorafim - datahorainicio) as cargaHoraria" +
+    				" interval '8 hours' - sum(datahorafim - datahorainicio) as saldoDiario" +
     				" from ts.timesheet where date_part('year', datahorainicio)  = " + ano +
     				" and date_part('month', datahorainicio)=" + mes +
     				" and codigofuncionario=" + codigofuncionario +
@@ -417,29 +419,30 @@ public class TimeSheetDao extends AbstractHibernateDAO<TimeSheet, Integer> {
     			vo.setAno(resultado.getInt("ano")); 
     			vo.setDia(resultado.getInt("dia")); 
     			vo.setMes(resultado.getInt("mes")); 
+    			
     			if(resultado.getString("horasTrabalhadas")!=null){
     				vo.setHorasTrabalhadas(resultado.getString("horasTrabalhadas").substring(0, 5));
     			}else{
     				vo.setHorasTrabalhadas("00:00");    				
     			}
     			
-    			if(resultado.getString("cargaHoraria")!=null){
-    				String cargaHoraria = resultado.getString("cargaHoraria").substring(0, 5);
-    				Integer saldo = Integer.valueOf(resultado.getString("cargaHoraria").substring(0, 2));
+    			if(resultado.getString("saldoDiario")!=null){
+    				String saldoDiario = resultado.getString("saldoDiario").substring(0, 5);
+    				Integer saldo = Integer.valueOf(resultado.getString("saldoDiario").substring(0, 2));
     				
     				if(saldo != 0 && saldo < 8){
     					vo.setIndicaSaldoDevedor(true);
     				}else{
-    					String saldoPositivo = resultado.getString("cargaHoraria").substring(0, 1);
+    					String saldoPositivo = resultado.getString("saldoDiario").substring(0, 1);
     					if(saldoPositivo.equals("-")){    						
-    						cargaHoraria = StringUtil.formataSaldoPositivo(saldoPositivo,resultado.getString("cargaHoraria"));;
+    						saldoDiario = StringUtil.formataSaldoPositivo(saldoPositivo,resultado.getString("saldoDiario"));
     					}
     				}
     				
-    				vo.setCargaHoraria(cargaHoraria);
+    				vo.setSaldoDiario(saldoDiario);
     				
     			}else{
-    				vo.setCargaHoraria(resultado.getString("cargaHoraria"));
+    				vo.setSaldoDiario(resultado.getString("saldoDiario"));
     				vo.setHorasTrabalhadas("00:00");
     				vo.setIndicaSaldoDevedor(true);
     			}

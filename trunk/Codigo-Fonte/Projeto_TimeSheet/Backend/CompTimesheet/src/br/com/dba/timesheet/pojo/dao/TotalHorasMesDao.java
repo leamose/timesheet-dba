@@ -1,8 +1,13 @@
 package br.com.dba.timesheet.pojo.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.dba.dao.hibernate.AbstractHibernateDAO;
+import br.com.dba.timesheet.exceptions.DAOException;
+import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
+import br.com.dba.timesheet.pojo.Configuracao;
 import br.com.dba.timesheet.pojo.TotalHorasMes;
 
 /**
@@ -27,5 +32,15 @@ public class TotalHorasMesDao extends AbstractHibernateDAO<TotalHorasMes, Intege
 	public Class<TotalHorasMes> doGetClass() {
 		return TotalHorasMes.class;
 	}
+	
+	
+	public TotalHorasMes consultaTotalHorasMesPorAnoMes(String anoMes)throws ParametroInvalidoException, DAOException{
+		Criteria query = getSession().createCriteria(TotalHorasMes.class);
+        query.add(Restrictions.eq("id", anoMes));
+        
+        TotalHorasMes resultado = (TotalHorasMes) query.uniqueResult();
+        
+        return resultado != null ? resultado:null;
+    }
     
 }

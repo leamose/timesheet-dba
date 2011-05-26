@@ -1,150 +1,65 @@
-<!--<div style='overflow-x: scroll;'>
-	<table class="paneEstatistica" border="0" cellpadding="0" cellspacing="0" style="padding: 5px;">
-		 MES ATUAL 
-		<tr><th colspan="3" class="h1">${form.mesLiteral}</th></tr>
-		<tr>
-			<td>
-				<table class="paneEstatistica" style="width: 130px;">
-					<tr><th style="font-weight:bold;">dias:</th></tr>
-					<tr><th style="font-weight:bold;">carga horaria:</th></tr>
-					<tr><th style="font-weight:bold;">horas trabalhadas:</th></tr>
-					<tr><th style="font-weight:bold;">saldo diário:</th></tr>
-				</table>
-			</td>
-			<td>
-				<table style="overflow:visible;" class="paneEstatistica">
-					<tr>
-						<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm">
-							<th style="text-align: center;">${lfm.dia}</th>
-						</c:forEach>
-					</tr>
-					<tr>
-						<script>
-							for (i=0; i<${form.tamanhoListaHoras}; i++) {
-					  	    	document.write("<th  style='text-align: center;font-size: 10px'>08:00</th>");
-						  	}
-					  	</script>
-					</tr>
-					<tr>
-						<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" varStatus="status0">
-							<th style="text-align: center;font-size: 10px">${lfm.horasTrabalhadas}</th>
-						</c:forEach>
-					</tr>
-					<tr>
-						<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" varStatus="status0">
-							<script>							
-							if(${lfm.indicaSaldoDevedor}){
-								document.write("<th style='text-align: center;color: red;font-size: 10px'>${lfm.cargaHoraria}</th>");
-							}else{
-								document.write("<th style='text-align: center;font-size: 10px'>${lfm.cargaHoraria}</th>");
-							}	
-							</script>
-						</c:forEach>
-					</tr>
-				</table>
-			</td>
-			<td>
-			<table class="paneEstatistica" style="width: 230px;">
-				<tr><th>&nbsp;</th></tr>
-				<tr><th><b>total carga horaria:</b><%=request.getAttribute("totalCargaHoraria")%></th></tr>
-				<tr><th><b>total horas trabalhadas:</b><%=request.getAttribute("totalHorasTrabalhadas")%></th></tr>
-				<tr><th><b>total saldo diário:</b><%=request.getAttribute("totalSaldoDiario")%></th></tr>
-			</table>
-		</td>
-		</tr>
-	</table>
-</div>
--->
-
-
-			<table style="overflow:visible;" width="275">
-				<tr>
-					<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm">
-						<th style="text-align: center;">${lfm.dia}</th>
-					</c:forEach>
-				</tr>
-				<tr>
+	<div style="width: 11.4%; float: left; ">
+		<table class="paneEstatistica" width="100%">
+			<tr><th colspan="3" class="h1">${form.mesLiteral}</th></tr>
+			<tr><th style="font-size:10px; font-weight:bold;">Dias:</th></tr>
+			<tr><th style="font-size:10px;font-weight:bold;">Carga Horária:</th></tr>
+			<tr><th style="font-size:10px;font-weight:bold;">Horas Trabalhadas:</th></tr>
+			<tr><th style="font-size:10px;font-weight:bold;">Saldo Diário:</th></tr>
+			<tr><th style="font-size:10px;font-weight:bold;">Saldo Acumulado:</th></tr>
+		</table>
+	</div>		
+	<div style="width: 79.6%; overflow-x: scroll;float:left;">
+		<table class="paneEstatistica" style="overflow: auto">
+			<tr><th colspan="35" class="h1">&nbsp;</th></tr>
+			<tr>
+				<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm">
+					<td style="text-align: center;font-size: 10px">${lfm.dia}</td>
+				</c:forEach>
+			</tr>
+			<tr>
+				<script>
+					for (i=0; i<${form.tamanhoListaHoras}; i++) {
+			  	    	document.write("<td  style='text-align: center;font-size: 10px'>08:00</td>");
+				  	}
+			  	</script>
+			</tr>
+			<tr>
+				<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" >
+					<td style="text-align: center;font-size: 10px">${lfm.horasTrabalhadas}</td>
+				</c:forEach>
+			</tr>
+			<tr>
+				<c:forEach items="${form.listaHorasAtividadeVOs}" var="lha" >
+					<script>							
+					if(${lha.indicaSaldoDevedor}){
+						document.write("<td style='text-align: center;color: red;font-size: 10px'>${lha.saldoDiario}</td>");
+					}else{
+						document.write("<td style='text-align: center;font-size: 10px'>${lha.saldoDiario}</td>");
+					}	
+					</script>
+				</c:forEach>
+			</tr>
+			<tr>
+				<c:forEach items="${form.listaHorasAtividadeVOs}" var="lha" >
 					<script>
-						for (i=0; i<${form.tamanhoListaHoras}; i++) {
-				  	    	document.write("<th  style='text-align: center;font-size: 10px'>08:00</th>");
-					  	}
-				  	</script>
-				</tr>
-				<tr>
-					<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" varStatus="status0">
-						<th style="text-align: center;font-size: 10px">${lfm.horasTrabalhadas}</th>
-					</c:forEach>
-				</tr>
-				<tr>
-					<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" varStatus="status0">
-						<script>							
-						if(${lfm.indicaSaldoDevedor}){
-							document.write("<th style='text-align: center;color: red;font-size: 10px'>${lfm.cargaHoraria}</th>");
+						if(${lha.indicaSaldoAcumuladoDevedor}){
+							document.write("<td style='text-align: center;color: red;font-size: 10px'>${lha.saldoAcumulado}</td>");
 						}else{
-							document.write("<th style='text-align: center;font-size: 10px'>${lfm.cargaHoraria}</th>");
-						}	
-						</script>
-					</c:forEach>
-				</tr>
-			</table>
-
-
-	<!--<div>
-		 MES ATUAL 
-		<div>${form.mesLiteral}</div>
-		<div>
-			<table border>
-				<tr><th style="font-weight:bold;">dias:</th></tr>
-				<tr><th style="font-weight:bold;">carga horaria:</th></tr>
-				<tr><th style="font-weight:bold;">horas trabalhadas:</th></tr>
-				<tr><th style="font-weight:bold;">saldo diário:</th></tr>
-			</table>
-		</div>
-	
-	<div style='overflow-x: scroll;'>
-		<div>
-			<table style="overflow:visible;" border style="width:175px;">
-				<tr>
-					<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm">
-						<th style="text-align: center;">${lfm.dia}</th>
-					</c:forEach>
-				</tr>
-				<tr>
-					<script>
-						for (i=0; i<${form.tamanhoListaHoras}; i++) {
-				  	    	document.write("<th  style='text-align: center;font-size: 10px'>08:00</th>");
-					  	}
-				  	</script>
-				</tr>
-				<tr>
-					<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" varStatus="status0">
-						<th style="text-align: center;font-size: 10px">${lfm.horasTrabalhadas}</th>
-					</c:forEach>
-				</tr>
-				<tr>
-					<c:forEach items="${form.listaHorasAtividadeVOs}" var="lfm" varStatus="status0">
-						<script>							
-						if(${lfm.indicaSaldoDevedor}){
-							document.write("<th style='text-align: center;color: red;font-size: 10px'>${lfm.cargaHoraria}</th>");
-						}else{
-							document.write("<th style='text-align: center;font-size: 10px'>${lfm.cargaHoraria}</th>");
-						}	
-						</script>
-					</c:forEach>
-				</tr>
-			</table>
-		</div>
+							document.write("<td style='text-align: center;font-size: 10px'>${lha.saldoAcumulado}</td>");
+						}						
+					</script>
+				</c:forEach>
+			</tr>
+			
+		</table>
 	</div>
+	<div style="width:9%; float: left;">
+		<table class="paneEstatistica" border="0" width="100%">
+			<tr><th>&nbsp;</th></tr>
+			<tr><th>&nbsp;</th></tr>
+			<tr><th style="font-size:10px; font-weight:bold;">total:${form.totalCargaHoraria}</th></tr>
+			<tr><th style="font-size:10px; font-weight:bold;">total:${form.totalHorasTrabalhadas}</th></tr>
+			<tr><th style="font-size:10px; font-weight:bold;">total:${form.totalSaldoDiario}</th></tr>
+			<tr><th style="font-size:10px; font-weight:bold;">total:${form.totalSaldoAcumulado}</th></tr>		
+		</table>
 	</div>
-		--><!--
-			<td>
-			<table class="paneEstatistica" style="width: 230px;">
-				<tr><th>&nbsp;</th></tr>
-				<tr><th><b>total carga horaria:</b><%=request.getAttribute("totalCargaHoraria")%></th></tr>
-				<tr><th><b>total horas trabalhadas:</b><%=request.getAttribute("totalHorasTrabalhadas")%></th></tr>
-				<tr><th><b>total saldo diário:</b><%=request.getAttribute("totalSaldoDiario")%></th></tr>
-			</table>
-		</td>
-		</tr>
-	</table>
--->

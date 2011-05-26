@@ -671,7 +671,7 @@ public class UtilDate {
 			segundos1   = (Integer.parseInt(hora1.substring(0,2))*3600)+(Integer.parseInt(hora1.substring(3,5))*60);     
 			segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);
 		}else{
-			segundos1   = (Integer.parseInt(hora1.substring(0,3))*3600)+(Integer.parseInt(hora1.substring(4,6))*60);    
+			segundos1   = (Integer.parseInt(hora1.substring(0,3))*3600)+(Integer.parseInt(hora1.substring(4,5))*60);    
 			segundos2   = (Integer.parseInt(hora2.substring(0,2))*3600)+(Integer.parseInt(hora2.substring(3,5))*60);			 
 		}
 		
@@ -701,7 +701,7 @@ public class UtilDate {
 		System.out.println("HH:MM:SS : "+horas+":"+minutos);  
 		return  horas + ":" + minutos;
 	}	  
-
+	
 	
 
 }

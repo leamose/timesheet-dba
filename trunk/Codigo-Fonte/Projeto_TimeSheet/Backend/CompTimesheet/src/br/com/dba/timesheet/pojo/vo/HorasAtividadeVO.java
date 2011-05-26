@@ -12,7 +12,10 @@ public class HorasAtividadeVO implements Serializable {
     private Integer mes;
     private Integer dia;        
     private String horasTrabalhadas;
+    private String saldoAcumulado;
+    private String saldoDiario;
     private Boolean indicaSaldoDevedor = false;
+    private Boolean indicaSaldoAcumuladoDevedor = false;
     private Date dataHoraInicio;
     private Date dataHoraFim;
     
@@ -63,6 +66,24 @@ public class HorasAtividadeVO implements Serializable {
 	}
 	public void setDataHoraFim(Date dataHoraFim) {
 		this.dataHoraFim = dataHoraFim;
+	}
+	public String getSaldoAcumulado() {
+		return saldoAcumulado;
+	}
+	public void setSaldoAcumulado(String saldoAcumulado) {
+		this.saldoAcumulado = saldoAcumulado;
+	}
+	public String getSaldoDiario() {
+		return saldoDiario;
+	}
+	public void setSaldoDiario(String saldoDiario) {
+		this.saldoDiario = saldoDiario;
+	}
+	public Boolean getIndicaSaldoAcumuladoDevedor() {
+		return indicaSaldoAcumuladoDevedor;
+	}
+	public void setIndicaSaldoAcumuladoDevedor(Boolean indicaSaldoAcumuladoDevedor) {
+		this.indicaSaldoAcumuladoDevedor = indicaSaldoAcumuladoDevedor;
 	}
     
 

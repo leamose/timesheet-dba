@@ -1,9 +1,17 @@
 package br.com.dba.timesheet.pojo.dao;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.dba.dao.hibernate.AbstractHibernateDAO;
+import br.com.dba.timesheet.exceptions.DAOException;
+import br.com.dba.timesheet.exceptions.ParametroInvalidoException;
 import br.com.dba.timesheet.pojo.Configuracao;
+import br.com.dba.timesheet.pojo.TimeSheet;
 
 /**
  * 
@@ -28,5 +36,14 @@ public class ConfiguracaoDao extends AbstractHibernateDAO<Configuracao, Integer>
 	public Class<Configuracao> doGetClass() {
 		return Configuracao.class;
 	}
+	
+    public Configuracao consultaConfiguracaoPorAnoMes(String anoMes)throws ParametroInvalidoException, DAOException{
+		Criteria query = getSession().createCriteria(Configuracao.class);
+        query.add(Restrictions.like("anoMes", anoMes));
+        
+        Configuracao resultado = (Configuracao) query.uniqueResult();
+        
+        return resultado != null ? resultado:null;
+    }
     
 }

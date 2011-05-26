@@ -11,20 +11,18 @@ public class ConfigurarForm extends ValidatorForm {
 	private static final long serialVersionUID = 1L;
 	
     private Integer codigoConfiguracao;
-    private Integer hora_trabalho_inicio;
-    private Integer hora_trabalho_fim;
-    private Integer hora_almoco_inicio;
-    private Integer hora_almoco_fim;
+    private Integer codigoUsuario;
     private Integer mininoAlmoco;
     private TotalHorasMes totalHorasMes;
-    
+    private String mesLiteral;
     private Sessao sessao;
-    
-    private String[] totalHoras;
-    
-    private String ano; 
-    
+    private String[] totalHoras;    
+    private String ano;     
     private Usuario usuario;
+    private String horaTrabalhoInicio;
+    private String horaTrabalhoFim;
+    private String horaAlmocoInicio;
+    private String horaAlmocoFim;
 
 	public Integer getCodigoConfiguracao() {
 		return codigoConfiguracao;
@@ -32,38 +30,6 @@ public class ConfigurarForm extends ValidatorForm {
 
 	public void setCodigoConfiguracao(Integer codigoConfiguracao) {
 		this.codigoConfiguracao = codigoConfiguracao;
-	}
-
-	public Integer getHora_trabalho_inicio() {
-		return hora_trabalho_inicio;
-	}
-
-	public void setHora_trabalho_inicio(Integer horaTrabalhoInicio) {
-		hora_trabalho_inicio = horaTrabalhoInicio;
-	}
-
-	public Integer getHora_trabalho_fim() {
-		return hora_trabalho_fim;
-	}
-
-	public void setHora_trabalho_fim(Integer horaTrabalhoFim) {
-		hora_trabalho_fim = horaTrabalhoFim;
-	}
-
-	public Integer getHora_almoco_inicio() {
-		return hora_almoco_inicio;
-	}
-
-	public void setHora_almoco_inicio(Integer horaAlmocoInicio) {
-		hora_almoco_inicio = horaAlmocoInicio;
-	}
-
-	public Integer getHora_almoco_fim() {
-		return hora_almoco_fim;
-	}
-
-	public void setHora_almoco_fim(Integer horaAlmocoFim) {
-		hora_almoco_fim = horaAlmocoFim;
 	}
 
 	public Integer getMininoAlmoco() {
@@ -123,4 +89,52 @@ public class ConfigurarForm extends ValidatorForm {
 		this.sessao = sessao;
 	}
 
+	public String getMesLiteral() {
+		return mesLiteral;
+	}
+
+	public void setMesLiteral(String mesLiteral) {
+		this.mesLiteral = mesLiteral;
+	}
+
+	public Integer getCodigoUsuario() {
+		return codigoUsuario;
+	}
+
+	public void setCodigoUsuario(Integer codigoUsuario) {
+		this.codigoUsuario = codigoUsuario;
+	}
+
+	public String getHoraTrabalhoInicio() {
+		return horaTrabalhoInicio;
+	}
+
+	public void setHoraTrabalhoInicio(String horaTrabalhoInicio) {
+		this.horaTrabalhoInicio = horaTrabalhoInicio;
+	}
+
+	public String getHoraTrabalhoFim() {
+		return horaTrabalhoFim;
+	}
+
+	public void setHoraTrabalhoFim(String horaTrabalhoFim) {
+		this.horaTrabalhoFim = horaTrabalhoFim;
+	}
+
+	public String getHoraAlmocoInicio() {
+		return horaAlmocoInicio;
+	}
+
+	public void setHoraAlmocoInicio(String horaAlmocoInicio) {
+		this.horaAlmocoInicio = horaAlmocoInicio;
+	}
+
+	public String getHoraAlmocoFim() {
+		return horaAlmocoFim;
+	}
+
+	public void setHoraAlmocoFim(String horaAlmocoFim) {
+		this.horaAlmocoFim = horaAlmocoFim;
+	}
+	
 }

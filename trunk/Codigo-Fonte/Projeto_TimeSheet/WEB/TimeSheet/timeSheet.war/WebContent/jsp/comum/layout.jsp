@@ -9,18 +9,23 @@
 		<link href="${contexto}/WebContent/css/Geral.css" rel="stylesheet" type="text/css"/>
 		<link href="${contexto}/WebContent/css/submodal.css" rel="stylesheet" type="text/css"/>
 		
+		<script type="text/javascript">
+			var contexto = '${contexto}';
+		</script>
+		
 		<script type="text/javascript" src="${contexto}/WebContent/js/geral.js"></script>
 		<script type="text/javascript" src="${contexto}/WebContent/js/prototype.js"></script>
 		<script type="text/javascript" src="${contexto}/WebContent/js/submodal.js"></script>
 		<script type="text/javascript" src="${contexto}/WebContent/js/submodalsource.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/jquery.smoothDivScroll-1.1-min.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/jquery.smoothDivScroll-1.1.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="${contexto}/WebContent/js/jquery-ui-1.8.12.custom.min.js"></script>
 
-		<script type="text/javascript">
-			var contexto = '${contexto}';
-		</script>
 
 	</head>
 
-    <body >
+    <body>
 		<tiles:insert name="corpo" />
-    </body>
+	</body>
 </html>

@@ -3,6 +3,7 @@ package br.com.dba.timesheet.web.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.ValidatorForm;
 
 import br.com.dba.timesheet.dominios.Dominio;
@@ -31,10 +32,12 @@ public class AtividadesForm extends ValidatorForm{
 	private String acao; 
 	private Boolean desabilitarCampo;
 	private Integer codigoAtividade;
+	private Integer codigoAvaliacao;
 	private Integer codigoCliente;
 	private Integer codigoOp;
 	private Integer codigoMetodologia;
 	private Integer codigoProdutoServico;		
+	private Integer codigoProdutoSelecionadoAnteriormente;		
 	private Integer codigoTimeSheet;		
 	private Integer codigoFuncionario;		
 	private Integer codigoFuncionarioLogado;		
@@ -65,6 +68,8 @@ public class AtividadesForm extends ValidatorForm{
     private String descricaoProjeto;
     private String anoConsulta;
     private String mesConsulta;
+    private Boolean consulta;
+    private Boolean mostraConsulta;
     
     //Descricao do Mes : Exemplo (Março, Abril....)
     private String mesLiteral;
@@ -75,6 +80,7 @@ public class AtividadesForm extends ValidatorForm{
 	private Boolean alteracao_data_avaliacao;	
     private Boolean indicaChefe;
     private Boolean indicaSaldoDevedor;
+    private Boolean indicaSaldoAcumuladoDevedor;
     
     //indica se o funcionario sera avaliado, no caso de ser a mesma pessoa, ela nao pode se auto-avaliar
     private Boolean indicaAvaliacao;
@@ -107,6 +113,13 @@ public class AtividadesForm extends ValidatorForm{
     private Funcionario funcionario;
     private Projeto projeto;
     
+    private ActionMessages messages;
+    
+    private String totalCargaHoraria;
+    private String totalHorasTrabalhadas;
+    private String totalSaldoDiario;
+    private String totalSaldoAcumulado;
+    
     public void limparFormulario(){
         setAlteracao_data_avaliacao(false);
         setAtividades(null);
@@ -132,6 +145,11 @@ public class AtividadesForm extends ValidatorForm{
         setNomeProjeto("");
         setNumeroProjeto("");
         setCodigoCliente(null);
+        setObservacao("");
+        setObservacaoAvaliacaoAtividade("");
+        setObservacaoPrivada("");
+        setCodigoAvaliacao(null);
+        
     }
     
 	public Integer getId() {
@@ -553,5 +571,86 @@ public class AtividadesForm extends ValidatorForm{
 
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
+	}
+
+	public Integer getCodigoProdutoSelecionadoAnteriormente() {
+		return codigoProdutoSelecionadoAnteriormente;
+	}
+
+	public void setCodigoProdutoSelecionadoAnteriormente(
+			Integer codigoProdutoSelecionadoAnteriormente) {
+		this.codigoProdutoSelecionadoAnteriormente = codigoProdutoSelecionadoAnteriormente;
+	}
+
+	public ActionMessages getMessages() {
+		return messages;
+	}
+
+	public void setMessages(ActionMessages messages) {
+		this.messages = messages;
+	}
+
+	public Integer getCodigoAvaliacao() {
+		return codigoAvaliacao;
+	}
+
+	public void setCodigoAvaliacao(Integer codigoAvaliacao) {
+		this.codigoAvaliacao = codigoAvaliacao;
+	}
+
+	public Boolean getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(Boolean consulta) {
+		this.consulta = consulta;
+	}
+
+	public Boolean getMostraConsulta() {
+		return mostraConsulta;
+	}
+
+	public void setMostraConsulta(Boolean mostraConsulta) {
+		this.mostraConsulta = mostraConsulta;
+	}
+
+	public String getTotalCargaHoraria() {
+		return totalCargaHoraria;
+	}
+
+	public void setTotalCargaHoraria(String totalCargaHoraria) {
+		this.totalCargaHoraria = totalCargaHoraria;
+	}
+
+	public String getTotalHorasTrabalhadas() {
+		return totalHorasTrabalhadas;
+	}
+
+	public void setTotalHorasTrabalhadas(String totalHorasTrabalhadas) {
+		this.totalHorasTrabalhadas = totalHorasTrabalhadas;
+	}
+
+	public String getTotalSaldoDiario() {
+		return totalSaldoDiario;
+	}
+
+	public void setTotalSaldoDiario(String totalSaldoDiario) {
+		this.totalSaldoDiario = totalSaldoDiario;
+	}
+
+	public String getTotalSaldoAcumulado() {
+		return totalSaldoAcumulado;
+	}
+
+	public void setTotalSaldoAcumulado(String totalSaldoAcumulado) {
+		this.totalSaldoAcumulado = totalSaldoAcumulado;
+	}
+
+	public Boolean getIndicaSaldoAcumuladoDevedor() {
+		return indicaSaldoAcumuladoDevedor;
+	}
+
+	public void setIndicaSaldoAcumuladoDevedor(Boolean indicaSaldoAcumuladoDevedor) {
+		this.indicaSaldoAcumuladoDevedor = indicaSaldoAcumuladoDevedor;
 	}
 }
